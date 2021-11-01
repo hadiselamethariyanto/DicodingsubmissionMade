@@ -1,17 +1,17 @@
-package com.bwx.made.core.data.source
+package com.bwx.core.data.source
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
-import com.bwx.made.core.data.source.local.LocalDataSource
-import com.bwx.made.core.data.source.local.entity.CastEntity
-import com.bwx.made.core.data.source.local.entity.MovieEntity
-import com.bwx.made.core.data.source.local.entity.TvEntity
-import com.bwx.made.core.data.source.remote.RemoteDataSource
+import com.bwx.core.data.source.local.LocalDataSource
+import com.bwx.core.data.source.local.entity.CastEntity
+import com.bwx.core.data.source.local.entity.MovieEntity
+import com.bwx.core.data.source.local.entity.TvEntity
+import com.bwx.core.data.source.remote.RemoteDataSource
 import com.bwx.made.utils.*
-import com.bwx.made.core.data.Resource
-import com.bwx.made.core.utils.AppExecutors
-import com.bwx.made.core.utils.SortUtils
+import com.bwx.core.data.Resource
+import com.bwx.core.utils.AppExecutors
+import com.bwx.core.utils.SortUtils
 import com.nhaarman.mockitokotlin2.verify
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull

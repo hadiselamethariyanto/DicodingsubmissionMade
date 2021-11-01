@@ -1,8 +1,8 @@
 package com.bwx.made.utils
 
-import com.bwx.made.core.data.source.local.entity.CastEntity
-import com.bwx.made.core.data.source.local.entity.MovieEntity
-import com.bwx.made.core.data.source.local.entity.TvEntity
+import com.bwx.core.data.source.local.entity.CastEntity
+import com.bwx.core.data.source.local.entity.MovieEntity
+import com.bwx.core.data.source.local.entity.TvEntity
 import java.util.ArrayList
 
 object DataDummy {

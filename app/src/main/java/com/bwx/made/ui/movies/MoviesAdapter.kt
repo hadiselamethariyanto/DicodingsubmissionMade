@@ -9,7 +9,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.bwx.made.R
-import com.bwx.made.core.domain.model.Movie
+import com.bwx.core.domain.model.Movie
 import com.bwx.made.databinding.ItemsMovieBinding
 import com.bwx.made.ui.detail_movie.DetailMovieActivity
 import java.text.ParseException

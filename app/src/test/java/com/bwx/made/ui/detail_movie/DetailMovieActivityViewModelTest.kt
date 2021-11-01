@@ -4,7 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.paging.PagedList
-import com.bwx.made.core.data.CinemasRepository
+import com.bwx.core.data.CinemasRepository
 import com.bwx.made.core.data.source.local.entity.CastEntity
 import com.bwx.made.core.data.source.local.entity.MovieEntity
 import com.bwx.made.utils.DataDummy
@@ -36,7 +36,7 @@ class DetailMovieActivityViewModelTest {
     private lateinit var pagedList: PagedList<CastEntity>
 
     @Mock
-    private lateinit var repository: CinemasRepository
+    private lateinit var repository: com.bwx.core.data.CinemasRepository
 
     @Mock
     private lateinit var castObserver: Observer<Resource<PagedList<CastEntity>>>

@@ -1,9 +1,9 @@
 package com.bwx.made
 
 import android.app.Application
-import com.bwx.made.core.di.databaseModule
-import com.bwx.made.core.di.networkModule
-import com.bwx.made.core.di.repositoryModule
+import com.bwx.core.di.databaseModule
+import com.bwx.core.di.networkModule
+import com.bwx.core.di.repositoryModule
 import com.bwx.made.di.useCaseModule
 import com.bwx.made.di.viewModelModule
 import org.koin.android.ext.koin.androidContext

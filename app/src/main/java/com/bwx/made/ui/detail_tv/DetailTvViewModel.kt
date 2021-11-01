@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.bwx.made.core.domain.model.Tv
-import com.bwx.made.core.domain.usecase.CinemaUseCase
-import com.bwx.made.core.data.Resource
+import com.bwx.core.domain.model.Tv
+import com.bwx.core.domain.usecase.CinemaUseCase
+import com.bwx.core.data.Resource
 import kotlinx.coroutines.launch
 
 class DetailTvViewModel(private val cinemaUseCase: CinemaUseCase) : ViewModel() {
@@ -22,7 +22,7 @@ class DetailTvViewModel(private val cinemaUseCase: CinemaUseCase) : ViewModel() 
         if (tv != null) {
             viewModelScope.launch {
                 val newState = !tv.data!!.isFav
-                cinemaUseCase.setFavoriteTv(tv.data, newState)
+                cinemaUseCase.setFavoriteTv(tv.data!!, newState)
             }
         }
     }

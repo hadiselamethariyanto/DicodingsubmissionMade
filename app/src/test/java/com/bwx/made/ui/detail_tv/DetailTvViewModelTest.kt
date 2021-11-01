@@ -3,10 +3,9 @@ package com.bwx.made.ui.detail_tv
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.bwx.made.core.data.CinemasRepository
-import com.bwx.made.core.data.source.local.entity.TvEntity
+import com.bwx.core.data.source.local.entity.TvEntity
 import com.bwx.made.utils.DataDummy
-import com.bwx.made.core.data.Resource
+import com.bwx.core.data.Resource
 import com.nhaarman.mockitokotlin2.verify
 import org.junit.Before
 import org.junit.Rule
@@ -30,7 +29,7 @@ class DetailTvViewModelTest {
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Mock
-    private lateinit var repository: CinemasRepository
+    private lateinit var repository: com.bwx.core.data.CinemasRepository
 
     @Mock
     private lateinit var observer: Observer<Resource<TvEntity>>

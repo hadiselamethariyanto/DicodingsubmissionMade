@@ -8,15 +8,14 @@ import android.view.MenuItem
 import android.view.View
 import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.bwx.made.R
-import com.bwx.made.core.data.source.remote.response.DetailTVResponse
-import com.bwx.made.core.domain.model.Tv
+import com.bwx.core.data.source.remote.response.DetailTVResponse
+import com.bwx.core.domain.model.Tv
 import com.bwx.made.databinding.ActivityDetailTvBinding
 import com.bwx.made.databinding.ContentDetailTvBinding
-import com.bwx.made.core.data.Resource
+import com.bwx.core.data.Resource
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class DetailTVActivity : AppCompatActivity() {
@@ -53,7 +52,7 @@ class DetailTVActivity : AppCompatActivity() {
                     is Resource.Loading -> setLoading(true, binding)
                     is Resource.Success -> {
                         if (detailTV.data != null) {
-                            populateTv(detailTV.data, binding)
+                            populateTv(detailTV.data!!, binding)
                             setLoading(false, binding)
                         }
                     }

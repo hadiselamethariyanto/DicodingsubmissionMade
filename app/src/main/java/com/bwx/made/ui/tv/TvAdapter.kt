@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.bwx.made.R
-import com.bwx.made.core.domain.model.Tv
+import com.bwx.core.domain.model.Tv
 import com.bwx.made.databinding.ItemsTvBinding
 import com.bwx.made.ui.detail_tv.DetailTVActivity
 import java.text.ParseException

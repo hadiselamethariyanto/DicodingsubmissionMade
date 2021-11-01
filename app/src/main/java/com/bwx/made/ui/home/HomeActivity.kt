@@ -16,7 +16,7 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val splashScreen = installSplashScreen()
+        installSplashScreen()
 
         _activityHomeBinding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding?.root)

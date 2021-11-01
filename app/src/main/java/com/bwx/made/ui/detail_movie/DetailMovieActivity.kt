@@ -9,18 +9,17 @@ import android.view.View
 import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.bwx.made.R
-import com.bwx.made.core.data.source.remote.response.DetailMovieResponse
-import com.bwx.made.core.domain.model.Cast
-import com.bwx.made.core.domain.model.Movie
+import com.bwx.core.data.source.remote.response.DetailMovieResponse
+import com.bwx.core.domain.model.Cast
+import com.bwx.core.domain.model.Movie
 import com.bwx.made.databinding.ActivityDetailMovieBinding
 import com.bwx.made.databinding.ContentDetailMovieBinding
-import com.bwx.made.core.data.Resource
+import com.bwx.core.data.Resource
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class DetailMovieActivity : AppCompatActivity() {
@@ -53,7 +52,7 @@ class DetailMovieActivity : AppCompatActivity() {
                     is Resource.Loading -> setLoading(true, binding)
                     is Resource.Success -> {
                         if (movie.data != null) {
-                            populateMovie(movie.data, binding)
+                            populateMovie(movie.data!!, binding)
                             setLoading(false, binding)
                         }
                     }

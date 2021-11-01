@@ -3,7 +3,7 @@ package com.bwx.made.ui.detail_tv
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bwx.made.core.data.source.remote.response.SeasonsItem
+import com.bwx.core.data.source.remote.response.SeasonsItem
 import com.bwx.made.databinding.ItemsEpisodeBinding
 import java.util.ArrayList
 

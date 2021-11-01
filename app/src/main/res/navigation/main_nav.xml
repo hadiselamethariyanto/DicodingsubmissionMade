@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/favoriteFragment"
-        android:name="com.bwx.made.ui.favorite.FavoriteFragment"
+        android:name="com.bwx.favorite.FavoriteFragment"
         android:label="FavoriteFragment"
         tools:layout="@layout/fragment_favorite" />
 

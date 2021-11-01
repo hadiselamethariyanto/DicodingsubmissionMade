@@ -33,6 +33,9 @@
         <entry key="..\:/Android/SubmissionArchitecture/app/src/main/res/menu/menu_bottom.xml" value="0.1921875" />
         <entry key="..\:/Android/SubmissionArchitecture/app/src/main/res/menu/menu_detail.xml" value="0.1" />
         <entry key="..\:/Android/SubmissionArchitecture/app/src/main/res/menu/menu_short.xml" value="0.17685185185185184" />
+        <entry key="..\:/Android/SubmissionMade/favorite/src/main/res/layout/fragment_favorite.xml" value="0.1" />
+        <entry key="..\:/Android/SubmissionMade/favorite/src/main/res/layout/fragment_favorite_movie.xml" value="0.1" />
+        <entry key="..\:/Android/SubmissionMade/favorite/src/main/res/layout/fragment_favorite_tv.xml" value="0.1" />
       </map>
     </option>
   </component>

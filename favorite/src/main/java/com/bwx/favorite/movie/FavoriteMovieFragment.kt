@@ -1,4 +1,4 @@
-package com.bwx.made.ui.favorite.tv
+package com.bwx.favorite.movie
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,49 +6,48 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bwx.made.databinding.FragmentFavoriteTvBinding
-import com.bwx.made.ui.tv.TvAdapter
+import com.bwx.favorite.databinding.FragmentFavoriteMovieBinding
+import com.bwx.made.ui.movies.MoviesAdapter
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class FavoriteTvFragment : Fragment() {
+class FavoriteMovieFragment : Fragment() {
 
-    private var _binding: FragmentFavoriteTvBinding? = null
+    private var _binding: FragmentFavoriteMovieBinding? = null
     private val binding get() = _binding!!
-
-    private val viewModel: FavoriteTvViewModel by viewModel()
-    private lateinit var tvAdapter: TvAdapter
+    private val viewModel: FavoriteMovieViewModel by viewModel()
+    private lateinit var moviesAdapter: MoviesAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        _binding = FragmentFavoriteTvBinding.inflate(layoutInflater, container, false)
+        _binding = FragmentFavoriteMovieBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        tvAdapter = TvAdapter()
+        moviesAdapter = MoviesAdapter()
 
-        with(binding.rvTv) {
+        with(binding.rvMovie) {
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
-            adapter = tvAdapter
+            adapter = moviesAdapter
         }
-
-        viewModel.getFavTv().observe(viewLifecycleOwner, { listFavorite ->
+        viewModel.getFavMovies().observe(viewLifecycleOwner, { listFavorite ->
             if (listFavorite != null) {
                 if (listFavorite.isNotEmpty()) {
-                    tvAdapter.updateData(listFavorite)
+                    moviesAdapter.updateData(listFavorite)
                     binding.emptyData.visibility = View.GONE
                 } else {
                     binding.emptyData.visibility = View.VISIBLE
                 }
             }
-        })
 
+        })
     }
+
 
 }

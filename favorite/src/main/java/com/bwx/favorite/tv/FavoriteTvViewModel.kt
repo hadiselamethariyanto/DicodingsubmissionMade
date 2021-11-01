@@ -1,4 +1,4 @@
-package com.bwx.made.ui.favorite.tv
+package com.bwx.favorite.tv
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData

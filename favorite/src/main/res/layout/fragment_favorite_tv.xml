@@ -4,19 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.favorite.movie.FavoriteMovieFragment">
+    tools:context="com.bwx.favorite.tv.FavoriteTvFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvMovie"
+        android:id="@+id/rvTv"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
     <ImageView
         android:id="@+id/empty_data"
-        android:layout_width="240dp"
+        android:layout_width="260dp"
         android:layout_height="wrap_content"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/ic_undraw_horror_movie_3988"
+        android:src="@drawable/ic_undraw_home_cinema_l7yl"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

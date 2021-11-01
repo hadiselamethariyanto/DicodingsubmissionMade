@@ -1,4 +1,4 @@
-package com.bwx.made.ui.favorite.movie
+package com.bwx.favorite.movie
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData

@@ -1,16 +1,18 @@
-package com.bwx.made.ui.favorite
+package com.bwx.favorite
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bwx.favorite.databinding.FragmentFavoriteBinding
+import com.bwx.favorite.di.favoriteViewModelModule
 import com.bwx.made.R
-import com.bwx.made.databinding.FragmentFavoriteBinding
-import com.bwx.made.ui.favorite.movie.FavoriteMovieFragment
-import com.bwx.made.ui.favorite.tv.FavoriteTvFragment
+import com.bwx.favorite.movie.FavoriteMovieFragment
+import com.bwx.favorite.tv.FavoriteTvFragment
 import com.bwx.made.ui.home.SectionsPagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
+import org.koin.core.context.loadKoinModules
 
 class FavoriteFragment : Fragment() {
     private var _favoriteFragmentBinding: FragmentFavoriteBinding? = null
@@ -27,6 +29,7 @@ class FavoriteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (activity != null) {
+            loadKoinModules(favoriteViewModelModule)
             setViewpager()
         }
     }

@@ -1,14 +1,12 @@
 package com.bwx.made.core.data.source.remote
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.bwx.made.api.ApiConfig
 import com.bwx.made.core.data.source.remote.response.*
-import com.bwx.made.utils.EspressoIdlingResource
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlin.Exception
 
 class RemoteDataSource {
     companion object {
@@ -24,117 +22,78 @@ class RemoteDataSource {
             }
     }
 
-    fun getMovies(): LiveData<ApiResponse<List<MoviesItem>>> {
-        EspressoIdlingResource.increment()
-        val movieResult = MutableLiveData<ApiResponse<List<MoviesItem>>>()
-        val client = ApiConfig.getApiService().getPopularMovies(API_KEY, LANGUAGE, 1)
-        client.enqueue(object : Callback<MovieResponse> {
-            override fun onResponse(
-                call: Call<MovieResponse>,
-                response: Response<MovieResponse>
-            ) {
-                movieResult.value =
-                    ApiResponse.success(response.body()?.results as List<MoviesItem>)
-                EspressoIdlingResource.decrement()
+    suspend fun getMovies(): Flow<ApiResponse<List<MoviesItem>>> {
+        return flow {
+            try {
+                val response = ApiConfig.getApiService().getPopularMovies(API_KEY, LANGUAGE, 1)
+                val dataArray = response.results
+                if (dataArray != null) {
+                    if (dataArray.isNotEmpty()) {
+                        emit(ApiResponse.Success(dataArray))
+                    } else {
+                        emit(ApiResponse.Empty)
+                    }
+                }
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.toString()))
             }
-
-            override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
-                Log.e("RemoteDataSource", "getMovies onFailure : ${t.message}")
-                EspressoIdlingResource.decrement()
-            }
-        })
-        return movieResult
+        }.flowOn(Dispatchers.IO)
     }
 
-    fun getDetailMovie(movieId: Int): LiveData<ApiResponse<DetailMovieResponse>> {
-        EspressoIdlingResource.increment()
-        val resultDetailMovie = MutableLiveData<ApiResponse<DetailMovieResponse>>()
-
-        val client = ApiConfig.getApiService().getDetailMovie(movieId, API_KEY, LANGUAGE)
-        client.enqueue(object : Callback<DetailMovieResponse> {
-            override fun onResponse(
-                call: Call<DetailMovieResponse>,
-                response: Response<DetailMovieResponse>
-            ) {
-                EspressoIdlingResource.decrement()
-                resultDetailMovie.value =
-                    ApiResponse.success(response.body() as DetailMovieResponse)
+    suspend fun getDetailMovie(movieId: Int): Flow<ApiResponse<DetailMovieResponse>> {
+        return flow {
+            try {
+                val response = ApiConfig.getApiService().getDetailMovie(movieId, API_KEY, LANGUAGE)
+                emit(ApiResponse.Success(response))
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.toString()))
             }
-
-            override fun onFailure(call: Call<DetailMovieResponse>, t: Throwable) {
-                Log.e("RemoteDataSource", "getDetailMovie onFailure : ${t.message}")
-                EspressoIdlingResource.decrement()
-            }
-        })
-
-        return resultDetailMovie
+        }.flowOn(Dispatchers.IO)
     }
 
-    fun getCreditsMovie(movieId: Int): LiveData<ApiResponse<List<CastItem>>> {
-        EspressoIdlingResource.increment()
-        val castResult = MutableLiveData<ApiResponse<List<CastItem>>>()
-        val client = ApiConfig.getApiService().getCreditsMovie(movieId, API_KEY, LANGUAGE)
-        client.enqueue(object : Callback<CreditsResponse> {
-            override fun onResponse(
-                call: Call<CreditsResponse>,
-                response: Response<CreditsResponse>
-            ) {
-                castResult.value = ApiResponse.success(response.body()?.cast as List<CastItem>)
-                EspressoIdlingResource.decrement()
+    suspend fun getCreditsMovie(movieId: Int): Flow<ApiResponse<List<CastItem>>> {
+        return flow {
+            try {
+                val response = ApiConfig.getApiService().getCreditsMovie(movieId, API_KEY, LANGUAGE)
+                val dataArray = response.cast
+                if (dataArray.isNotEmpty()) {
+                    emit(ApiResponse.Success(dataArray))
+                } else {
+                    emit(ApiResponse.Empty)
+                }
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.toString()))
             }
-
-            override fun onFailure(call: Call<CreditsResponse>, t: Throwable) {
-                Log.e("RemoteDataSource", "getCreditsMovie onFailure : ${t.message}")
-                EspressoIdlingResource.decrement()
-            }
-        })
-
-        return castResult
+        }.flowOn(Dispatchers.IO)
     }
 
-    fun getListTv(): LiveData<ApiResponse<List<TVItem>>> {
-        EspressoIdlingResource.increment()
-        val tvResult = MutableLiveData<ApiResponse<List<TVItem>>>()
-        val client = ApiConfig.getApiService().getPopularTv(API_KEY, LANGUAGE, 1)
-        client.enqueue(object : Callback<TvResponse> {
-            override fun onResponse(
-                call: Call<TvResponse>,
-                response: Response<TvResponse>
-            ) {
-                tvResult.value =
-                    ApiResponse.success(response.body()?.results as List<TVItem>)
-                EspressoIdlingResource.decrement()
+    suspend fun getListTv(): Flow<ApiResponse<List<TVItem>>> {
+        return flow {
+            try {
+                val response = ApiConfig.getApiService().getPopularTv(API_KEY, LANGUAGE, 1)
+                val dataArray = response.results
+                if (dataArray != null) {
+                    if (dataArray.isNotEmpty()) {
+                        emit(ApiResponse.Success(dataArray))
+                    } else {
+                        emit(ApiResponse.Empty)
+                    }
+                }
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.toString()))
             }
-
-            override fun onFailure(call: Call<TvResponse>, t: Throwable) {
-                Log.e("RemoteDataSource", "getListTv onFailure : ${t.message}")
-                EspressoIdlingResource.decrement()
-            }
-        })
-        return tvResult
+        }.flowOn(Dispatchers.IO)
     }
 
-    fun getDetailTv(tvId: Int): LiveData<ApiResponse<DetailTVResponse>> {
-        EspressoIdlingResource.increment()
-        val resultDetailTv = MutableLiveData<ApiResponse<DetailTVResponse>>()
-
-        val client = ApiConfig.getApiService().getDetailTV(tvId, API_KEY, LANGUAGE)
-        client.enqueue(object : Callback<DetailTVResponse> {
-            override fun onResponse(
-                call: Call<DetailTVResponse>,
-                response: Response<DetailTVResponse>
-            ) {
-                EspressoIdlingResource.decrement()
-                resultDetailTv.value = ApiResponse.success(response.body() as DetailTVResponse)
+    suspend fun getDetailTv(tvId: Int): Flow<ApiResponse<DetailTVResponse>> {
+        return flow {
+            try {
+                val response = ApiConfig.getApiService().getDetailTV(tvId, API_KEY, LANGUAGE)
+                emit(ApiResponse.Success(response))
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.toString()))
             }
-
-            override fun onFailure(call: Call<DetailTVResponse>, t: Throwable) {
-                Log.e("RemoteDataSource", "getListTv onFailure : ${t.message}")
-                EspressoIdlingResource.decrement()
-            }
-        })
-
-        return resultDetailTv
+        }.flowOn(Dispatchers.IO)
     }
 
 }

@@ -22,7 +22,6 @@ import com.bwx.made.databinding.ActivityDetailMovieBinding
 import com.bwx.made.databinding.ContentDetailMovieBinding
 import com.bwx.made.viewmodel.ViewModelFactory
 import com.bwx.made.vo.Resource
-import com.bwx.made.vo.Status
 
 class DetailMovieActivity : AppCompatActivity() {
 
@@ -57,15 +56,15 @@ class DetailMovieActivity : AppCompatActivity() {
             val movieId = extras.getInt(EXTRA_MOVIE)
             viewModel.getDetailMovie(movieId)
             viewModel.getData().observe(this, { movie ->
-                when (movie.status) {
-                    Status.LOADING -> setLoading(true, binding)
-                    Status.SUCCESS -> {
+                when (movie) {
+                    is Resource.Loading -> setLoading(true, binding)
+                    is Resource.Success -> {
                         if (movie.data != null) {
                             populateMovie(movie.data, binding)
                             setLoading(false, binding)
                         }
                     }
-                    Status.ERROR -> {
+                    is Resource.Error -> {
                         setLoading(false, binding)
                     }
                 }
@@ -155,13 +154,13 @@ class DetailMovieActivity : AppCompatActivity() {
 
     private val castObserver = Observer<Resource<List<Cast>>> { casts ->
         if (casts != null) {
-            when (casts.status) {
-                Status.SUCCESS -> {
+            when (casts) {
+                is Resource.Success -> {
                     detailBinding.rvCast.visibility = View.VISIBLE
                     casts.data?.let { castAdapter.updateData(it) }
                 }
-                Status.ERROR -> detailBinding.rvCast.visibility = View.GONE
-                Status.LOADING -> detailBinding.rvCast.visibility = View.GONE
+                is Resource.Error -> detailBinding.rvCast.visibility = View.GONE
+                is Resource.Loading -> detailBinding.rvCast.visibility = View.GONE
             }
         }
     }

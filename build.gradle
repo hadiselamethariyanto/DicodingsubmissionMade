@@ -24,6 +24,7 @@ ext {
     mockitoVersion = '3.6.0'
     mockitoKotlinVersion = '2.2.0'
     pagingVersion = '2.1.2'
+    room = '2.3.0'
 }
 
 task clean(type: Delete) {

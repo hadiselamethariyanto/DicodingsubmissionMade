@@ -15,7 +15,6 @@ import com.bwx.made.utils.SortUtils.RANDOM
 import com.bwx.made.utils.SortUtils.VOTE_BEST
 import com.bwx.made.viewmodel.ViewModelFactory
 import com.bwx.made.vo.Resource
-import com.bwx.made.vo.Status
 
 class MoviesFragment : Fragment() {
 
@@ -81,14 +80,13 @@ class MoviesFragment : Fragment() {
 
     private val movieObserver = Observer<Resource<List<Movie>>> { movies ->
         if (movies != null) {
-            when (movies.status) {
-                Status.LOADING -> setLoading(true)
-                Status.SUCCESS -> {
+            when (movies) {
+                is Resource.Loading -> setLoading(true)
+                is Resource.Success -> {
                     setLoading(false)
                     movies.data?.let { moviesAdapter.updateData(it) }
-                    moviesAdapter.notifyDataSetChanged()
                 }
-                Status.ERROR -> {
+                is Resource.Error -> {
                     setLoading(false)
                 }
             }

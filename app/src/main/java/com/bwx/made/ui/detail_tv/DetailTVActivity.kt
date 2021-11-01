@@ -12,13 +12,12 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.bwx.made.R
-import com.bwx.made.core.data.source.local.entity.TvEntity
 import com.bwx.made.core.data.source.remote.response.DetailTVResponse
 import com.bwx.made.core.domain.model.Tv
 import com.bwx.made.databinding.ActivityDetailTvBinding
 import com.bwx.made.databinding.ContentDetailTvBinding
 import com.bwx.made.viewmodel.ViewModelFactory
-import com.bwx.made.vo.Status
+import com.bwx.made.vo.Resource
 
 class DetailTVActivity : AppCompatActivity() {
     companion object {
@@ -56,15 +55,15 @@ class DetailTVActivity : AppCompatActivity() {
             val tvId = extras.getInt(EXTRA_TV)
             viewmodel.getDetailTV(tvId)
             viewmodel.getData().observe(this, { detailTV ->
-                when (detailTV.status) {
-                    Status.LOADING -> setLoading(true, binding)
-                    Status.SUCCESS -> {
+                when (detailTV) {
+                    is Resource.Loading -> setLoading(true, binding)
+                    is Resource.Success -> {
                         if (detailTV.data != null) {
                             populateTv(detailTV.data, binding)
                             setLoading(false, binding)
                         }
                     }
-                    Status.ERROR -> {
+                    is Resource.Error -> {
                         setLoading(false, binding)
                     }
                 }
@@ -92,9 +91,11 @@ class DetailTVActivity : AppCompatActivity() {
         }
 
         if (tv.isFav) {
-            binding.fab.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(this,R.color.red))
-        }else{
-            binding.fab.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(this,R.color.white))
+            binding.fab.imageTintList =
+                ColorStateList.valueOf(ContextCompat.getColor(this, R.color.red))
+        } else {
+            binding.fab.imageTintList =
+                ColorStateList.valueOf(ContextCompat.getColor(this, R.color.white))
         }
 
 //        val detailTvAdapter = DetailTvAdapter()

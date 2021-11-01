@@ -14,7 +14,6 @@ import com.bwx.made.utils.SortUtils.TV_NEW
 import com.bwx.made.utils.SortUtils.TV_OLD
 import com.bwx.made.viewmodel.ViewModelFactory
 import com.bwx.made.vo.Resource
-import com.bwx.made.vo.Status
 
 class TvFragment : Fragment() {
 
@@ -90,13 +89,13 @@ class TvFragment : Fragment() {
 
     private val tvObserver = Observer<Resource<List<Tv>>> { tv ->
         if (tv != null) {
-            when (tv.status) {
-                Status.LOADING -> setLoading(true)
-                Status.SUCCESS -> {
+            when (tv) {
+                is Resource.Loading -> setLoading(true)
+                is Resource.Success -> {
                     setLoading(false)
                     tv.data?.let { tvAdapter.updateData(it) }
                 }
-                Status.ERROR -> {
+                is Resource.Error -> {
                     setLoading(false)
                 }
             }

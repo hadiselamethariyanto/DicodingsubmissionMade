@@ -5,15 +5,16 @@ import com.bwx.made.core.domain.model.Cast
 import com.bwx.made.core.domain.model.Movie
 import com.bwx.made.core.domain.model.Tv
 import com.bwx.made.vo.Resource
+import kotlinx.coroutines.flow.Flow
 
 interface ICinemaRepository {
-    fun getListMovie(sort: String): LiveData<Resource<List<Movie>>>
-    fun getDetailMovie(movieId: Int): LiveData<Resource<Movie>>
-    fun getCreditsMovie(movieId: Int): LiveData<Resource<List<Cast>>>
-    fun getListTV(sort: String): LiveData<Resource<List<Tv>>>
-    fun getDetailTV(tvId: Int): LiveData<Resource<Tv>>
-    fun getFavoriteTv(): LiveData<List<Tv>>
-    fun getFavoriteMovies(): LiveData<List<Movie>>
-    fun setFavoriteMovie(movie: Movie, state: Boolean)
-    fun setFavoriteTv(tv: Tv, state: Boolean)
+    fun getListMovie(sort: String): Flow<Resource<List<Movie>>>
+    fun getDetailMovie(movieId: Int): Flow<Resource<Movie>>
+    fun getCreditsMovie(movieId: Int): Flow<Resource<List<Cast>>>
+    fun getListTV(sort: String): Flow<Resource<List<Tv>>>
+    fun getDetailTV(tvId: Int): Flow<Resource<Tv>>
+    fun getFavoriteTv(): Flow<List<Tv>>
+    fun getFavoriteMovies(): Flow<List<Movie>>
+    suspend fun setFavoriteMovie(movie: Movie, state: Boolean)
+    suspend fun setFavoriteTv(tv: Tv, state: Boolean)
 }

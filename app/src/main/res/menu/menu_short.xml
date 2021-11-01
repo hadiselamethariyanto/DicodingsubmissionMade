@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/action_latest"
+            android:checked="true"
+            android:title="@string/sort_latest" />
+
+        <item
+            android:id="@+id/action_older"
+            android:checked="true"
+            android:title="@string/sort_old" />
+
+        <item
+            android:id="@+id/action_random"
+            android:checked="true"
+            android:title="@string/sort_random" />
+    </group>
+</menu>

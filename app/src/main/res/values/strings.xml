@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Cinema</string>
+    <string name="movies">Movies</string>
+    <string name="label_movie_detail">Movie Detail</string>
+    <string name="label_tv_detail">TV Detail</string>
+    <string name="tv">Tv</string>
+    <string name="favorite">Favorite</string>
+    <string name="title">Movie Title</string>
+    <string name="dateline">16 August, 2021</string>
+    <string name="vote_average">9.0</string>
+    <string name="category">Category</string>
+    <string name="releasedate">Release Date</string>
+    <string name="duration">Duration</string>
+    <string name="episodes">Episodes</string>
+    <string name="seasons">Seasons</string>
+    <string name="overview">Overview</string>
+    <string name="share">Share</string>
+    <string name="cast">Cast</string>
+    <string name="share_text">Watch %s only on your favorite cinema</string>
+    <string name="image_path">https://image.tmdb.org/t/p/w500/%s</string>
+    <string name="share_description">Share this app</string>
+    <string name="sort_latest">Latest</string>
+    <string name="sort_old">Old</string>
+    <string name="sort_random">Random</string>
+</resources>

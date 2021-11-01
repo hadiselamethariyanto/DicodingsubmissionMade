@@ -1,4 +1,4 @@
-package com.bwx.made.api
+package com.bwx.made.core.data.source.remote.network
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

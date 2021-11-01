@@ -4,23 +4,22 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bwx.made.R
 import com.bwx.made.core.domain.model.Tv
 import com.bwx.made.databinding.FragmentTvBinding
-import com.bwx.made.utils.SortUtils.RANDOM
-import com.bwx.made.utils.SortUtils.TV_NEW
-import com.bwx.made.utils.SortUtils.TV_OLD
-import com.bwx.made.viewmodel.ViewModelFactory
-import com.bwx.made.vo.Resource
+import com.bwx.made.core.utils.SortUtils.RANDOM
+import com.bwx.made.core.utils.SortUtils.TV_NEW
+import com.bwx.made.core.utils.SortUtils.TV_OLD
+import com.bwx.made.core.data.Resource
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class TvFragment : Fragment() {
 
     private var _binding: FragmentTvBinding? = null
     private val binding get() = _binding!!
     private lateinit var tvAdapter: TvAdapter
-    private lateinit var viewModel: TvViewModel
+    private val viewModel: TvViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,12 +34,6 @@ class TvFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (activity != null) {
-
-            val factory = ViewModelFactory.getInstance(requireActivity())
-            viewModel = ViewModelProvider(
-                requireActivity(),
-                factory
-            )[TvViewModel::class.java]
 
             tvAdapter = TvAdapter()
 

@@ -5,9 +5,9 @@ import com.bwx.made.core.data.source.local.entity.MovieEntity
 import com.bwx.made.core.data.source.local.entity.SeasonEntity
 import com.bwx.made.core.data.source.local.entity.TvEntity
 import com.bwx.made.core.data.source.local.room.CinemaDao
-import com.bwx.made.utils.SortUtils
-import com.bwx.made.utils.SortUtils.MOVIE_ENTITIES
-import com.bwx.made.utils.SortUtils.TV_ENTITIES
+import com.bwx.made.core.utils.SortUtils
+import com.bwx.made.core.utils.SortUtils.MOVIE_ENTITIES
+import com.bwx.made.core.utils.SortUtils.TV_ENTITIES
 import kotlinx.coroutines.flow.Flow
 
 class LocalDataSource(private val cinemaDao: CinemaDao) {

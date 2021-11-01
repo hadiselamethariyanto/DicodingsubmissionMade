@@ -4,7 +4,7 @@ import com.bwx.made.core.data.source.local.LocalDataSource
 import com.bwx.made.core.data.source.local.entity.CastEntity
 import com.bwx.made.core.data.source.local.entity.MovieEntity
 import com.bwx.made.core.data.source.local.entity.TvEntity
-import com.bwx.made.core.data.source.remote.ApiResponse
+import com.bwx.made.core.data.source.remote.network.ApiResponse
 import com.bwx.made.core.data.source.remote.RemoteDataSource
 import com.bwx.made.core.data.source.remote.response.*
 import com.bwx.made.core.domain.model.Cast
@@ -12,12 +12,11 @@ import com.bwx.made.core.domain.model.Movie
 import com.bwx.made.core.domain.model.Tv
 import com.bwx.made.core.domain.repository.ICinemaRepository
 import com.bwx.made.core.utils.DataMapper
-import com.bwx.made.utils.AppExecutors
-import com.bwx.made.vo.Resource
+import com.bwx.made.core.utils.AppExecutors
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class CinemasRepository private constructor(
+class CinemasRepository(
     private val remoteDataSource: RemoteDataSource, private val localDataSource: LocalDataSource,
     private val appExecutors: AppExecutors
 ) :
@@ -231,22 +230,5 @@ class CinemasRepository private constructor(
         val movieEntity = DataMapper.mapMovieDomainToEntity(movie)
         localDataSource.setFavoriteMovie(movieEntity, state)
     }
-
-    companion object {
-        @Volatile
-        private var instance: CinemasRepository? = null
-        fun getInstance(
-            remoteData: RemoteDataSource,
-            localDataSource: LocalDataSource,
-            appExecutors: AppExecutors
-        ): CinemasRepository =
-            instance ?: synchronized(this) {
-                instance ?: CinemasRepository(
-                    remoteData,
-                    localDataSource, appExecutors
-                )
-            }
-    }
-
 
 }

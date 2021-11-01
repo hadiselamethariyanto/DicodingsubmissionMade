@@ -16,8 +16,8 @@ import com.bwx.made.core.data.source.remote.response.DetailTVResponse
 import com.bwx.made.core.domain.model.Tv
 import com.bwx.made.databinding.ActivityDetailTvBinding
 import com.bwx.made.databinding.ContentDetailTvBinding
-import com.bwx.made.viewmodel.ViewModelFactory
-import com.bwx.made.vo.Resource
+import com.bwx.made.core.data.Resource
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class DetailTVActivity : AppCompatActivity() {
     companion object {
@@ -25,7 +25,7 @@ class DetailTVActivity : AppCompatActivity() {
     }
 
     private lateinit var detailBinding: ContentDetailTvBinding
-    private lateinit var viewmodel: DetailTvViewModel
+    private val viewmodel: DetailTvViewModel by viewModel()
     private lateinit var tv: DetailTVResponse
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,12 +38,6 @@ class DetailTVActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         detailBinding = binding.detailContent
-
-        val factory = ViewModelFactory.getInstance(this)
-        viewmodel = ViewModelProvider(
-            this,
-            factory
-        )[DetailTvViewModel::class.java]
 
         val extras = intent.extras
 

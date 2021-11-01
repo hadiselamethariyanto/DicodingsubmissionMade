@@ -20,13 +20,13 @@ import com.bwx.made.core.domain.model.Cast
 import com.bwx.made.core.domain.model.Movie
 import com.bwx.made.databinding.ActivityDetailMovieBinding
 import com.bwx.made.databinding.ContentDetailMovieBinding
-import com.bwx.made.viewmodel.ViewModelFactory
-import com.bwx.made.vo.Resource
+import com.bwx.made.core.data.Resource
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class DetailMovieActivity : AppCompatActivity() {
 
     private lateinit var detailBinding: ContentDetailMovieBinding
-    private lateinit var viewModel: DetailMovieViewModel
+    private val viewModel: DetailMovieViewModel by viewModel()
     private lateinit var movie: DetailMovieResponse
     private lateinit var castAdapter: CastAdapter
 
@@ -39,13 +39,6 @@ class DetailMovieActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        val factory = ViewModelFactory.getInstance(this)
-        viewModel = ViewModelProvider(
-            this,
-            factory
-        )[DetailMovieViewModel::class.java]
-
 
         binding.fab.setOnClickListener {
             viewModel.setFavorite()

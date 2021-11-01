@@ -4,24 +4,22 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bwx.made.R
 import com.bwx.made.core.domain.model.Movie
 import com.bwx.made.databinding.FragmentMoviesBinding
-import com.bwx.made.utils.SortUtils.MOVIE_NEW
-import com.bwx.made.utils.SortUtils.MOVIE_OLD
-import com.bwx.made.utils.SortUtils.RANDOM
-import com.bwx.made.utils.SortUtils.VOTE_BEST
-import com.bwx.made.viewmodel.ViewModelFactory
-import com.bwx.made.vo.Resource
+import com.bwx.made.core.utils.SortUtils.MOVIE_NEW
+import com.bwx.made.core.utils.SortUtils.MOVIE_OLD
+import com.bwx.made.core.utils.SortUtils.RANDOM
+import com.bwx.made.core.data.Resource
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class MoviesFragment : Fragment() {
 
     private var _binding: FragmentMoviesBinding? = null
     private val binding get() = _binding!!
     private lateinit var moviesAdapter: MoviesAdapter
-    private lateinit var viewModel: MoviesViewModel
+    private val viewModel: MoviesViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,15 +33,10 @@ class MoviesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (activity != null) {
-            val factory = ViewModelFactory.getInstance(requireActivity())
-            viewModel = ViewModelProvider(
-                requireActivity(),
-                factory
-            )[MoviesViewModel::class.java]
 
             moviesAdapter = MoviesAdapter()
 
-            viewModel.getListMovies(VOTE_BEST).observe(viewLifecycleOwner, movieObserver)
+            viewModel.getListMovies(MOVIE_NEW).observe(viewLifecycleOwner, movieObserver)
 
 
             with(binding.rvMovies) {

@@ -9,13 +9,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bwx.made.databinding.FragmentFavoriteMovieBinding
 import com.bwx.made.ui.movies.MoviesAdapter
-import com.bwx.made.viewmodel.ViewModelFactory
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class FavoriteMovieFragment : Fragment() {
 
     private var _binding: FragmentFavoriteMovieBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel: FavoriteMovieViewModel
+    private val viewModel: FavoriteMovieViewModel by viewModel()
     private lateinit var moviesAdapter: MoviesAdapter
 
     override fun onCreateView(
@@ -29,9 +29,6 @@ class FavoriteMovieFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val factory = ViewModelFactory.getInstance(requireContext())
-        viewModel = ViewModelProvider(this, factory)[FavoriteMovieViewModel::class.java]
 
         moviesAdapter = MoviesAdapter()
 

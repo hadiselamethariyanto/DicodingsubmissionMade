@@ -6,7 +6,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.bwx.made.core.domain.model.Movie
 import com.bwx.made.core.domain.usecase.CinemaUseCase
-import com.bwx.made.vo.Resource
+import com.bwx.made.core.data.Resource
 import kotlinx.coroutines.launch
 
 class DetailMovieViewModel(private val cinemaUseCase: CinemaUseCase) : ViewModel() {

@@ -7,12 +7,12 @@ import com.bwx.made.core.data.source.local.LocalDataSource
 import com.bwx.made.core.data.source.local.entity.CastEntity
 import com.bwx.made.core.data.source.local.entity.MovieEntity
 import com.bwx.made.core.data.source.local.entity.TvEntity
-import com.bwx.made.core.data.source.remote.ApiResponse
+import com.bwx.made.core.data.source.remote.network.ApiResponse
 import com.bwx.made.core.data.source.remote.RemoteDataSource
 import com.bwx.made.core.data.source.remote.response.*
 import com.bwx.made.core.domain.repository.CinemasDataSource
-import com.bwx.made.utils.AppExecutors
-import com.bwx.made.vo.Resource
+import com.bwx.made.core.utils.AppExecutors
+import com.bwx.made.core.data.Resource
 
 class FakeCinemasRepository(
     private val remoteDataSource: RemoteDataSource, private val localDataSource: LocalDataSource,

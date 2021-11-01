@@ -1,4 +1,4 @@
-package com.bwx.made.api
+package com.bwx.made.core.data.source.remote.network
 
 import com.bwx.made.core.data.source.remote.response.*
 import retrofit2.http.*

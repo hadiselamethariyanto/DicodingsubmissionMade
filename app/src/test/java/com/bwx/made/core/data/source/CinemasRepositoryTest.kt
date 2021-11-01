@@ -9,7 +9,9 @@ import com.bwx.made.core.data.source.local.entity.MovieEntity
 import com.bwx.made.core.data.source.local.entity.TvEntity
 import com.bwx.made.core.data.source.remote.RemoteDataSource
 import com.bwx.made.utils.*
-import com.bwx.made.vo.Resource
+import com.bwx.made.core.data.Resource
+import com.bwx.made.core.utils.AppExecutors
+import com.bwx.made.core.utils.SortUtils
 import com.nhaarman.mockitokotlin2.verify
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull

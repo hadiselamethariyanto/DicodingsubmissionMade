@@ -1,11 +1,10 @@
 package com.bwx.made.core.domain.usecase
 
-import androidx.lifecycle.LiveData
 import com.bwx.made.core.domain.model.Cast
 import com.bwx.made.core.domain.model.Movie
 import com.bwx.made.core.domain.model.Tv
 import com.bwx.made.core.domain.repository.ICinemaRepository
-import com.bwx.made.vo.Resource
+import com.bwx.made.core.data.Resource
 import kotlinx.coroutines.flow.Flow
 
 class CinemaInteractor(private val repositoru: ICinemaRepository) : CinemaUseCase {

@@ -6,8 +6,8 @@ import androidx.lifecycle.Observer
 import androidx.paging.PagedList
 import com.bwx.made.core.data.CinemasRepository
 import com.bwx.made.core.data.source.local.entity.TvEntity
-import com.bwx.made.utils.SortUtils
-import com.bwx.made.vo.Resource
+import com.bwx.made.core.utils.SortUtils
+import com.bwx.made.core.data.Resource
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule

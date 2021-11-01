@@ -1,9 +1,8 @@
-package com.bwx.made.utils
+package com.bwx.made.core.utils
 
 import androidx.sqlite.db.SimpleSQLiteQuery
 
 object SortUtils {
-    const val VOTE_BEST = "Best"
     const val TV_NEW = "New"
     const val TV_OLD = "Old"
     const val MOVIE_NEW = "New_movie"

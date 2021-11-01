@@ -1,4 +1,4 @@
-package com.bwx.made.utils
+package com.bwx.made.core.utils
 
 import android.os.Handler
 import android.os.Looper

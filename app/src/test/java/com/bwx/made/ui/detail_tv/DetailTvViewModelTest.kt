@@ -6,7 +6,7 @@ import androidx.lifecycle.Observer
 import com.bwx.made.core.data.CinemasRepository
 import com.bwx.made.core.data.source.local.entity.TvEntity
 import com.bwx.made.utils.DataDummy
-import com.bwx.made.vo.Resource
+import com.bwx.made.core.data.Resource
 import com.nhaarman.mockitokotlin2.verify
 import org.junit.Before
 import org.junit.Rule

@@ -1,8 +1,7 @@
 package com.bwx.made.core.data
 
-import com.bwx.made.core.data.source.remote.ApiResponse
-import com.bwx.made.utils.AppExecutors
-import com.bwx.made.vo.Resource
+import com.bwx.made.core.data.source.remote.network.ApiResponse
+import com.bwx.made.core.utils.AppExecutors
 import kotlinx.coroutines.flow.*
 
 abstract class NetworkBoundResource<ResultType, RequestType>(private val mExecutors: AppExecutors) {

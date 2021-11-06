@@ -33,7 +33,6 @@ class MoviesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (activity != null) {
-
             moviesAdapter = MoviesAdapter()
 
             viewModel.getListMovies(MOVIE_NEW).observe(viewLifecycleOwner, movieObserver)

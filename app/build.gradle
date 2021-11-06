@@ -9,16 +9,12 @@ apply from: '../shared_dependencies.gradle'
 
 android {
     compileSdk 31
-
     defaultConfig {
         applicationId "com.bwx.made"
         minSdk 21
         targetSdk 31
         versionCode 1
         versionName "1.0"
-
-        buildConfigField "String", "API_KEY", '"e3b408a268a2828c1a10803a4f55415c"'
-        buildConfigField "String", "LANGUAGE", '"en-US"'
 
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

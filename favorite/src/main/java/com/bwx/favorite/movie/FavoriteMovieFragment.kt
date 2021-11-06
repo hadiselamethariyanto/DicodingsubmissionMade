@@ -13,17 +13,17 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class FavoriteMovieFragment : Fragment() {
 
     private var _binding: FragmentFavoriteMovieBinding? = null
-    private val binding get() = _binding!!
+    private val binding get() = _binding
     private val viewModel: FavoriteMovieViewModel by viewModel()
     private lateinit var moviesAdapter: MoviesAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentFavoriteMovieBinding.inflate(layoutInflater, container, false)
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -31,18 +31,19 @@ class FavoriteMovieFragment : Fragment() {
 
         moviesAdapter = MoviesAdapter()
 
-        with(binding.rvMovie) {
-            layoutManager = LinearLayoutManager(context)
-            setHasFixedSize(true)
-            adapter = moviesAdapter
+        with(binding?.rvMovie) {
+            this?.layoutManager = LinearLayoutManager(context)
+            this?.setHasFixedSize(true)
+            this?.adapter = moviesAdapter
         }
+
         viewModel.getFavMovies().observe(viewLifecycleOwner, { listFavorite ->
             if (listFavorite != null) {
                 if (listFavorite.isNotEmpty()) {
                     moviesAdapter.updateData(listFavorite)
-                    binding.emptyData.visibility = View.GONE
+                    binding?.emptyData?.visibility = View.GONE
                 } else {
-                    binding.emptyData.visibility = View.VISIBLE
+                    binding?.emptyData?.visibility = View.VISIBLE
                 }
             }
 

@@ -27,5 +27,8 @@ class DetailTvViewModel(private val cinemaUseCase: CinemaUseCase) : ViewModel() 
         }
     }
 
+    fun getSeasonTv(tv_id: Int) = cinemaUseCase.getSeasonTv(tv_id).asLiveData()
+
+
     fun getData() = detailTv
 }

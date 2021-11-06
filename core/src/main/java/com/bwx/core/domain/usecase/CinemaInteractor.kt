@@ -5,6 +5,7 @@ import com.bwx.core.domain.model.Movie
 import com.bwx.core.domain.model.Tv
 import com.bwx.core.domain.repository.ICinemaRepository
 import com.bwx.core.data.Resource
+import com.bwx.core.domain.model.Season
 import kotlinx.coroutines.flow.Flow
 
 class CinemaInteractor(private val repositoru: ICinemaRepository) : CinemaUseCase {
@@ -24,6 +25,8 @@ class CinemaInteractor(private val repositoru: ICinemaRepository) : CinemaUseCas
     override fun getFavoriteTv(): Flow<List<Tv>> = repositoru.getFavoriteTv()
 
     override fun getFavoriteMovies(): Flow<List<Movie>> = repositoru.getFavoriteMovies()
+
+    override fun getSeasonTv(tv_id: Int): Flow<List<Season>> = repositoru.getSeasonTv(tv_id)
 
     override suspend fun setFavoriteMovie(movie: Movie, state: Boolean) =
         repositoru.setFavoriteMovie(movie, state)

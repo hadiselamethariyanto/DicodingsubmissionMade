@@ -7,7 +7,6 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.bwx.made.R
 import com.bwx.made.databinding.ActivityHomeBinding
-import org.koin.core.context.loadKoinModules
 
 class HomeActivity : AppCompatActivity() {
 

@@ -16,6 +16,10 @@ android {
         versionCode 1
         versionName "1.0"
 
+        buildConfigField "String", "BASE_URL", "\"https://api.themoviedb.org/\""
+        buildConfigField "String", "API_KEY", '"e3b408a268a2828c1a10803a4f55415c"'
+        buildConfigField "String", "LANGUAGE", '"en-US"'
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
@@ -27,7 +31,7 @@ android {
         }
     }
 
-    buildFeatures{
+    buildFeatures {
         viewBinding true
     }
 

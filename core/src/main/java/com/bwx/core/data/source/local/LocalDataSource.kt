@@ -47,6 +47,8 @@ class LocalDataSource(private val cinemaDao: CinemaDao) {
         cinemaDao.updateMovie(movie)
     }
 
+    fun getSeasonTv(tv_id: Int): Flow<List<SeasonEntity>> = cinemaDao.getSeasonTv(tv_id)
+
     fun getFavoriteTv(): Flow<List<TvEntity>> = cinemaDao.getFavTv()
 
     fun getFavoriteMovies(): Flow<List<MovieEntity>> = cinemaDao.getFavMovies()

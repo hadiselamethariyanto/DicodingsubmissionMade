@@ -3,28 +3,28 @@ package com.bwx.core.data
 import com.bwx.core.data.source.local.LocalDataSource
 import com.bwx.core.data.source.local.entity.CastEntity
 import com.bwx.core.data.source.local.entity.MovieEntity
+import com.bwx.core.data.source.local.entity.SeasonEntity
 import com.bwx.core.data.source.local.entity.TvEntity
 import com.bwx.core.data.source.remote.network.ApiResponse
 import com.bwx.core.data.source.remote.RemoteDataSource
 import com.bwx.core.data.source.remote.response.*
 import com.bwx.core.domain.model.Cast
 import com.bwx.core.domain.model.Movie
+import com.bwx.core.domain.model.Season
 import com.bwx.core.domain.model.Tv
 import com.bwx.core.domain.repository.ICinemaRepository
 import com.bwx.core.utils.DataMapper
-import com.bwx.core.utils.AppExecutors
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class CinemasRepository(
-    private val remoteDataSource: RemoteDataSource, private val localDataSource: LocalDataSource,
-    private val appExecutors: AppExecutors
+    private val remoteDataSource: RemoteDataSource, private val localDataSource: LocalDataSource
 ) :
     ICinemaRepository {
 
     override fun getListMovie(sort: String): Flow<Resource<List<Movie>>> {
         return object :
-            com.bwx.core.data.NetworkBoundResource<List<Movie>, List<MoviesItem>>(appExecutors) {
+            NetworkBoundResource<List<Movie>, List<MoviesItem>>() {
             override fun loadFromDB(): Flow<List<Movie>> {
                 return localDataSource.getAllMovies(sort).map {
                     DataMapper.mapMovieEntitiesToDomain(it)
@@ -44,7 +44,7 @@ class CinemasRepository(
     }
 
     override fun getDetailMovie(movieId: Int): Flow<Resource<Movie>> {
-        return object : com.bwx.core.data.NetworkBoundResource<Movie, DetailMovieResponse>(appExecutors) {
+        return object : NetworkBoundResource<Movie, DetailMovieResponse>() {
             override fun loadFromDB(): Flow<Movie> =
                 localDataSource.getDetailMovie(movieId).map {
                     DataMapper.mapMovieEntityToDomain(it)
@@ -88,7 +88,7 @@ class CinemasRepository(
     }
 
     override fun getCreditsMovie(movieId: Int): Flow<Resource<List<Cast>>> {
-        return object : com.bwx.core.data.NetworkBoundResource<List<Cast>, List<CastItem>>(appExecutors) {
+        return object : NetworkBoundResource<List<Cast>, List<CastItem>>() {
             override fun loadFromDB(): Flow<List<Cast>> {
                 return localDataSource.getCastMovie(movieId).map {
                     DataMapper.mapCastEntitiesToDomain(it)
@@ -122,7 +122,7 @@ class CinemasRepository(
 
     override fun getListTV(sort: String): Flow<Resource<List<Tv>>> {
         return object :
-            com.bwx.core.data.NetworkBoundResource<List<Tv>, List<TVItem>>(appExecutors) {
+            NetworkBoundResource<List<Tv>, List<TVItem>>() {
             override fun loadFromDB(): Flow<List<Tv>> {
                 return localDataSource.getAllTv(sort).map {
                     DataMapper.mapTvEntitiesToDomain(it)
@@ -159,7 +159,7 @@ class CinemasRepository(
     }
 
     override fun getDetailTV(tvId: Int): Flow<Resource<Tv>> {
-        return object : com.bwx.core.data.NetworkBoundResource<Tv, DetailTVResponse>(appExecutors) {
+        return object : NetworkBoundResource<Tv, DetailTVResponse>() {
 
             override fun loadFromDB(): Flow<Tv> =
                 localDataSource.getDetailTv(tvId).map {
@@ -198,15 +198,22 @@ class CinemasRepository(
 
                 localDataSource.updateTv(tv)
 
-//                val seasonList = ArrayList<SeasonEntity>()
-//                for (x in data.seasons!!.indices) {
-//                    val season = SeasonEntity(name = data.seasons[x].name)
-//                    seasonList.add(season)
-//                }
-//                localDataSource.insertSeasonTv(seasonList)
+                val seasonList = ArrayList<SeasonEntity>()
+                for (x in data.seasons) {
+                    val season =
+                        SeasonEntity(id = x.id, name = x.name, tv_id = tvId, x.poster_path.toString())
+                    seasonList.add(season)
+                }
+                localDataSource.insertSeasonTv(seasonList)
             }
 
         }.asFlow()
+    }
+
+    override fun getSeasonTv(tv_id: Int): Flow<List<Season>> {
+        return localDataSource.getSeasonTv(tv_id).map {
+            DataMapper.mapSeasonEntitiesToDomain(it)
+        }
     }
 
     override fun getFavoriteTv(): Flow<List<Tv>> {

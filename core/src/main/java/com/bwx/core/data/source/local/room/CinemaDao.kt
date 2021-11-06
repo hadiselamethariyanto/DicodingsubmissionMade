@@ -28,6 +28,9 @@ interface CinemaDao {
     @Query("SELECT * FROM tv WHERE isFav = 1")
     fun getFavTv(): Flow<List<TvEntity>>
 
+    @Query("SELECT * FROM season WHERE tv_id = :tv_id")
+    fun getSeasonTv(tv_id: Int): Flow<List<SeasonEntity>>
+
     @Query("SELECT * FROM `cast` WHERE movie_id=:movie_id")
     fun getCastMovie(movie_id: Int): Flow<List<CastEntity>>
 

@@ -14,7 +14,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.bwx.made.R
-import com.bwx.core.data.source.remote.response.DetailMovieResponse
 import com.bwx.core.domain.model.Cast
 import com.bwx.core.domain.model.Movie
 import com.bwx.made.databinding.ActivityDetailMovieBinding
@@ -26,7 +25,7 @@ class DetailMovieActivity : AppCompatActivity() {
 
     private lateinit var detailBinding: ContentDetailMovieBinding
     private val viewModel: DetailMovieViewModel by viewModel()
-    private lateinit var movie: DetailMovieResponse
+    private lateinit var movie: Movie
     private lateinit var castAdapter: CastAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -89,6 +88,8 @@ class DetailMovieActivity : AppCompatActivity() {
             tvOverview.text = movie.overview
         }
 
+        this.movie = movie
+
         if (movie.isFav) {
             binding.fab.imageTintList =
                 ColorStateList.valueOf(ContextCompat.getColor(this, R.color.red))
@@ -124,7 +125,7 @@ class DetailMovieActivity : AppCompatActivity() {
         }
     }
 
-    private fun onShareClick(movie: DetailMovieResponse) {
+    private fun onShareClick(movie: Movie) {
         val mimeType = "text/plain"
         ShareCompat.IntentBuilder
             .from(this)

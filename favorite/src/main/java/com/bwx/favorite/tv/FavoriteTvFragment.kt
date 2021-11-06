@@ -13,7 +13,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class FavoriteTvFragment : Fragment() {
 
     private var _binding: FragmentFavoriteTvBinding? = null
-    private val binding get() = _binding!!
+    private val binding get() = _binding
 
     private val viewModel: FavoriteTvViewModel by viewModel()
     private lateinit var tvAdapter: TvAdapter
@@ -21,10 +21,10 @@ class FavoriteTvFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentFavoriteTvBinding.inflate(layoutInflater, container, false)
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -32,19 +32,19 @@ class FavoriteTvFragment : Fragment() {
 
         tvAdapter = TvAdapter()
 
-        with(binding.rvTv) {
-            layoutManager = LinearLayoutManager(context)
-            setHasFixedSize(true)
-            adapter = tvAdapter
+        with(binding?.rvTv) {
+            this?.layoutManager = LinearLayoutManager(context)
+            this?.setHasFixedSize(true)
+            this?.adapter = tvAdapter
         }
 
         viewModel.getFavTv().observe(viewLifecycleOwner, { listFavorite ->
             if (listFavorite != null) {
                 if (listFavorite.isNotEmpty()) {
                     tvAdapter.updateData(listFavorite)
-                    binding.emptyData.visibility = View.GONE
+                    binding?.emptyData?.visibility = View.GONE
                 } else {
-                    binding.emptyData.visibility = View.VISIBLE
+                    binding?.emptyData?.visibility = View.VISIBLE
                 }
             }
         })

@@ -2,10 +2,12 @@ package com.bwx.core.utils
 
 import com.bwx.core.data.source.local.entity.CastEntity
 import com.bwx.core.data.source.local.entity.MovieEntity
+import com.bwx.core.data.source.local.entity.SeasonEntity
 import com.bwx.core.data.source.local.entity.TvEntity
 import com.bwx.core.data.source.remote.response.MoviesItem
 import com.bwx.core.domain.model.Cast
 import com.bwx.core.domain.model.Movie
+import com.bwx.core.domain.model.Season
 import com.bwx.core.domain.model.Tv
 
 object DataMapper {
@@ -72,6 +74,10 @@ object DataMapper {
                 genres = it.genres
             )
         }
+
+    fun mapSeasonEntitiesToDomain(input: List<SeasonEntity>): List<Season> = input.map {
+        Season(it.id, it.name, it.tv_id, it.poster_path)
+    }
 
 
     fun mapMovieEntityToDomain(input: MovieEntity) = Movie(

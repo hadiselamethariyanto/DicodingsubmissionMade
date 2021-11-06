@@ -4,6 +4,7 @@ import com.bwx.core.domain.model.Cast
 import com.bwx.core.domain.model.Movie
 import com.bwx.core.domain.model.Tv
 import com.bwx.core.data.Resource
+import com.bwx.core.domain.model.Season
 import kotlinx.coroutines.flow.Flow
 
 interface CinemaUseCase {
@@ -14,6 +15,7 @@ interface CinemaUseCase {
     fun getDetailTV(tvId: Int): Flow<Resource<Tv>>
     fun getFavoriteTv(): Flow<List<Tv>>
     fun getFavoriteMovies(): Flow<List<Movie>>
+    fun getSeasonTv(tv_id: Int): Flow<List<Season>>
     suspend fun setFavoriteMovie(movie: Movie, state: Boolean)
     suspend fun setFavoriteTv(tv: Tv, state: Boolean)
 }

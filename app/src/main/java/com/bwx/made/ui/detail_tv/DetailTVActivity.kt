@@ -8,24 +8,25 @@ import android.view.MenuItem
 import android.view.View
 import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.bwx.made.R
-import com.bwx.core.data.source.remote.response.DetailTVResponse
 import com.bwx.core.domain.model.Tv
 import com.bwx.made.databinding.ActivityDetailTvBinding
 import com.bwx.made.databinding.ContentDetailTvBinding
 import com.bwx.core.data.Resource
+import com.bwx.core.domain.model.Season
 import org.koin.android.viewmodel.ext.android.viewModel
+import java.util.*
 
 class DetailTVActivity : AppCompatActivity() {
-    companion object {
-        const val EXTRA_TV = "extra_tv"
-    }
 
     private lateinit var detailBinding: ContentDetailTvBinding
     private val viewmodel: DetailTvViewModel by viewModel()
-    private lateinit var tv: DetailTVResponse
+    private lateinit var tv: Tv
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,6 +62,8 @@ class DetailTVActivity : AppCompatActivity() {
                     }
                 }
             })
+
+            viewmodel.getSeasonTv(tvId).observe(this, seasonObserver)
         }
     }
 
@@ -83,6 +86,8 @@ class DetailTVActivity : AppCompatActivity() {
             tvOverview.text = tv.overview
         }
 
+        this.tv = tv
+
         if (tv.isFav) {
             binding.fab.imageTintList =
                 ColorStateList.valueOf(ContextCompat.getColor(this, R.color.red))
@@ -91,17 +96,6 @@ class DetailTVActivity : AppCompatActivity() {
                 ColorStateList.valueOf(ContextCompat.getColor(this, R.color.white))
         }
 
-//        val detailTvAdapter = DetailTvAdapter()
-//        detailTvAdapter.setEpisode(tv.seasons)
-//
-//        with(detailBinding.rvEpisode) {
-//            layoutManager = LinearLayoutManager(this@DetailTVActivity)
-//            setHasFixedSize(true)
-//            adapter = detailTvAdapter
-//            val dividerItemDecoration =
-//                DividerItemDecoration(this@DetailTVActivity, DividerItemDecoration.VERTICAL)
-//            addItemDecoration(dividerItemDecoration)
-//        }
 
         Glide.with(this)
             .load(resources.getString(R.string.image_path, tv.backdrop_path))
@@ -112,6 +106,7 @@ class DetailTVActivity : AppCompatActivity() {
             )
             .into(detailBinding.imgPoster)
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -129,7 +124,7 @@ class DetailTVActivity : AppCompatActivity() {
         }
     }
 
-    private fun onShareClick(tv: DetailTVResponse) {
+    private fun onShareClick(tv: Tv) {
         val mimeType = "text/plain"
         ShareCompat.IntentBuilder
             .from(this)
@@ -138,4 +133,26 @@ class DetailTVActivity : AppCompatActivity() {
             .setText(resources.getString(R.string.share_text, tv.name))
             .startChooser()
     }
+
+
+    private val seasonObserver = Observer<List<Season>> { seasons ->
+        if (seasons != null) {
+            val detailTvAdapter = DetailTvAdapter()
+            detailTvAdapter.setEpisode(seasons)
+
+            with(detailBinding.rvEpisode) {
+                layoutManager = LinearLayoutManager(this@DetailTVActivity)
+                setHasFixedSize(true)
+                adapter = detailTvAdapter
+                val dividerItemDecoration =
+                    DividerItemDecoration(this@DetailTVActivity, DividerItemDecoration.VERTICAL)
+                addItemDecoration(dividerItemDecoration)
+            }
+        }
+    }
+
+    companion object {
+        const val EXTRA_TV = "extra_tv"
+    }
+
 }

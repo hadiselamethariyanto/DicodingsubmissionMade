@@ -1,5 +1,6 @@
 package com.bwx.core.data.source.remote
 
+import com.bwx.core.BuildConfig
 import com.bwx.core.data.source.remote.network.ApiResponse
 import com.bwx.core.data.source.remote.network.ApiService
 import com.bwx.core.data.source.remote.response.*
@@ -86,8 +87,8 @@ class RemoteDataSource(private val apiService: ApiService) {
     }
 
     companion object {
-        private const val API_KEY = "e3b408a268a2828c1a10803a4f55415c"
-        private const val LANGUAGE = "en-US"
+        private const val API_KEY = BuildConfig.API_KEY
+        private const val LANGUAGE = BuildConfig.LANGUAGE
     }
 
 

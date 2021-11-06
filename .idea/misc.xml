@@ -33,7 +33,14 @@
         <entry key="..\:/Android/SubmissionArchitecture/app/src/main/res/menu/menu_bottom.xml" value="0.1921875" />
         <entry key="..\:/Android/SubmissionArchitecture/app/src/main/res/menu/menu_detail.xml" value="0.1" />
         <entry key="..\:/Android/SubmissionArchitecture/app/src/main/res/menu/menu_short.xml" value="0.17685185185185184" />
+        <entry key="..\:/Android/SubmissionMade/app/src/main/res/layout/activity_detail_movie.xml" value="0.1" />
+        <entry key="..\:/Android/SubmissionMade/app/src/main/res/layout/activity_home.xml" value="0.14402173913043478" />
+        <entry key="..\:/Android/SubmissionMade/app/src/main/res/layout/fragment_movies.xml" value="0.1" />
+        <entry key="..\:/Android/SubmissionMade/app/src/main/res/layout/item_bottom_navigation.xml" value="0.14402173913043478" />
+        <entry key="..\:/Android/SubmissionMade/app/src/main/res/layout/items_cast.xml" value="0.14402173913043478" />
         <entry key="..\:/Android/SubmissionMade/app/src/main/res/layout/items_episode.xml" value="0.1" />
+        <entry key="..\:/Android/SubmissionMade/app/src/main/res/layout/items_movie.xml" value="0.25" />
+        <entry key="..\:/Android/SubmissionMade/app/src/main/res/layout/items_tv.xml" value="0.14402173913043478" />
         <entry key="..\:/Android/SubmissionMade/favorite/src/main/res/layout/fragment_favorite.xml" value="0.1" />
         <entry key="..\:/Android/SubmissionMade/favorite/src/main/res/layout/fragment_favorite_movie.xml" value="0.1" />
         <entry key="..\:/Android/SubmissionMade/favorite/src/main/res/layout/fragment_favorite_tv.xml" value="0.1" />

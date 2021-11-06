@@ -8,6 +8,9 @@ import com.bwx.core.data.source.local.room.CinemaDatabase
 import com.bwx.core.data.source.remote.RemoteDataSource
 import com.bwx.core.data.source.remote.network.ApiService
 import com.bwx.core.domain.repository.ICinemaRepository
+import net.sqlcipher.database.SQLiteDatabase
+import net.sqlcipher.database.SupportFactory
+import okhttp3.CertificatePinner
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
@@ -16,20 +19,29 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 val databaseModule = module {
+    val passphrase: ByteArray = SQLiteDatabase.getBytes("dicoding".toCharArray())
+    val factor = SupportFactory(passphrase)
+
     factory { get<CinemaDatabase>().cinemaDao() }
     single {
         Room.databaseBuilder(
             androidContext(),
             CinemaDatabase::class.java, "Cinema.db"
-        ).fallbackToDestructiveMigration().build()
+        ).fallbackToDestructiveMigration().openHelperFactory(factor).build()
     }
 }
 
 val networkModule = module {
     single {
+        val hostname = "api.themoviedb.org"
+        val certificatePinner = CertificatePinner.Builder()
+            .add(hostname, "sha256/oD/WAoRPvbez1Y2dfYfuo4yujAcYHXdv1Ivb2v2MOKk=")
+            .build()
+
         OkHttpClient.Builder()
             .connectTimeout(120, TimeUnit.SECONDS)
             .readTimeout(120, TimeUnit.SECONDS)
+            .certificatePinner(certificatePinner)
             .build()
     }
     single {

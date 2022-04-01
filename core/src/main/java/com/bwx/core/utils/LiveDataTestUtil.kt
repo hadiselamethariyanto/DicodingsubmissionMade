@@ -1,4 +1,4 @@
-package com.bwx.made.utils
+package com.bwx.core.utils
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer

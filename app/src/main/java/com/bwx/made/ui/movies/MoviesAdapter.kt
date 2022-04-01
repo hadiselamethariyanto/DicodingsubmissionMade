@@ -3,6 +3,8 @@ package com.bwx.made.ui.movies
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
@@ -15,15 +17,8 @@ import com.bwx.made.ui.detail_movie.DetailMovieActivity
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
-class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
-    private var list = ArrayList<Movie>()
-    fun updateData(new: List<Movie>) {
-        list.clear()
-        list.addAll(new)
-        notifyDataSetChanged()
-    }
+class MoviesAdapter : PagingDataAdapter<Movie, MoviesAdapter.MoviesViewHolder>(DataDifferntiator) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewHolder {
         val itemsMovieBinding =
@@ -32,8 +27,10 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: MoviesViewHolder, position: Int) {
-        val movie = list[position]
-        holder.bind(movie)
+        val movie = getItem(position)
+        if (movie != null) {
+            holder.bind(movie)
+        }
     }
 
     inner class MoviesViewHolder(private val binding: ItemsMovieBinding) :
@@ -73,8 +70,15 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
         }
     }
 
-    override fun getItemCount(): Int {
-        return list.size
+    object DataDifferntiator : DiffUtil.ItemCallback<Movie>() {
+
+        override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+            return oldItem == newItem
+        }
     }
 
 }

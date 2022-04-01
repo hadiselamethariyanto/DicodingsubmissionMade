@@ -1,9 +1,6 @@
 package com.bwx.core.data.source.local
 
-import com.bwx.core.data.source.local.entity.CastEntity
-import com.bwx.core.data.source.local.entity.MovieEntity
-import com.bwx.core.data.source.local.entity.SeasonEntity
-import com.bwx.core.data.source.local.entity.TvEntity
+import com.bwx.core.data.source.local.entity.*
 import com.bwx.core.data.source.local.room.CinemaDao
 import com.bwx.core.utils.SortUtils
 import com.bwx.core.utils.SortUtils.MOVIE_ENTITIES
@@ -12,8 +9,11 @@ import kotlinx.coroutines.flow.Flow
 
 class LocalDataSource(private val cinemaDao: CinemaDao) {
 
+
     fun getAllMovies(sort: String): Flow<List<MovieEntity>> =
         cinemaDao.getMovies(SortUtils.getSortedQuery(sort, MOVIE_ENTITIES))
+
+    fun getPagingSourceMovies() = cinemaDao.getPagingSourceMovies()
 
     fun getCastMovie(movie_id: Int): Flow<List<CastEntity>> =
         cinemaDao.getCastMovie(movie_id)
@@ -53,4 +53,12 @@ class LocalDataSource(private val cinemaDao: CinemaDao) {
 
     fun getFavoriteMovies(): Flow<List<MovieEntity>> = cinemaDao.getFavMovies()
 
+    suspend fun getRemoteKey(category: String) = cinemaDao.getRemoteKey(category)
+
+    suspend fun insertRemoteKey(remoteKeyEntity: RemoteKeyEntity) =
+        cinemaDao.insertRemoteKey(remoteKeyEntity)
+
+    suspend fun deleteRemoteKey(category: String) = cinemaDao.deleteRemoteKey(category)
+
+    suspend fun deleteMovies() = cinemaDao.deleteMovies()
 }

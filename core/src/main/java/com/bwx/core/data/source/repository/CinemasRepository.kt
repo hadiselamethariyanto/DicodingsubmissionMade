@@ -1,5 +1,7 @@
-package com.bwx.core.data
+package com.bwx.core.data.source.repository
 
+import com.bwx.core.data.NetworkBoundResource
+import com.bwx.core.data.Resource
 import com.bwx.core.data.source.local.LocalDataSource
 import com.bwx.core.data.source.local.entity.CastEntity
 import com.bwx.core.data.source.local.entity.MovieEntity
@@ -77,7 +79,8 @@ class CinemasRepository(
                     runtime = data.runtime,
                     vote_average = data.voteAverage,
                     isFav = false,
-                    genres = genres.toString()
+                    genres = genres.toString(),
+                    created_time = ""
                 )
 
                 localDataSource.updateMovie(movie)

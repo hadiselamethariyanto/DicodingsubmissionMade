@@ -8,7 +8,7 @@ interface ApiService {
     suspend fun getPopularMovies(
         @Query("api_key") api_key: String,
         @Query("language") language: String,
-        @Query("page") page: Int
+        @Query("page") page: Int?
     ): MovieResponse
 
     @GET("3/movie/{movie_id}")

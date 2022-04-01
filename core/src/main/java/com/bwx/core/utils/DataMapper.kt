@@ -25,7 +25,8 @@ object DataMapper {
                 runtime = 0,
                 vote_average = response.voteAverage,
                 isFav = false,
-                genres = ""
+                genres = "",
+                created_time = System.currentTimeMillis().toString()
             )
             movieList.add(tourism)
         }
@@ -117,7 +118,8 @@ object DataMapper {
         vote_average = input.vote_average,
         runtime = input.runtime,
         isFav = input.isFav,
-        genres = input.genres
+        genres = input.genres,
+        created_time = System.currentTimeMillis().toString()
     )
 
     fun mapTvDomainToEntity(input: Tv) = TvEntity(

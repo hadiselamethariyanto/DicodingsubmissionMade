@@ -26,5 +26,7 @@ data class MovieEntity(
     @ColumnInfo(name = "isFav")
     var isFav: Boolean = false,
     @ColumnInfo(name = "genres")
-    var genres: String
+    var genres: String,
+    @ColumnInfo(name = "created_time", defaultValue = "CURRENT_TIMESTAMP")
+    var created_time: String
 )

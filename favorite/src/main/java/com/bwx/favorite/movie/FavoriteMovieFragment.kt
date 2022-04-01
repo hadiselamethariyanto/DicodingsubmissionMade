@@ -40,7 +40,7 @@ class FavoriteMovieFragment : Fragment() {
         viewModel.getFavMovies().observe(viewLifecycleOwner, { listFavorite ->
             if (listFavorite != null) {
                 if (listFavorite.isNotEmpty()) {
-                    moviesAdapter.updateData(listFavorite)
+//                    moviesAdapter.updateData(listFavorite)
                     binding?.emptyData?.visibility = View.GONE
                 } else {
                     binding?.emptyData?.visibility = View.VISIBLE

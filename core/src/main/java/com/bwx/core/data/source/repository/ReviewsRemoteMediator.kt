@@ -5,19 +5,20 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import com.bwx.core.data.source.local.LocalDataSource
-import com.bwx.core.data.source.local.entity.MovieEntity
 import com.bwx.core.data.source.local.entity.RemoteKeyEntity
+import com.bwx.core.data.source.local.entity.ReviewEntity
 import com.bwx.core.data.source.remote.RemoteDataSource
-import com.bwx.core.data.source.remote.response.MovieResponse
+import com.bwx.core.data.source.remote.response.ReviewsResponse
 import com.bwx.core.utils.DataMapper
 import retrofit2.HttpException
 import java.io.IOException
 
 @OptIn(ExperimentalPagingApi::class)
-class MoviesRemoteMediator(
+class ReviewsRemoteMediator(
     private val localDataSource: LocalDataSource,
-    private val remoteDataSource: RemoteDataSource
-) : RemoteMediator<Int, MovieEntity>() {
+    private val remoteDataSource: RemoteDataSource,
+    private val movieId: Int
+) : RemoteMediator<Int, ReviewEntity>() {
 
     override suspend fun initialize(): InitializeAction {
         return InitializeAction.LAUNCH_INITIAL_REFRESH
@@ -25,43 +26,42 @@ class MoviesRemoteMediator(
 
     override suspend fun load(
         loadType: LoadType,
-        state: PagingState<Int, MovieEntity>
+        state: PagingState<Int, ReviewEntity>
     ): MediatorResult {
         try {
             val loadKey = when (loadType) {
                 LoadType.REFRESH -> null
                 LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
                 LoadType.APPEND -> {
-                    val remoteKey = localDataSource.getRemoteKey("popular_movies")
-
+                    val remoteKey = localDataSource.getRemoteKey(movieId.toString())
                     if (remoteKey.nextPageKey == remoteKey.total_pages) {
                         return MediatorResult.Success(endOfPaginationReached = true)
                     }
-
                     remoteKey.nextPageKey.plus(1)
                 }
-
             }
 
-            val movies: MovieResponse = if (loadType == LoadType.REFRESH) {
-                remoteDataSource.getPagingMovies(1)
+            val reviews: ReviewsResponse = if (loadType == LoadType.REFRESH) {
+                remoteDataSource.getReviewsMovie(movieId, 1)
             } else {
-                remoteDataSource.getPagingMovies(loadKey)
+                remoteDataSource.getReviewsMovie(movieId, loadKey)
             }
 
             val remoteKeyEntity = RemoteKeyEntity(
-                category = "popular_movies",
-                movies.page,
-                total_pages = movies.totalPages
+                category = movieId.toString(),
+                reviews.page,
+                total_pages = reviews.totalPages
             )
 
             localDataSource.insertRemoteKey(remoteKeyEntity)
 
-            if (movies.results.isNotEmpty()) {
-                localDataSource.insertMovies(DataMapper.mapMovieResponsesToEntities(movies.results))
+            if (reviews.results.isNotEmpty()) {
+                localDataSource.insertReviews(
+                    DataMapper.mapReviewsResponseToEntity(reviews, movieId)
+                )
             }
 
-            return MediatorResult.Success(endOfPaginationReached = movies.results.isEmpty())
+            return MediatorResult.Success(endOfPaginationReached = reviews.results.isEmpty())
         } catch (e: IOException) {
             return MediatorResult.Error(e)
         } catch (e: HttpException) {

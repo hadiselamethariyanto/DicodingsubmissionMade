@@ -14,6 +14,9 @@ interface CinemaDao {
     @Query("SELECT * FROM movie ORDER BY vote_average DESC")
     fun getPagingSourceMovies(): PagingSource<Int, MovieEntity>
 
+    @Query("SELECT * FROM review WHERE movieId=:movieId ORDER BY id ASC")
+    fun getPagingReviewsMovie(movieId: Int): PagingSource<Int, ReviewEntity>
+
     @Query("SELECT * FROM movie WHERE isFav = 1")
     fun getFavMovies(): Flow<List<MovieEntity>>
 
@@ -43,6 +46,9 @@ interface CinemaDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMovies(movies: List<MovieEntity>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertReviews(reviews: List<ReviewEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTV(tv: List<TvEntity>)

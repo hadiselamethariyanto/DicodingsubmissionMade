@@ -33,13 +33,18 @@
         <entry key="..\:/Android/SubmissionArchitecture/app/src/main/res/menu/menu_bottom.xml" value="0.1921875" />
         <entry key="..\:/Android/SubmissionArchitecture/app/src/main/res/menu/menu_detail.xml" value="0.1" />
         <entry key="..\:/Android/SubmissionArchitecture/app/src/main/res/menu/menu_short.xml" value="0.17685185185185184" />
+        <entry key="..\:/Android/SubmissionMade/app/src/main/res/drawable/background_rounded_top.xml" value="0.1415" />
         <entry key="..\:/Android/SubmissionMade/app/src/main/res/layout/activity_detail_movie.xml" value="0.1" />
         <entry key="..\:/Android/SubmissionMade/app/src/main/res/layout/activity_home.xml" value="0.14402173913043478" />
-        <entry key="..\:/Android/SubmissionMade/app/src/main/res/layout/fragment_detail_movie.xml" value="0.1" />
+        <entry key="..\:/Android/SubmissionMade/app/src/main/res/layout/content_detail_movie.xml" value="0.18" />
+        <entry key="..\:/Android/SubmissionMade/app/src/main/res/layout/fragment_detail_movie.xml" value="0.24407826982492276" />
+        <entry key="..\:/Android/SubmissionMade/app/src/main/res/layout/fragment_info.xml" value="0.1" />
+        <entry key="..\:/Android/SubmissionMade/app/src/main/res/layout/fragment_movie_reviews.xml" value="0.1" />
         <entry key="..\:/Android/SubmissionMade/app/src/main/res/layout/fragment_movies.xml" value="0.1" />
         <entry key="..\:/Android/SubmissionMade/app/src/main/res/layout/fragment_tv.xml" value="0.11770833333333333" />
         <entry key="..\:/Android/SubmissionMade/app/src/main/res/layout/item_bottom_navigation.xml" value="0.14402173913043478" />
         <entry key="..\:/Android/SubmissionMade/app/src/main/res/layout/item_network_state.xml" value="0.1453804347826087" />
+        <entry key="..\:/Android/SubmissionMade/app/src/main/res/layout/item_review.xml" value="0.1" />
         <entry key="..\:/Android/SubmissionMade/app/src/main/res/layout/items_cast.xml" value="0.14402173913043478" />
         <entry key="..\:/Android/SubmissionMade/app/src/main/res/layout/items_episode.xml" value="0.1" />
         <entry key="..\:/Android/SubmissionMade/app/src/main/res/layout/items_movie.xml" value="0.25" />

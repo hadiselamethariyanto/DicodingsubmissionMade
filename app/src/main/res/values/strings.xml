@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Cinema</string>
     <string name="movies">Movies</string>
+    <string name="info">Info</string>
+    <string name="reviews">Reviews</string>
     <string name="label_movie_detail">Movie Detail</string>
     <string name="label_tv_detail">TV Detail</string>
     <string name="tv">Tv</string>

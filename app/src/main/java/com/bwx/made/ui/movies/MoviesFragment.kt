@@ -11,6 +11,7 @@ import com.bwx.core.data.source.local.entity.MovieEntity
 import com.bwx.made.R
 import com.bwx.made.databinding.FragmentMoviesBinding
 import com.bwx.made.ui.detail_movie.DetailMovieFragment.Companion.MOVIE_KEY
+import com.bwx.made.ui.detail_movie.DetailMovieFragment.Companion.MOVIE_OVERVIEW
 import com.bwx.made.utils.asMergedLoadStates
 import kotlinx.coroutines.flow.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -43,7 +44,7 @@ class MoviesFragment : Fragment() {
         moviesAdapter = MoviesAdapter()
         moviesAdapter.setOnItemClickCallback(object : MoviesAdapter.OnItemClickCallback {
             override fun onItemClicked(data: MovieEntity) {
-                val bundle = bundleOf(MOVIE_KEY to data.id)
+                val bundle = bundleOf(MOVIE_KEY to data.id, MOVIE_OVERVIEW to data.overview)
                 findNavController().navigate(R.id.action_movie_to_detail_movie, bundle)
             }
 

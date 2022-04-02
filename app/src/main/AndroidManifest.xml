@@ -22,15 +22,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.bwx.made.ui.detail_movie.DetailMovieActivity"
-            android:label="@string/label_movie_detail"
-            android:parentActivityName="com.bwx.made.ui.home.HomeActivity"
-            android:theme="@style/Theme.SubmissionArchitecture.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.bwx.made.ui.home.HomeActivity" />
-        </activity>
-        <activity
             android:name="com.bwx.made.ui.detail_tv.DetailTVActivity"
             android:label="@string/label_tv_detail"
             android:parentActivityName="com.bwx.made.ui.home.HomeActivity"

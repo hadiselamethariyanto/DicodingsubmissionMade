@@ -15,10 +15,14 @@ class LocalDataSource(private val cinemaDao: CinemaDao) {
 
     fun getPagingSourceMovies() = cinemaDao.getPagingSourceMovies()
 
+    fun getPagingSourceReviewsMovie(movieId: Int) = cinemaDao.getPagingReviewsMovie(movieId)
+
     fun getCastMovie(movie_id: Int): Flow<List<CastEntity>> =
         cinemaDao.getCastMovie(movie_id)
 
     suspend fun insertMovies(movies: List<MovieEntity>) = cinemaDao.insertMovies(movies)
+
+    suspend fun insertReviews(reviews: List<ReviewEntity>) = cinemaDao.insertReviews(reviews)
 
     suspend fun insertCast(casts: List<CastEntity>) = cinemaDao.insertCast(casts)
 

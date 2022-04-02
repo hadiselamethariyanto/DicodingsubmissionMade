@@ -1,10 +1,8 @@
 package com.bwx.core.utils
 
-import com.bwx.core.data.source.local.entity.CastEntity
-import com.bwx.core.data.source.local.entity.MovieEntity
-import com.bwx.core.data.source.local.entity.SeasonEntity
-import com.bwx.core.data.source.local.entity.TvEntity
+import com.bwx.core.data.source.local.entity.*
 import com.bwx.core.data.source.remote.response.MoviesItem
+import com.bwx.core.data.source.remote.response.ReviewsResponse
 import com.bwx.core.domain.model.Cast
 import com.bwx.core.domain.model.Movie
 import com.bwx.core.domain.model.Season
@@ -30,6 +28,22 @@ object DataMapper {
             movieList.add(tourism)
         }
         return movieList
+    }
+
+    fun mapReviewsResponseToEntity(response: ReviewsResponse, movieId: Int): List<ReviewEntity> {
+        val list = ArrayList<ReviewEntity>()
+        response.results.map {
+            val review = ReviewEntity(
+                id = it?.id.toString(),
+                username = it?.authorDetails?.username.toString(),
+                avatar_url = it?.authorDetails?.avatarPath.toString(),
+                rating = it?.authorDetails?.rating ?: 0.0,
+                content = it?.content.toString(),
+                movieId = movieId
+            )
+            list.add(review)
+        }
+        return list
     }
 
     fun mapMovieEntitiesToDomain(input: List<MovieEntity>): List<Movie> =

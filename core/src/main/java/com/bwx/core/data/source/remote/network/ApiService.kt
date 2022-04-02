@@ -25,6 +25,13 @@ interface ApiService {
         @Query("language") language: String
     ): CreditsResponse
 
+    @GET("3/movie/{movie_id}/reviews")
+    suspend fun getReviewsMovie(
+        @Path("movie_id") movie_id: Int,
+        @Query("page") page: Int?,
+        @Query("api_key") api_key: String
+    ): ReviewsResponse
+
     @GET("3/tv/popular")
     suspend fun getPopularTv(
         @Query("api_key") api_key: String,

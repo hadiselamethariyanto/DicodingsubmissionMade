@@ -62,6 +62,9 @@ class RemoteDataSource(private val apiService: ApiService) {
         }.flowOn(Dispatchers.IO)
     }
 
+    suspend fun getReviewsMovie(movieId: Int, page: Int?) =
+        apiService.getReviewsMovie(movieId, page, API_KEY)
+
     suspend fun getListTv(): Flow<ApiResponse<List<TVItem>>> {
         return flow {
             try {

@@ -6,6 +6,8 @@ import com.bwx.core.domain.usecase.MoviesInteractor
 import com.bwx.core.domain.usecase.MoviesUseCase
 import com.bwx.made.ui.detail_movie.DetailMovieViewModel
 import com.bwx.made.ui.detail_tv.DetailTvViewModel
+import com.bwx.made.ui.info.InfoViewModel
+import com.bwx.made.ui.movie_reviews.MovieReviewsViewModel
 import com.bwx.made.ui.movies.MoviesViewModel
 import com.bwx.made.ui.tv.TvViewModel
 import org.koin.android.viewmodel.dsl.viewModel
@@ -21,4 +23,6 @@ val viewModelModule = module {
     viewModel { TvViewModel(get()) }
     viewModel { DetailMovieViewModel(get()) }
     viewModel { DetailTvViewModel(get()) }
+    viewModel { MovieReviewsViewModel(get()) }
+    viewModel { InfoViewModel(get()) }
 }

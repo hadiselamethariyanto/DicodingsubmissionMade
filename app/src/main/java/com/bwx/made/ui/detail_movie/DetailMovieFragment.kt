@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.bwx.core.data.Resource
@@ -16,6 +17,9 @@ import com.bwx.core.domain.model.Movie
 import com.bwx.made.R
 import com.bwx.made.databinding.ContentDetailMovieBinding
 import com.bwx.made.databinding.FragmentDetailMovieBinding
+import com.bwx.made.ui.info.InfoFragment
+import com.bwx.made.ui.movie_reviews.MovieReviewsFragment
+import com.google.android.material.tabs.TabLayoutMediator
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class DetailMovieFragment : Fragment() {
@@ -24,6 +28,7 @@ class DetailMovieFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var detailBinding: ContentDetailMovieBinding
     private val viewModel: DetailMovieViewModel by viewModel()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,13 +41,36 @@ class DetailMovieFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val id = arguments?.getInt(MOVIE_KEY) ?: 0
+        val overview = arguments?.getString(MOVIE_OVERVIEW) ?: ""
+
         getDetailMovie(id)
+        setFavorite()
+        setupTabs(id, overview)
     }
 
-    private fun getDetailMovie(id: Int) {
-        viewModel.getDetailMovie(id)
+    private fun getDetailMovie(movieId: Int) {
+        viewModel.getDetailMovie(movieId)
         viewModel.getData().observe(viewLifecycleOwner, movieObserver)
     }
+
+    private fun setupTabs(movieId: Int, overView: String) {
+        val fragmentList =
+            listOf(
+                InfoFragment.newInstance(movieId, overView),
+                MovieReviewsFragment.newInstance(movieId)
+            )
+        val sectionsPagerAdapter = SectionsPagerAdapter(requireActivity(), fragmentList)
+        val tabTitle =
+            listOf(resources.getString(R.string.info), resources.getString(R.string.reviews))
+        detailBinding.viewPager.adapter = sectionsPagerAdapter
+        TabLayoutMediator(
+            detailBinding.tabs,
+            detailBinding.viewPager
+        ) { tab, position ->
+            tab.text = tabTitle[position]
+        }.attach()
+    }
+
 
     private val movieObserver = Observer<Resource<Movie>> { movie ->
         when (movie) {
@@ -59,13 +87,18 @@ class DetailMovieFragment : Fragment() {
         }
     }
 
+
+    private fun setFavorite() {
+        binding.fab.setOnClickListener {
+            viewModel.setFavorite()
+        }
+    }
+
     private fun populateMovie(movie: Movie) {
         with(detailBinding) {
             tvTitleMovie.text = movie.title
+            tvItemVoteAverage.text = movie.vote_average.toString()
             tvCategoryMovie.text = movie.genres
-            tvReleasedateMovie.text = movie.release_date
-            tvDurationMovie.text = movie.runtime.toString()
-            tvOverview.text = movie.overview
         }
 
         if (movie.isFav) {
@@ -78,8 +111,16 @@ class DetailMovieFragment : Fragment() {
 
         Glide.with(this)
             .load(resources.getString(R.string.image_path, movie.backdrop_path))
-            .transform(RoundedCorners(20))
             .centerCrop()
+            .apply(
+                RequestOptions.placeholderOf(R.drawable.ic_loading)
+                    .error(R.drawable.ic_error)
+            )
+            .into(detailBinding.imgBackdrop)
+
+        Glide.with(this)
+            .load(resources.getString(R.string.image_path, movie.poster_path))
+            .transform(CenterCrop(), RoundedCorners(36))
             .apply(
                 RequestOptions.placeholderOf(R.drawable.ic_loading)
                     .error(R.drawable.ic_error)
@@ -99,5 +140,6 @@ class DetailMovieFragment : Fragment() {
 
     companion object {
         const val MOVIE_KEY = "movie_key"
+        const val MOVIE_OVERVIEW = "movie_overview"
     }
 }

@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 import com.bwx.core.data.source.local.entity.*
 
 @Database(
-    entities = [MovieEntity::class, TvEntity::class, SeasonEntity::class, CastEntity::class, RemoteKeyEntity::class],
+    entities = [MovieEntity::class, TvEntity::class, SeasonEntity::class, CastEntity::class, RemoteKeyEntity::class, ReviewEntity::class],
     version = 1,
     exportSchema = false
 )

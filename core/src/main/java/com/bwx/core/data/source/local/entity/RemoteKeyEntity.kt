@@ -8,5 +8,6 @@ import androidx.room.PrimaryKey
 data class RemoteKeyEntity(
     @PrimaryKey
     @ColumnInfo(name = "category") val category: String,
-    @ColumnInfo(name = "nextPageKey") val nextPageKey: Int
+    @ColumnInfo(name = "nextPageKey") val nextPageKey: Int,
+    @ColumnInfo(name = "total_pages") val total_pages: Int
 )

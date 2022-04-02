@@ -2,12 +2,16 @@ package com.bwx.made.ui.movies
 
 import android.os.Bundle
 import android.view.*
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
-import androidx.recyclerview.widget.LinearLayoutManager
+import com.bwx.core.data.source.local.entity.MovieEntity
 import com.bwx.made.R
 import com.bwx.made.databinding.FragmentMoviesBinding
+import com.bwx.made.ui.detail_movie.DetailMovieFragment.Companion.MOVIE_KEY
+import com.bwx.made.utils.asMergedLoadStates
 import kotlinx.coroutines.flow.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -37,6 +41,18 @@ class MoviesFragment : Fragment() {
 
     private fun setupAdapter() {
         moviesAdapter = MoviesAdapter()
+        moviesAdapter.setOnItemClickCallback(object : MoviesAdapter.OnItemClickCallback {
+            override fun onItemClicked(data: MovieEntity) {
+                val bundle = bundleOf(MOVIE_KEY to data.id)
+                findNavController().navigate(R.id.action_movie_to_detail_movie, bundle)
+            }
+
+        })
+
+        binding.rvMovies.adapter = moviesAdapter.withLoadStateHeaderAndFooter(
+            header = MoviesLoadStateAdapter(moviesAdapter),
+            footer = MoviesLoadStateAdapter(moviesAdapter)
+        )
 
         viewModel.getListMovies().observe(viewLifecycleOwner) {
             lifecycleScope.launchWhenCreated {
@@ -51,17 +67,12 @@ class MoviesFragment : Fragment() {
             }
         }
 
-        with(binding.rvMovies) {
-            layoutManager = LinearLayoutManager(context)
-            setHasFixedSize(true)
-            adapter = moviesAdapter.withLoadStateHeaderAndFooter(
-                header = MoviesLoadStateAdapter(moviesAdapter),
-                footer = MoviesLoadStateAdapter(moviesAdapter)
-            )
-        }
+
+
 
         lifecycleScope.launchWhenCreated {
             moviesAdapter.loadStateFlow
+                .asMergedLoadStates()
                 .distinctUntilChangedBy { it.refresh }
                 .filter { it.refresh is LoadState.NotLoading }
                 .collect {

@@ -2,6 +2,7 @@ package com.bwx.core.data.source.repository
 
 import androidx.paging.*
 import com.bwx.core.data.source.local.LocalDataSource
+import com.bwx.core.data.source.local.entity.MovieEntity
 import com.bwx.core.data.source.remote.RemoteDataSource
 import com.bwx.core.domain.model.Movie
 import com.bwx.core.domain.repository.IMoviesRepository
@@ -15,7 +16,7 @@ class MoviesRepository(
 ) : IMoviesRepository {
 
     @OptIn(ExperimentalPagingApi::class)
-    override fun getPagingPopularMovies(): Flow<PagingData<Movie>> {
+    override fun getPagingPopularMovies(): Flow<PagingData<MovieEntity>> {
         return Pager(
             config = PagingConfig(10),
             remoteMediator = MoviesRemoteMediator(
@@ -24,10 +25,6 @@ class MoviesRepository(
             )
         ) {
             localDataSource.getPagingSourceMovies()
-        }.flow.map { pagingData ->
-            pagingData.map {
-                DataMapper.mapMovieEntityToDomain(it)
-            }
-        }
+        }.flow
     }
 }

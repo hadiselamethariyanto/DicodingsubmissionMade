@@ -46,7 +46,7 @@ class DetailMovieActivity : AppCompatActivity() {
         if (extras != null) {
             val movieId = extras.getInt(EXTRA_MOVIE)
             viewModel.getDetailMovie(movieId)
-            viewModel.getData().observe(this, { movie ->
+            viewModel.getData().observe(this) { movie ->
                 when (movie) {
                     is Resource.Loading -> setLoading(true, binding)
                     is Resource.Success -> {
@@ -59,7 +59,7 @@ class DetailMovieActivity : AppCompatActivity() {
                         setLoading(false, binding)
                     }
                 }
-            })
+            }
 
             castAdapter = CastAdapter()
 

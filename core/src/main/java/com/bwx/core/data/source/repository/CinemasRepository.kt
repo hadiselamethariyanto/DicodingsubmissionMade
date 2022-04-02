@@ -79,8 +79,7 @@ class CinemasRepository(
                     runtime = data.runtime,
                     vote_average = data.voteAverage,
                     isFav = false,
-                    genres = genres.toString(),
-                    created_time = ""
+                    genres = genres.toString()
                 )
 
                 localDataSource.updateMovie(movie)

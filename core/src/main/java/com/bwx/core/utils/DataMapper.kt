@@ -16,17 +16,16 @@ object DataMapper {
         val movieList = ArrayList<MovieEntity>()
         input.map { response ->
             val tourism = MovieEntity(
-                id = response.id,
-                title = response.title,
-                overview = response.overview,
-                poster_path = response.posterPath,
-                backdrop_path = response.backdropPath,
-                release_date = response.releaseDate,
+                id = response.id ?: 0,
+                title = response.title.toString(),
+                overview = response.overview.toString(),
+                poster_path = response.posterPath.toString(),
+                backdrop_path = response.backdropPath.toString(),
+                release_date = response.releaseDate.toString(),
                 runtime = 0,
-                vote_average = response.voteAverage,
+                vote_average = response.voteAverage ?: 0.0,
                 isFav = false,
-                genres = "",
-                created_time = System.currentTimeMillis().toString()
+                genres = ""
             )
             movieList.add(tourism)
         }
@@ -118,8 +117,7 @@ object DataMapper {
         vote_average = input.vote_average,
         runtime = input.runtime,
         isFav = input.isFav,
-        genres = input.genres,
-        created_time = System.currentTimeMillis().toString()
+        genres = input.genres
     )
 
     fun mapTvDomainToEntity(input: Tv) = TvEntity(

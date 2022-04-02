@@ -11,7 +11,7 @@ interface CinemaDao {
     @RawQuery(observedEntities = [MovieEntity::class])
     fun getMovies(query: SimpleSQLiteQuery): Flow<List<MovieEntity>>
 
-    @Query("SELECT * FROM movie ORDER BY created_time ASC")
+    @Query("SELECT * FROM movie ORDER BY vote_average DESC")
     fun getPagingSourceMovies(): PagingSource<Int, MovieEntity>
 
     @Query("SELECT * FROM movie WHERE isFav = 1")
@@ -38,7 +38,7 @@ interface CinemaDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertRemoteKey(remoteKeyEntity: RemoteKeyEntity)
 
-    @Query("SELECT * FROM remote_keys WHERE category=:category")
+    @Query("SELECT * FROM remote_keys WHERE category=:category LIMIT 1")
     suspend fun getRemoteKey(category: String): RemoteKeyEntity
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

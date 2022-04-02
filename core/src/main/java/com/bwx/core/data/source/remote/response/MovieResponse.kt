@@ -20,24 +20,24 @@ data class MovieResponse(
 data class MoviesItem(
 
     @field:SerializedName("overview")
-    val overview: String,
+    val overview: String? = null,
 
     @field:SerializedName("title")
-    val title: String,
+    val title: String? = null,
 
     @field:SerializedName("poster_path")
-    val posterPath: String,
+    val posterPath: String? = null,
 
     @field:SerializedName("backdrop_path")
-    val backdropPath: String,
+    val backdropPath: String? = null,
 
     @field:SerializedName("release_date")
-    val releaseDate: String,
+    val releaseDate: String? = null,
 
     @field:SerializedName("vote_average")
-    val voteAverage: Double,
+    val voteAverage: Double? = null,
 
     @field:SerializedName("id")
-    val id: Int,
+    val id: Int? = 0,
 
     )

@@ -1,7 +1,7 @@
 package com.bwx.made.ui.movies
 
-import android.content.Intent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -10,15 +10,19 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.bwx.core.data.source.local.entity.MovieEntity
 import com.bwx.made.R
-import com.bwx.core.domain.model.Movie
 import com.bwx.made.databinding.ItemsMovieBinding
-import com.bwx.made.ui.detail_movie.DetailMovieActivity
-import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.util.*
+import com.bwx.made.utils.Utils
 
-class MoviesAdapter : PagingDataAdapter<Movie, MoviesAdapter.MoviesViewHolder>(DataDifferntiator) {
+class MoviesAdapter :
+    PagingDataAdapter<MovieEntity, MoviesAdapter.MoviesViewHolder>(DataDifferntiator) {
+
+    private lateinit var onItemClickCallback: OnItemClickCallback
+
+    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
+        this.onItemClickCallback = onItemClickCallback
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewHolder {
         val itemsMovieBinding =
@@ -35,27 +39,21 @@ class MoviesAdapter : PagingDataAdapter<Movie, MoviesAdapter.MoviesViewHolder>(D
 
     inner class MoviesViewHolder(private val binding: ItemsMovieBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(movie: Movie) {
+        fun bind(movie: MovieEntity) {
             with(binding) {
-                var format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
 
-                var newDate: Date? = null
-                try {
-                    newDate = format.parse(movie.release_date)
-                } catch (e: ParseException) {
-                    e.printStackTrace()
-                }
-                format = SimpleDateFormat("dd MMMM yy", Locale.getDefault())
-                val date: String = format.format(newDate)
 
                 tvItemTitle.text = movie.title
-                tvItemDate.text = date
                 tvItemVoteAverage.text = movie.vote_average.toString()
+                if (movie.release_date.isNotEmpty() || movie.release_date == "null") {
+                    tvItemDate.text = Utils.formatStringDate(movie.release_date)
+                    tvItemDate.visibility = View.VISIBLE
+                } else {
+                    tvItemDate.visibility = View.GONE
+                }
 
                 itemView.setOnClickListener {
-                    val intent = Intent(itemView.context, DetailMovieActivity::class.java)
-                    intent.putExtra(DetailMovieActivity.EXTRA_MOVIE, movie.id)
-                    itemView.context.startActivity(intent)
+                    onItemClickCallback.onItemClicked(movie)
                 }
 
                 Glide.with(itemView.context)
@@ -70,15 +68,20 @@ class MoviesAdapter : PagingDataAdapter<Movie, MoviesAdapter.MoviesViewHolder>(D
         }
     }
 
-    object DataDifferntiator : DiffUtil.ItemCallback<Movie>() {
+    object DataDifferntiator : DiffUtil.ItemCallback<MovieEntity>() {
 
-        override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+        override fun areItemsTheSame(oldItem: MovieEntity, newItem: MovieEntity): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+        override fun areContentsTheSame(oldItem: MovieEntity, newItem: MovieEntity): Boolean {
             return oldItem == newItem
         }
     }
+
+    interface OnItemClickCallback {
+        fun onItemClicked(data: MovieEntity)
+    }
+
 
 }

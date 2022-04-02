@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tv"
+    app:startDestination="@id/tvFragment">
+    <fragment
+        android:id="@+id/tvFragment"
+        android:name="com.bwx.made.ui.tv.TvFragment"
+        android:label="TvFragment"
+        tools:layout="@layout/fragment_tv" />
+</navigation>

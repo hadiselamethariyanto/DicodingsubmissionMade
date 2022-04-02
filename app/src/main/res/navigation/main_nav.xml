@@ -1,26 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav"
-    app:startDestination="@id/movieFragment">
+    app:startDestination="@id/movies">
 
-    <fragment
-        android:id="@+id/movieFragment"
-        android:name="com.bwx.made.ui.movies.MoviesFragment"
-        android:label="MovieFragment"
-        tools:layout="@layout/fragment_movies" />
-
-    <fragment
-        android:id="@+id/tvFragment"
-        android:name="com.bwx.made.ui.tv.TvFragment"
-        android:label="TvFragment"
-        tools:layout="@layout/fragment_tv" />
-
-    <fragment
-        android:id="@+id/favoriteFragment"
-        android:name="com.bwx.favorite.FavoriteFragment"
-        android:label="FavoriteFragment"
-        tools:layout="@layout/fragment_favorite" />
+    <include app:graph="@navigation/movies" />
+    <include app:graph="@navigation/tv" />
+    <include app:graph="@navigation/favorite" />
 
 </navigation>

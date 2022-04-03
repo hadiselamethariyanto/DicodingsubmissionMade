@@ -41,6 +41,7 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+        freeCompilerArgs += ["-Xopt-in=kotlin.RequiresOptIn"]
     }
 
     packagingOptions {
@@ -55,5 +56,4 @@ android {
 dependencies {
     implementation project(":core")
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation files('libs/YouTubeAndroidPlayerApi.jar')
 }

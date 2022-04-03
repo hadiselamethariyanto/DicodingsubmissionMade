@@ -57,10 +57,10 @@ class MovieReviewsFragment : Fragment() {
             reviewsAdapter.loadStateFlow.collectLatest { loadStates ->
                 if (loadStates.source.refresh is LoadState.NotLoading && loadStates.append.endOfPaginationReached && reviewsAdapter.itemCount < 1) {
                     binding.rvReviews.isVisible = false
-                    binding.imgEmpty.isVisible = true
+                    binding.empty.empty.isVisible = true
                 } else {
                     binding.rvReviews.isVisible = true
-                    binding.imgEmpty.isVisible = false
+                    binding.empty.empty.isVisible = false
                 }
 
             }

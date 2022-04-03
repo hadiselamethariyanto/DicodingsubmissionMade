@@ -43,11 +43,7 @@ class MoviesRemoteMediator(
 
             }
 
-            val movies: MovieResponse = if (loadType == LoadType.REFRESH) {
-                remoteDataSource.getPagingMovies(1)
-            } else {
-                remoteDataSource.getPagingMovies(loadKey)
-            }
+            val movies = remoteDataSource.getPagingMovies(loadKey)
 
             val remoteKeyEntity = RemoteKeyEntity(
                 category = "popular_movies",
@@ -56,6 +52,7 @@ class MoviesRemoteMediator(
             )
 
             localDataSource.insertRemoteKey(remoteKeyEntity)
+
 
             if (movies.results.isNotEmpty()) {
                 localDataSource.insertMovies(DataMapper.mapMovieResponsesToEntities(movies.results))

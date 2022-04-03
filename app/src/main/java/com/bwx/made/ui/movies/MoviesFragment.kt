@@ -68,9 +68,6 @@ class MoviesFragment : Fragment() {
             }
         }
 
-
-
-
         lifecycleScope.launchWhenCreated {
             moviesAdapter.loadStateFlow
                 .asMergedLoadStates()
@@ -88,9 +85,5 @@ class MoviesFragment : Fragment() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        activity?.menuInflater?.inflate(R.menu.menu_short, menu)
-    }
 
 }

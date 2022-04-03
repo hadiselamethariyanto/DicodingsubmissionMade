@@ -30,4 +30,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="label_detail_movie">Detail Movie</string>
     <string name="label_movie_videos">Movie Videos</string>
+    <string name="please_wait">Please Wait . . .</string>
+    <string name="no_review">No Review yet</string>
 </resources>

@@ -41,18 +41,12 @@ class ReviewsRemoteMediator(
                 }
             }
 
-            val reviews: ReviewsResponse = if (loadType == LoadType.REFRESH) {
-                remoteDataSource.getReviewsMovie(movieId, 1)
-            } else {
-                remoteDataSource.getReviewsMovie(movieId, loadKey)
-            }
-
+            val reviews = remoteDataSource.getReviewsMovie(movieId, loadKey)
             val remoteKeyEntity = RemoteKeyEntity(
                 category = movieId.toString(),
                 reviews.page,
                 total_pages = reviews.totalPages
             )
-
             localDataSource.insertRemoteKey(remoteKeyEntity)
 
             if (reviews.results.isNotEmpty()) {

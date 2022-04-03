@@ -13,16 +13,8 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/item_review" />
 
-    <ImageView
-        android:id="@+id/imgEmpty"
-        android:layout_width="140dp"
-        android:layout_height="140dp"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/ic_error"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <include
+        android:id="@+id/empty"
+        layout="@layout/view_empty_reviews" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

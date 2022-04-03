@@ -1,22 +1,28 @@
 package com.bwx.made.ui.detail_movie
 
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.bwx.core.data.Resource
 import com.bwx.core.domain.model.Movie
+import com.bwx.core.domain.model.Video
 import com.bwx.made.R
 import com.bwx.made.databinding.ContentDetailMovieBinding
 import com.bwx.made.databinding.FragmentDetailMovieBinding
+import com.bwx.made.ui.home.SectionsPagerAdapter
 import com.bwx.made.ui.info.InfoFragment
 import com.bwx.made.ui.movie_reviews.MovieReviewsFragment
 import com.google.android.material.tabs.TabLayoutMediator
@@ -44,13 +50,23 @@ class DetailMovieFragment : Fragment() {
         val overview = arguments?.getString(MOVIE_OVERVIEW) ?: ""
 
         getDetailMovie(id)
+        getMovieVideos(id)
         setFavorite()
         setupTabs(id, overview)
+
+        detailBinding.playButton.setOnClickListener {
+            val bundle = bundleOf(MOVIE_KEY to id)
+            findNavController().navigate(R.id.action_detail_movie_to_movie_video, bundle)
+        }
     }
 
     private fun getDetailMovie(movieId: Int) {
         viewModel.getDetailMovie(movieId)
         viewModel.getData().observe(viewLifecycleOwner, movieObserver)
+    }
+
+    private fun getMovieVideos(movieId: Int) {
+        viewModel.getMovieVideo(movieId).observe(viewLifecycleOwner, videObserver)
     }
 
     private fun setupTabs(movieId: Int, overView: String) {
@@ -59,7 +75,7 @@ class DetailMovieFragment : Fragment() {
                 InfoFragment.newInstance(movieId, overView),
                 MovieReviewsFragment.newInstance(movieId)
             )
-        val sectionsPagerAdapter = SectionsPagerAdapter(requireActivity(), fragmentList)
+        val sectionsPagerAdapter = SectionsPagerAdapter(fragmentList, requireActivity())
         val tabTitle =
             listOf(resources.getString(R.string.info), resources.getString(R.string.reviews))
         detailBinding.viewPager.adapter = sectionsPagerAdapter
@@ -69,6 +85,25 @@ class DetailMovieFragment : Fragment() {
         ) { tab, position ->
             tab.text = tabTitle[position]
         }.attach()
+    }
+
+    private val videObserver = Observer<Resource<List<Video>>> { res ->
+        when (res) {
+            is Resource.Loading -> {
+
+            }
+            is Resource.Success -> {
+                if (res.data?.isNotEmpty() == true) {
+                    detailBinding.imgBackdrop.setColorFilter(
+                        Color.rgb(123, 123, 123),
+                        android.graphics.PorterDuff.Mode.MULTIPLY
+                    );
+                }
+            }
+            is Resource.Error -> {
+
+            }
+        }
     }
 
 

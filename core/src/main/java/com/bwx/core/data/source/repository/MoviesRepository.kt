@@ -11,8 +11,10 @@ import com.bwx.core.data.source.remote.RemoteDataSource
 import com.bwx.core.data.source.remote.network.ApiResponse
 import com.bwx.core.data.source.remote.response.CastItem
 import com.bwx.core.data.source.remote.response.DetailMovieResponse
+import com.bwx.core.data.source.remote.response.VideoItem
 import com.bwx.core.domain.model.Cast
 import com.bwx.core.domain.model.Movie
+import com.bwx.core.domain.model.Video
 import com.bwx.core.domain.repository.IMoviesRepository
 import com.bwx.core.utils.DataMapper
 import kotlinx.coroutines.flow.Flow
@@ -123,6 +125,33 @@ class MoviesRepository(
 
                 localDataSource.insertCast(listCast)
 
+            }
+
+        }.asFlow()
+    }
+
+    override fun getMovieVideos(movieId: Int): Flow<Resource<List<Video>>> {
+        return object : NetworkBoundResource<List<Video>, List<VideoItem>>() {
+            override fun loadFromDB(): Flow<List<Video>> {
+                return localDataSource.getMovieVideos(movieId).map {
+                    DataMapper.mapVideoEntitiesToDomain(it)
+                }
+            }
+
+            override fun shouldFetch(data: List<Video>?): Boolean = data == null || data.isEmpty()
+
+            override suspend fun createCall(): Flow<ApiResponse<List<VideoItem>>> =
+                remoteDataSource.getMovieVideos(movieId)
+
+            override suspend fun saveCallResult(data: List<VideoItem>) {
+                if (data.isNotEmpty()) {
+                    localDataSource.insertMovieVideos(
+                        DataMapper.mapVideoResponseToEntities(
+                            data,
+                            movieId
+                        )
+                    )
+                }
             }
 
         }.asFlow()

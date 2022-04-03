@@ -7,9 +7,13 @@ import androidx.lifecycle.viewModelScope
 import com.bwx.core.domain.model.Movie
 import com.bwx.core.domain.usecase.CinemaUseCase
 import com.bwx.core.data.Resource
+import com.bwx.core.domain.usecase.MoviesUseCase
 import kotlinx.coroutines.launch
 
-class DetailMovieViewModel(private val cinemaUseCase: CinemaUseCase) : ViewModel() {
+class DetailMovieViewModel(
+    private val cinemaUseCase: CinemaUseCase,
+    private val moviesUseCase: MoviesUseCase
+) : ViewModel() {
 
     private lateinit var detailMovie: LiveData<Resource<Movie>>
 
@@ -17,7 +21,7 @@ class DetailMovieViewModel(private val cinemaUseCase: CinemaUseCase) : ViewModel
         detailMovie = cinemaUseCase.getDetailMovie(movieId).asLiveData()
     }
 
-    fun getCastMovie(movieId: Int) = cinemaUseCase.getCreditsMovie(movieId).asLiveData()
+    fun getMovieVideo(movieId: Int) = moviesUseCase.getMovieVideos(movieId).asLiveData()
 
     fun setFavorite() {
         val movie = detailMovie.value

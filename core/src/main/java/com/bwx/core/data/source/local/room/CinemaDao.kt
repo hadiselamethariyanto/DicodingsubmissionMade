@@ -23,6 +23,9 @@ interface CinemaDao {
     @Query("SELECT * FROM movie WHERE id = :id")
     fun getDetailMovie(id: Int): Flow<MovieEntity>
 
+    @Query("SELECT * FROM video WHERE movieId=:movieId")
+    fun getMovieVideos(movieId: Int): Flow<List<VideoEntity>>
+
     @Query("SELECT * FROM tv WHERE tv_id = :id")
     fun getDetailTv(id: Int): Flow<TvEntity>
 
@@ -44,11 +47,14 @@ interface CinemaDao {
     @Query("SELECT * FROM remote_keys WHERE category=:category LIMIT 1")
     suspend fun getRemoteKey(category: String): RemoteKeyEntity
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertMovies(movies: List<MovieEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertReviews(reviews: List<ReviewEntity>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertMovieVideos(videos: List<VideoEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTV(tv: List<TvEntity>)

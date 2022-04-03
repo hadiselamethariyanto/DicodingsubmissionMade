@@ -14,6 +14,17 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
+        android:id="@+id/playButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_play"
+        app:layout_constraintBottom_toBottomOf="@id/imgBackdrop"
+        app:layout_constraintEnd_toEndOf="@id/imgBackdrop"
+        app:layout_constraintStart_toStartOf="@id/imgBackdrop"
+        app:layout_constraintTop_toTopOf="@id/imgBackdrop" />
+
+    <ImageView
         android:id="@+id/imgPoster"
         android:layout_width="120dp"
         android:layout_height="170dp"

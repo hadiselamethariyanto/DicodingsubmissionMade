@@ -6,6 +6,7 @@ import com.bwx.core.data.source.local.entity.MovieEntity
 import com.bwx.core.data.source.local.entity.ReviewEntity
 import com.bwx.core.domain.model.Cast
 import com.bwx.core.domain.model.Movie
+import com.bwx.core.domain.model.Video
 import kotlinx.coroutines.flow.Flow
 
 interface MoviesUseCase {
@@ -16,4 +17,6 @@ interface MoviesUseCase {
     fun getDetailMovie(movieId: Int): Flow<Resource<Movie>>
 
     fun getCreditsMovie(movieId: Int): Flow<Resource<List<Cast>>>
+
+    fun getMovieVideos(movieId: Int): Flow<Resource<List<Video>>>
 }

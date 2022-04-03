@@ -3,12 +3,44 @@ package com.bwx.core.utils
 import com.bwx.core.data.source.local.entity.*
 import com.bwx.core.data.source.remote.response.MoviesItem
 import com.bwx.core.data.source.remote.response.ReviewsResponse
-import com.bwx.core.domain.model.Cast
-import com.bwx.core.domain.model.Movie
-import com.bwx.core.domain.model.Season
-import com.bwx.core.domain.model.Tv
+import com.bwx.core.data.source.remote.response.VideoItem
+import com.bwx.core.data.source.remote.response.VideoResponse
+import com.bwx.core.domain.model.*
 
 object DataMapper {
+
+    fun mapVideoResponseToEntities(input: List<VideoItem>, movieId: Int): List<VideoEntity> =
+        input.map {
+            VideoEntity(
+                id = it.id,
+                name = it.name.toString(),
+                official = it.official.toString(),
+                type = it.type.toString(),
+                site = it.site.toString(),
+                size = it.size ?: 0,
+                publishedAt = it.publishedAt.toString(),
+                iso6391 = it.iso6391.toString(),
+                iso31661 = it.iso31661.toString(),
+                key = it.key.toString(),
+                movieId = movieId
+            )
+        }
+
+    fun mapVideoEntitiesToDomain(input: List<VideoEntity>): List<Video> = input.map {
+        Video(
+            id = it.id,
+            name = it.name,
+            official = it.official,
+            type = it.type,
+            site = it.site,
+            size = it.size,
+            publishedAt = it.publishedAt,
+            iso6391 = it.iso6391,
+            iso31661 = it.iso31661,
+            key = it.key
+        )
+    }
+
 
     fun mapMovieResponsesToEntities(input: List<MoviesItem>): List<MovieEntity> {
         val movieList = ArrayList<MovieEntity>()

@@ -40,7 +40,7 @@ class FavoriteFragment : Fragment() {
             listOf(resources.getString(R.string.movies), resources.getString(R.string.tv))
 
         binding?.viewpager?.adapter =
-            SectionsPagerAdapter(fragmentList, requireActivity().supportFragmentManager, lifecycle)
+            SectionsPagerAdapter(fragmentList, requireActivity())
 
         TabLayoutMediator(binding!!.tabs, binding!!.viewpager) { tab, position ->
             tab.text = tabTitle[position]

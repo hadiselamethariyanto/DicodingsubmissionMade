@@ -19,6 +19,16 @@
         android:id="@+id/detailMovieFragment"
         android:name="com.bwx.made.ui.detail_movie.DetailMovieFragment"
         android:label="@string/label_detail_movie"
-        tools:layout="@layout/fragment_detail_movie" />
+        tools:layout="@layout/fragment_detail_movie">
+        <action
+            android:id="@+id/action_detail_movie_to_movie_video"
+            app:destination="@+id/movieVideoFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/movieVideoFragment"
+        android:name="com.bwx.made.ui.movie_videos.MovieVideosFragment"
+        android:label="@string/label_movie_videos"
+        tools:layout="@layout/fragment_movie_videos" />
 
 </navigation>

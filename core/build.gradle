@@ -13,8 +13,6 @@ android {
     defaultConfig {
         minSdk 21
         targetSdk 31
-        versionCode 1
-        versionName "1.0"
 
         buildConfigField "String", "BASE_URL", "\"https://api.themoviedb.org/\""
         buildConfigField "String", "API_KEY", '"e3b408a268a2828c1a10803a4f55415c"'

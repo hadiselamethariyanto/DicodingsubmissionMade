@@ -6,6 +6,7 @@ import com.bwx.core.data.source.local.entity.MovieEntity
 import com.bwx.core.data.source.local.entity.ReviewEntity
 import com.bwx.core.domain.model.Cast
 import com.bwx.core.domain.model.Movie
+import com.bwx.core.domain.model.Video
 import com.bwx.core.domain.repository.IMoviesRepository
 import kotlinx.coroutines.flow.Flow
 
@@ -21,4 +22,8 @@ class MoviesInteractor(private val repository: IMoviesRepository) : MoviesUseCas
 
     override fun getCreditsMovie(movieId: Int): Flow<Resource<List<Cast>>> =
         repository.getCreditsMovie(movieId)
+
+    override fun getMovieVideos(movieId: Int): Flow<Resource<List<Video>>> =
+        repository.getMovieVideos(movieId)
+
 }

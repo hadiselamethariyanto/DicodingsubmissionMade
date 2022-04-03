@@ -32,6 +32,12 @@ interface ApiService {
         @Query("api_key") api_key: String
     ): ReviewsResponse
 
+    @GET("3/movie/{movie_id}/videos")
+    suspend fun getMovieVideos(
+        @Path("movie_id") movie_id: Int,
+        @Query("api_key") api_key: String
+    ): VideoResponse
+
     @GET("3/tv/popular")
     suspend fun getPopularTv(
         @Query("api_key") api_key: String,

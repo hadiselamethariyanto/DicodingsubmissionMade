@@ -1,7 +1,6 @@
 package com.bwx.made.ui.movies
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
@@ -53,7 +52,6 @@ class MoviesFragment : Fragment() {
         genreAdapter.setOnItemClickCallback(object : GenresAdapter.OnItemClickCallback {
             override fun onItemClicked(data: Genre) {
                 viewModel.setGenre(data.id)
-//                viewModel.getPagingMovies(data.id).observe(viewLifecycleOwner, moviePagingObserver)
             }
 
         })

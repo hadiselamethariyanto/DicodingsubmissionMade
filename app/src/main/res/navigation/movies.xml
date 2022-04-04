@@ -23,6 +23,13 @@
         <action
             android:id="@+id/action_detail_movie_to_movie_video"
             app:destination="@+id/movieVideoFragment" />
+        <deepLink app:uri="android-app://com.bwx.made/detail_movie/{movie_key}/{movie_overview}" />
+        <argument
+            android:name="movie_key"
+            app:argType="integer" />
+        <argument
+            android:name="movie_overview"
+            app:argType="string" />
     </fragment>
 
     <fragment

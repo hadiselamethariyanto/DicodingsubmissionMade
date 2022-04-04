@@ -20,11 +20,6 @@
 
     </androidx.core.widget.NestedScrollView>
 
-    <include
-        android:id="@+id/loading"
-        layout="@layout/view_loading"
-        app:layout_anchor="@id/content"
-        app:layout_anchorGravity="center_horizontal|center_vertical" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
@@ -36,6 +31,11 @@
         android:contentDescription="@string/app_name"
         android:src="@drawable/ic_favorite_white"
         app:backgroundTint="@color/primary"
-        app:tint="@color/white" />
+        app:tint="@color/white"
+        />
+
+    <include
+        android:id="@+id/loading"
+        layout="@layout/view_loading" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

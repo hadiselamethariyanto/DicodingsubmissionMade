@@ -5,9 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.net.toUri
+import androidx.navigation.NavDeepLinkRequest
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bwx.core.domain.model.Movie
 import com.bwx.favorite.databinding.FragmentFavoriteMovieBinding
-import com.bwx.made.ui.movies.MoviesAdapter
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class FavoriteMovieFragment : Fragment() {
@@ -15,7 +18,7 @@ class FavoriteMovieFragment : Fragment() {
     private var _binding: FragmentFavoriteMovieBinding? = null
     private val binding get() = _binding
     private val viewModel: FavoriteMovieViewModel by viewModel()
-    private lateinit var moviesAdapter: MoviesAdapter
+    private lateinit var moviesAdapter: FavoriteMovieAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,7 +32,15 @@ class FavoriteMovieFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        moviesAdapter = MoviesAdapter()
+        moviesAdapter = FavoriteMovieAdapter()
+        moviesAdapter.setOnItemClickCallback(object : FavoriteMovieAdapter.OnItemClickCallback {
+            override fun onItemClicked(data: Movie) {
+                val request = NavDeepLinkRequest.Builder
+                    .fromUri("android-app://com.bwx.made/detail_movie/${data.id}/${data.overview}".toUri())
+                    .build()
+                findNavController().navigate(request)
+            }
+        })
 
         with(binding?.rvMovie) {
             this?.layoutManager = LinearLayoutManager(context)
@@ -37,17 +48,17 @@ class FavoriteMovieFragment : Fragment() {
             this?.adapter = moviesAdapter
         }
 
-        viewModel.getFavMovies().observe(viewLifecycleOwner, { listFavorite ->
+        viewModel.getFavMovies().observe(viewLifecycleOwner) { listFavorite ->
             if (listFavorite != null) {
                 if (listFavorite.isNotEmpty()) {
-//                    moviesAdapter.updateData(listFavorite)
+                    moviesAdapter.updateData(listFavorite)
                     binding?.emptyData?.visibility = View.GONE
                 } else {
                     binding?.emptyData?.visibility = View.VISIBLE
                 }
             }
 
-        })
+        }
     }
 
 

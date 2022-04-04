@@ -78,20 +78,7 @@ class MoviesRepository(
                     }
                 }
 
-//                val movie = MovieEntity(
-//                    id = data.id,
-//                    title = data.title,
-//                    overview = data.overview,
-//                    poster_path = data.posterPath,
-//                    backdrop_path = data.backdropPath,
-//                    release_date = data.releaseDate,
-//                    runtime = data.runtime,
-//                    vote_average = data.voteAverage,
-//                    isFav = false,
-//                    genres = genres.toString()
-//                )
-//
-//                localDataSource.updateMovie(movie)
+                localDataSource.updateMovie(data.id, data.runtime, genres.toString())
 
             }
 
@@ -178,5 +165,9 @@ class MoviesRepository(
             }
 
         }.asFlow()
+    }
+
+    override fun getFavoriteMovie(movieId: Int): Flow<Boolean> {
+        return localDataSource.getFavoriteMovie(movieId)
     }
 }

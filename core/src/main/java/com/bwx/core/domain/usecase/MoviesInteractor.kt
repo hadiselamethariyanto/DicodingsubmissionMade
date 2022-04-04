@@ -29,4 +29,7 @@ class MoviesInteractor(private val repository: IMoviesRepository) : MoviesUseCas
 
     override fun getGenreTypes(): Flow<Resource<List<Genre>>> = repository.getGenresMovie()
 
+    override fun getFavoriteMovie(movieId: Int): Flow<Boolean> =
+        repository.getFavoriteMovie(movieId)
+
 }

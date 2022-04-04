@@ -6,6 +6,8 @@ import com.bwx.core.utils.SortUtils
 import com.bwx.core.utils.SortUtils.MOVIE_ENTITIES
 import com.bwx.core.utils.SortUtils.TV_ENTITIES
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 
 class LocalDataSource(private val cinemaDao: CinemaDao) {
 
@@ -44,7 +46,8 @@ class LocalDataSource(private val cinemaDao: CinemaDao) {
 
     fun getDetailMovie(id: Int) = cinemaDao.getDetailMovie(id)
 
-    suspend fun updateMovie(movie: MovieEntity) = cinemaDao.updateMovie(movie)
+    suspend fun updateMovie(movieId: Int, runtime: Int, genres: String) =
+        cinemaDao.updateMovie(movieId = movieId, runtime = runtime, genres = genres)
 
     fun getDetailTv(id: Int) = cinemaDao.getDetailTv(id)
 
@@ -57,10 +60,15 @@ class LocalDataSource(private val cinemaDao: CinemaDao) {
         cinemaDao.updateTv(tv)
     }
 
-    suspend fun setFavoriteMovie(movie: MovieEntity, newState: Boolean) {
-        movie.isFav = newState
-        cinemaDao.updateMovie(movie)
+    suspend fun setFavoriteMovie(movie: MovieEntity) {
+        if (cinemaDao.checkFavoriteMovie(movie.id)) {
+            cinemaDao.deleteFavoriteMovie(FavoriteMovieEntity(movie_id = movie.id))
+        } else {
+            cinemaDao.insertFavoriteMovie(FavoriteMovieEntity(movie_id = movie.id))
+        }
     }
+
+    fun getFavoriteMovie(movieId: Int): Flow<Boolean> = cinemaDao.getFavoriteMovie(movieId)
 
     fun getSeasonTv(tv_id: Int): Flow<List<SeasonEntity>> = cinemaDao.getSeasonTv(tv_id)
 

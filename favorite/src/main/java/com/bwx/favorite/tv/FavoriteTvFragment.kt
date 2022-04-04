@@ -38,7 +38,7 @@ class FavoriteTvFragment : Fragment() {
             this?.adapter = tvAdapter
         }
 
-        viewModel.getFavTv().observe(viewLifecycleOwner, { listFavorite ->
+        viewModel.getFavTv().observe(viewLifecycleOwner) { listFavorite ->
             if (listFavorite != null) {
                 if (listFavorite.isNotEmpty()) {
                     tvAdapter.updateData(listFavorite)
@@ -47,7 +47,7 @@ class FavoriteTvFragment : Fragment() {
                     binding?.emptyData?.visibility = View.VISIBLE
                 }
             }
-        })
+        }
 
     }
 

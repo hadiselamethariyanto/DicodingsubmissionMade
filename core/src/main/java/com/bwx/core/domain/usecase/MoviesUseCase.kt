@@ -11,7 +11,7 @@ import com.bwx.core.domain.model.Video
 import kotlinx.coroutines.flow.Flow
 
 interface MoviesUseCase {
-    fun getPagingPopularMovies(genre:Int): Flow<PagingData<MovieEntity>>
+    fun getPagingPopularMovies(genre: Int): Flow<PagingData<MovieEntity>>
 
     fun getPagingReviewsMovie(movieId: Int): Flow<PagingData<ReviewEntity>>
 
@@ -22,4 +22,6 @@ interface MoviesUseCase {
     fun getMovieVideos(movieId: Int): Flow<Resource<List<Video>>>
 
     fun getGenreTypes(): Flow<Resource<List<Genre>>>
+
+    fun getFavoriteMovie(movieId: Int): Flow<Boolean>
 }

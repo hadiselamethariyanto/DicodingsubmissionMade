@@ -1,13 +1,11 @@
 package com.bwx.made.ui.detail_movie
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.bwx.core.domain.usecase.CinemaUseCase
 import com.bwx.core.data.Resource
 import com.bwx.core.data.source.local.entity.MovieEntity
 import com.bwx.core.domain.usecase.MoviesUseCase
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class DetailMovieViewModel(
@@ -16,6 +14,8 @@ class DetailMovieViewModel(
 ) : ViewModel() {
 
     private lateinit var detailMovie: LiveData<Resource<MovieEntity>>
+    private val _isFavorite = MutableLiveData<Boolean>()
+    val isFavorite: LiveData<Boolean> get() = _isFavorite
 
     fun getDetailMovie(movieId: Int) {
         detailMovie = cinemaUseCase.getDetailMovie(movieId).asLiveData()
@@ -32,6 +32,9 @@ class DetailMovieViewModel(
             }
         }
     }
+
+    fun getFavoriteMovie(movieId: Int) =
+        moviesUseCase.getFavoriteMovie(movieId).asLiveData()
 
     fun getData() = detailMovie
 

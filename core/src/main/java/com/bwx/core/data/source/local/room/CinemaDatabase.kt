@@ -7,7 +7,7 @@ import com.bwx.core.data.source.local.entity.*
 @Database(
     entities = [MovieEntity::class, TvEntity::class, SeasonEntity::class,
         CastEntity::class, RemoteKeyEntity::class, ReviewEntity::class, VideoEntity::class,
-        GenreMovieEntity::class, GenreTypeEntity::class],
+        GenreMovieEntity::class, GenreTypeEntity::class, FavoriteMovieEntity::class],
     version = 1,
     exportSchema = false
 )

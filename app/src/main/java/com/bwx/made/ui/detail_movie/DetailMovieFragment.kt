@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
@@ -26,6 +27,7 @@ import com.bwx.made.ui.home.SectionsPagerAdapter
 import com.bwx.made.ui.info.InfoFragment
 import com.bwx.made.ui.movie_reviews.MovieReviewsFragment
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class DetailMovieFragment : Fragment() {
@@ -64,8 +66,11 @@ class DetailMovieFragment : Fragment() {
 
     private fun getDetailMovie(movieId: Int) {
         viewModel.getDetailMovie(movieId)
+        lifecycleScope.launch {
+            viewModel.getFavoriteMovie(movieId).observe(viewLifecycleOwner,favoriteMovieObserver)
+        }
         viewModel.getData().observe(viewLifecycleOwner, movieObserver)
-
+//        viewModel.isFavorite.observe(viewLifecycleOwner, favoriteMovieObserver)
     }
 
     private fun getMovieVideos(movieId: Int) {
@@ -125,6 +130,16 @@ class DetailMovieFragment : Fragment() {
         }
     }
 
+    private val favoriteMovieObserver = Observer<Boolean> {
+        if (it) {
+            binding.fab.imageTintList =
+                ColorStateList.valueOf(ContextCompat.getColor(requireActivity(), R.color.red))
+        } else {
+            binding.fab.imageTintList =
+                ColorStateList.valueOf(ContextCompat.getColor(requireActivity(), R.color.white))
+        }
+    }
+
 
     private fun setFavorite() {
         binding.fab.setOnClickListener {
@@ -139,13 +154,6 @@ class DetailMovieFragment : Fragment() {
             tvCategoryMovie.text = movie.genres
         }
 
-        if (movie.isFav) {
-            binding.fab.imageTintList =
-                ColorStateList.valueOf(ContextCompat.getColor(requireActivity(), R.color.red))
-        } else {
-            binding.fab.imageTintList =
-                ColorStateList.valueOf(ContextCompat.getColor(requireActivity(), R.color.white))
-        }
 
         Glide.with(this)
             .load(resources.getString(R.string.image_path, movie.backdrop_path))

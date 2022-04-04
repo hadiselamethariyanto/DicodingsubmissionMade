@@ -19,4 +19,6 @@ interface IMoviesRepository {
     fun getMovieVideos(movieId: Int): Flow<Resource<List<Video>>>
 
     fun getGenresMovie(): Flow<Resource<List<Genre>>>
+
+    fun getFavoriteMovie(movieId: Int): Flow<Boolean>
 }

@@ -17,7 +17,7 @@ interface CinemaDao {
     @Query("SELECT * FROM review WHERE movieId=:movieId ORDER BY id ASC")
     fun getPagingReviewsMovie(movieId: Int): PagingSource<Int, ReviewEntity>
 
-    @Query("SELECT * FROM movie WHERE isFav = 1")
+    @Query("SELECT m.* FROM movie m INNER JOIN favorite_movie f ON m.id = f.movie_id")
     fun getFavMovies(): Flow<List<MovieEntity>>
 
     @Query("SELECT * FROM movie WHERE id = :id")
@@ -74,8 +74,20 @@ interface CinemaDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertSeasons(seasons: List<SeasonEntity>)
 
-    @Update
-    suspend fun updateMovie(movie: MovieEntity)
+    @Query("UPDATE movie SET runtime=:runtime, genres=:genres WHERE id=:movieId")
+    suspend fun updateMovie(movieId: Int, runtime: Int, genres: String)
+
+    @Query("SELECT EXISTS(SELECT * FROM favorite_movie WHERE movie_id=:movieId)")
+    suspend fun checkFavoriteMovie(movieId: Int): Boolean
+
+    @Query("SELECT EXISTS(SELECT * FROM favorite_movie WHERE movie_id=:movieId)")
+    fun getFavoriteMovie(movieId: Int): Flow<Boolean>
+
+    @Insert
+    suspend fun insertFavoriteMovie(movie: FavoriteMovieEntity)
+
+    @Delete
+    suspend fun deleteFavoriteMovie(movie: FavoriteMovieEntity)
 
     @Update
     suspend fun updateTv(tv: TvEntity)

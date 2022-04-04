@@ -40,4 +40,7 @@ data class MoviesItem(
     @field:SerializedName("id")
     val id: Int? = 0,
 
-    )
+    @field:SerializedName("genre_ids")
+    val genre_ids: List<Int>
+
+)

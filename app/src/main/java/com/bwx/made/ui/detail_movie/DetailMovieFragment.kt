@@ -57,11 +57,14 @@ class DetailMovieFragment : Fragment() {
             val bundle = bundleOf(MOVIE_KEY to id)
             findNavController().navigate(R.id.action_detail_movie_to_movie_video, bundle)
         }
+
+
     }
 
     private fun getDetailMovie(movieId: Int) {
         viewModel.getDetailMovie(movieId)
         viewModel.getData().observe(viewLifecycleOwner, movieObserver)
+
     }
 
     private fun getMovieVideos(movieId: Int) {
@@ -96,7 +99,7 @@ class DetailMovieFragment : Fragment() {
                     detailBinding.imgBackdrop.setColorFilter(
                         Color.rgb(123, 123, 123),
                         android.graphics.PorterDuff.Mode.MULTIPLY
-                    );
+                    )
                 }
             }
             is Resource.Error -> {
@@ -171,6 +174,7 @@ class DetailMovieFragment : Fragment() {
             binding.progressBar.visibility = View.GONE
         }
     }
+
 
     companion object {
         const val MOVIE_KEY = "movie_key"

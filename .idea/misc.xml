@@ -33,6 +33,9 @@
         <entry key="..\:/Android/SubmissionArchitecture/app/src/main/res/menu/menu_bottom.xml" value="0.1921875" />
         <entry key="..\:/Android/SubmissionArchitecture/app/src/main/res/menu/menu_detail.xml" value="0.1" />
         <entry key="..\:/Android/SubmissionArchitecture/app/src/main/res/menu/menu_short.xml" value="0.17685185185185184" />
+        <entry key="..\:/Android/SubmissionMade/app/src/main/res/drawable/background_genre_not_selected.xml" value="0.1" />
+        <entry key="..\:/Android/SubmissionMade/app/src/main/res/drawable/background_genre_selected.xml" value="0.1" />
+        <entry key="..\:/Android/SubmissionMade/app/src/main/res/drawable/background_rounded.xml" value="0.1" />
         <entry key="..\:/Android/SubmissionMade/app/src/main/res/drawable/background_rounded_top.xml" value="0.1415" />
         <entry key="..\:/Android/SubmissionMade/app/src/main/res/drawable/ic_play.xml" value="0.1" />
         <entry key="..\:/Android/SubmissionMade/app/src/main/res/layout/activity_detail_movie.xml" value="0.1" />
@@ -45,6 +48,7 @@
         <entry key="..\:/Android/SubmissionMade/app/src/main/res/layout/fragment_movies.xml" value="0.1" />
         <entry key="..\:/Android/SubmissionMade/app/src/main/res/layout/fragment_tv.xml" value="0.11770833333333333" />
         <entry key="..\:/Android/SubmissionMade/app/src/main/res/layout/item_bottom_navigation.xml" value="0.14402173913043478" />
+        <entry key="..\:/Android/SubmissionMade/app/src/main/res/layout/item_genre.xml" value="0.5" />
         <entry key="..\:/Android/SubmissionMade/app/src/main/res/layout/item_network_state.xml" value="0.1453804347826087" />
         <entry key="..\:/Android/SubmissionMade/app/src/main/res/layout/item_review.xml" value="0.1" />
         <entry key="..\:/Android/SubmissionMade/app/src/main/res/layout/item_video.xml" value="0.1453804347826087" />

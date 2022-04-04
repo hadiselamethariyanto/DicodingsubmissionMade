@@ -11,8 +11,10 @@ import com.bwx.core.data.source.remote.RemoteDataSource
 import com.bwx.core.data.source.remote.network.ApiResponse
 import com.bwx.core.data.source.remote.response.CastItem
 import com.bwx.core.data.source.remote.response.DetailMovieResponse
+import com.bwx.core.data.source.remote.response.GenresResponse
 import com.bwx.core.data.source.remote.response.VideoItem
 import com.bwx.core.domain.model.Cast
+import com.bwx.core.domain.model.Genre
 import com.bwx.core.domain.model.Movie
 import com.bwx.core.domain.model.Video
 import com.bwx.core.domain.repository.IMoviesRepository
@@ -27,8 +29,7 @@ class MoviesRepository(
     private val localDataSource: LocalDataSource
 ) : IMoviesRepository {
 
-
-    override fun getPagingPopularMovies(): Flow<PagingData<MovieEntity>> {
+    override fun getPagingPopularMovies(genre: Int): Flow<PagingData<MovieEntity>> {
         return Pager(
             config = PagingConfig(10),
             remoteMediator = MoviesRemoteMediator(
@@ -36,7 +37,7 @@ class MoviesRepository(
                 localDataSource = localDataSource
             )
         ) {
-            localDataSource.getPagingSourceMovies()
+            localDataSource.getPagingSourceMovies(genre)
         }.flow
     }
 
@@ -151,6 +152,28 @@ class MoviesRepository(
                             movieId
                         )
                     )
+                }
+            }
+
+        }.asFlow()
+    }
+
+    override fun getGenresMovie(): Flow<Resource<List<Genre>>> {
+        return object : NetworkBoundResource<List<Genre>, GenresResponse>() {
+            override fun loadFromDB(): Flow<List<Genre>> {
+                return localDataSource.getGenreTypes().map {
+                    DataMapper.mapGenreTypeEntitiesToDomain(it)
+                }
+            }
+
+            override fun shouldFetch(data: List<Genre>?): Boolean = data == null || data.isEmpty()
+
+            override suspend fun createCall(): Flow<ApiResponse<GenresResponse>> =
+                remoteDataSource.getGenreTypes()
+
+            override suspend fun saveCallResult(data: GenresResponse) {
+                if (data.genres.isNotEmpty()) {
+                    localDataSource.insertGenreTypes(DataMapper.mapGenreTypesResponseToEntities(data.genres))
                 }
             }
 

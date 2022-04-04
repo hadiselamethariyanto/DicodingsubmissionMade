@@ -51,11 +51,16 @@ class MoviesRemoteMediator(
                 total_pages = movies.totalPages
             )
 
-            localDataSource.insertRemoteKey(remoteKeyEntity)
+            if (loadType == LoadType.REFRESH) {
+                localDataSource.deleteMovie()
+                localDataSource.deleteRemoteKey()
+            }
 
+            localDataSource.insertRemoteKey(remoteKeyEntity)
 
             if (movies.results.isNotEmpty()) {
                 localDataSource.insertMovies(DataMapper.mapMovieResponsesToEntities(movies.results))
+                localDataSource.insertGenresMovie(DataMapper.mapMovieGenresResponseToEntities(movies.results))
             }
 
             return MediatorResult.Success(endOfPaginationReached = movies.results.isEmpty())

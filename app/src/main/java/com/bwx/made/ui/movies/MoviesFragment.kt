@@ -4,10 +4,15 @@ import android.os.Bundle
 import android.view.*
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
+import androidx.paging.PagingData
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.bwx.core.data.Resource
 import com.bwx.core.data.source.local.entity.MovieEntity
+import com.bwx.core.domain.model.Genre
 import com.bwx.made.R
 import com.bwx.made.databinding.FragmentMoviesBinding
 import com.bwx.made.ui.detail_movie.DetailMovieFragment.Companion.MOVIE_KEY
@@ -21,6 +26,7 @@ class MoviesFragment : Fragment() {
     private var _binding: FragmentMoviesBinding? = null
     private val binding get() = _binding!!
     private lateinit var moviesAdapter: MoviesAdapter
+    private lateinit var genreAdapter: GenresAdapter
     private val viewModel: MoviesViewModel by viewModel()
 
     override fun onCreateView(
@@ -35,12 +41,45 @@ class MoviesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (activity != null) {
-            setupAdapter()
+            setupMovieAdapter()
+            setupGenresAdapter()
             initSwipeToRefresh()
         }
     }
 
-    private fun setupAdapter() {
+    private fun setupGenresAdapter() {
+        val linearLayoutManager =
+            LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
+        genreAdapter = GenresAdapter()
+        genreAdapter.setOnItemClickCallback(object : GenresAdapter.OnItemClickCallback {
+            override fun onItemClicked(data: Genre) {
+                viewModel.setGenre(data.id)
+//                viewModel.getPagingMovies(data.id).observe(viewLifecycleOwner, moviePagingObserver)
+            }
+
+        })
+        binding.rvGenre.apply {
+            layoutManager = linearLayoutManager
+            setHasFixedSize(true)
+            adapter = genreAdapter
+        }
+
+        viewModel.getGenreTypes().observe(viewLifecycleOwner) { res ->
+            when (res) {
+                is Resource.Loading -> {
+
+                }
+                is Resource.Success -> {
+                    res.data?.let { genreAdapter.updateData(it) }
+                }
+                is Resource.Error -> {
+
+                }
+            }
+        }
+    }
+
+    private fun setupMovieAdapter() {
         moviesAdapter = MoviesAdapter()
         moviesAdapter.setOnItemClickCallback(object : MoviesAdapter.OnItemClickCallback {
             override fun onItemClicked(data: MovieEntity) {
@@ -55,8 +94,10 @@ class MoviesFragment : Fragment() {
             footer = MoviesLoadStateAdapter(moviesAdapter)
         )
 
-        viewModel.getListMovies().observe(viewLifecycleOwner) {
-            lifecycleScope.launchWhenCreated {
+        viewModel.setGenre(0)
+
+        lifecycleScope.launchWhenCreated {
+            viewModel.posts.collectLatest {
                 moviesAdapter.submitData(it)
             }
         }
@@ -77,6 +118,16 @@ class MoviesFragment : Fragment() {
                     binding.rvMovies.scrollToPosition(0)
                 }
         }
+    }
+
+    private val moviePagingObserver = Observer<PagingData<MovieEntity>> {
+        lifecycleScope.launchWhenCreated {
+            moviesAdapter.submitData(it)
+        }
+    }
+
+    private fun getData(genre: Int) {
+        viewModel.getListMovies(genre)
     }
 
     private fun initSwipeToRefresh() {

@@ -38,6 +38,9 @@ interface ApiService {
         @Query("api_key") api_key: String
     ): VideoResponse
 
+    @GET("3/genre/movie/list")
+    suspend fun getGenresType(@Query("api_key") api_key: String): GenresResponse
+
     @GET("3/tv/popular")
     suspend fun getPopularTv(
         @Query("api_key") api_key: String,

@@ -77,6 +77,17 @@ class RemoteDataSource(private val apiService: ApiService) {
         }.flowOn(Dispatchers.IO)
     }
 
+    suspend fun getGenreTypes(): Flow<ApiResponse<GenresResponse>> {
+        return flow {
+            try {
+                val response = apiService.getGenresType(API_KEY)
+                emit(ApiResponse.Success(response))
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.message.toString()))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
     suspend fun getReviewsMovie(movieId: Int, page: Int?) =
         apiService.getReviewsMovie(movieId, page, API_KEY)
 

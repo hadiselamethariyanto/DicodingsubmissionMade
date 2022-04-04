@@ -9,16 +9,18 @@ import kotlinx.coroutines.flow.Flow
 
 class LocalDataSource(private val cinemaDao: CinemaDao) {
 
-
     fun getAllMovies(sort: String): Flow<List<MovieEntity>> =
         cinemaDao.getMovies(SortUtils.getSortedQuery(sort, MOVIE_ENTITIES))
 
-    fun getPagingSourceMovies() = cinemaDao.getPagingSourceMovies()
+    fun getPagingSourceMovies(genre: Int) =
+        cinemaDao.getPagingSourceMovies(SortUtils.getMovieByGenreQuery(genre))
 
     fun getPagingSourceReviewsMovie(movieId: Int) = cinemaDao.getPagingReviewsMovie(movieId)
 
     fun getCastMovie(movie_id: Int): Flow<List<CastEntity>> =
         cinemaDao.getCastMovie(movie_id)
+
+    fun getGenreTypes(): Flow<List<GenreTypeEntity>> = cinemaDao.getGenreTypes()
 
     fun getMovieVideos(movieId: Int): Flow<List<VideoEntity>> = cinemaDao.getMovieVideos(movieId)
 
@@ -27,6 +29,11 @@ class LocalDataSource(private val cinemaDao: CinemaDao) {
     suspend fun insertMovies(movies: List<MovieEntity>) = cinemaDao.insertMovies(movies)
 
     suspend fun insertReviews(reviews: List<ReviewEntity>) = cinemaDao.insertReviews(reviews)
+
+    suspend fun insertGenresMovie(genres: List<GenreMovieEntity>) =
+        cinemaDao.insertGenresMovie(genres)
+
+    suspend fun insertGenreTypes(genres: List<GenreTypeEntity>) = cinemaDao.insertGenreTypes(genres)
 
     suspend fun insertCast(casts: List<CastEntity>) = cinemaDao.insertCast(casts)
 
@@ -66,7 +73,8 @@ class LocalDataSource(private val cinemaDao: CinemaDao) {
     suspend fun insertRemoteKey(remoteKeyEntity: RemoteKeyEntity) =
         cinemaDao.insertRemoteKey(remoteKeyEntity)
 
-    suspend fun deleteRemoteKey(category: String) = cinemaDao.deleteRemoteKey(category)
+    suspend fun deleteMovie() = cinemaDao.deleteMovie()
 
-    suspend fun deleteMovies() = cinemaDao.deleteMovies()
+    suspend fun deleteRemoteKey() = cinemaDao.deleteRemoteKey()
+
 }

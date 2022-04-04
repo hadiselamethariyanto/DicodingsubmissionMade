@@ -11,8 +11,8 @@ interface CinemaDao {
     @RawQuery(observedEntities = [MovieEntity::class])
     fun getMovies(query: SimpleSQLiteQuery): Flow<List<MovieEntity>>
 
-    @Query("SELECT * FROM movie ORDER BY vote_average DESC")
-    fun getPagingSourceMovies(): PagingSource<Int, MovieEntity>
+    @RawQuery(observedEntities = [MovieEntity::class])
+    fun getPagingSourceMovies(query: SimpleSQLiteQuery): PagingSource<Int, MovieEntity>
 
     @Query("SELECT * FROM review WHERE movieId=:movieId ORDER BY id ASC")
     fun getPagingReviewsMovie(movieId: Int): PagingSource<Int, ReviewEntity>
@@ -25,6 +25,9 @@ interface CinemaDao {
 
     @Query("SELECT * FROM video WHERE movieId=:movieId")
     fun getMovieVideos(movieId: Int): Flow<List<VideoEntity>>
+
+    @Query("SELECT * FROM genre_type")
+    fun getGenreTypes(): Flow<List<GenreTypeEntity>>
 
     @Query("SELECT * FROM tv WHERE tv_id = :id")
     fun getDetailTv(id: Int): Flow<TvEntity>
@@ -53,6 +56,12 @@ interface CinemaDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertReviews(reviews: List<ReviewEntity>)
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertGenresMovie(genres: List<GenreMovieEntity>)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertGenreTypes(genres: List<GenreTypeEntity>)
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMovieVideos(videos: List<VideoEntity>)
 
@@ -71,10 +80,10 @@ interface CinemaDao {
     @Update
     suspend fun updateTv(tv: TvEntity)
 
-    @Query("DELETE FROM remote_keys WHERE category=:category")
-    suspend fun deleteRemoteKey(category: String)
-
     @Query("DELETE FROM movie")
-    suspend fun deleteMovies()
+    suspend fun deleteMovie()
+
+    @Query("DELETE FROM remote_keys")
+    suspend fun deleteRemoteKey()
 
 }

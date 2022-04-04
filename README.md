@@ -35,3 +35,8 @@ this app display movie and tv shows from https://developers.themoviedb.org/.
 [<img src="https://github.com/hadiselamethariyanto/Movie-App/blob/master/screenshot/6.png"></img>]
 
 # Mad Scorecard
+
+[<img src="https://github.com/hadiselamethariyanto/Movie-App/blob/master/mad_scorecard/jetpack.png"></img>](https://madscorecard.withgoogle.com/scorecards/2486171366/#jetpack)
+[<img src="https://github.com/hadiselamethariyanto/Movie-App/blob/master/mad_scorecard/summary.png"></img>](https://madscorecard.withgoogle.com/scorecards/2486171366/#summary)
+[<img src="https://github.com/hadiselamethariyanto/Movie-App/blob/master/mad_scorecard/kotlin.png"></img>](https://madscorecard.withgoogle.com/scorecards/2486171366/#kotlin)
+

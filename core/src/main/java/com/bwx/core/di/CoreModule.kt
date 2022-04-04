@@ -24,14 +24,14 @@ import java.util.concurrent.TimeUnit
 
 val databaseModule = module {
     val passphrase: ByteArray = SQLiteDatabase.getBytes("dicoding".toCharArray())
-    val factor = SupportFactory(passphrase)
+    val factory = SupportFactory(passphrase)
 
     factory { get<CinemaDatabase>().cinemaDao() }
     single {
         Room.databaseBuilder(
             androidContext(),
             CinemaDatabase::class.java, "Cinema.db"
-        ).fallbackToDestructiveMigration().build()
+        ).fallbackToDestructiveMigration().openHelperFactory(factory).build()
     }
 }
 

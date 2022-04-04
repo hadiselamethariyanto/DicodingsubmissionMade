@@ -27,12 +27,12 @@ this app display movie and tv shows from https://developers.themoviedb.org/.
 * Splash Screen
 
 # ScreenShot
-[<img src="https://github.com/hadiselamethariyanto/Movie-App/blob/master/screenshot/1.png"></img>]
-[<img src="https://github.com/hadiselamethariyanto/Movie-App/blob/master/screenshot/2.png"></img>]
-[<img src="https://github.com/hadiselamethariyanto/Movie-App/blob/master/screenshot/3.png"></img>]
-[<img src="https://github.com/hadiselamethariyanto/Movie-App/blob/master/screenshot/4.png"></img>]
-[<img src="https://github.com/hadiselamethariyanto/Movie-App/blob/master/screenshot/5.png"></img>]
-[<img src="https://github.com/hadiselamethariyanto/Movie-App/blob/master/screenshot/6.png"></img>]
+<img src="https://github.com/hadiselamethariyanto/Movie-App/blob/master/screenshot/1.png"></img>
+<img src="https://github.com/hadiselamethariyanto/Movie-App/blob/master/screenshot/2.png"></img>
+<img src="https://github.com/hadiselamethariyanto/Movie-App/blob/master/screenshot/3.png"></img>
+<img src="https://github.com/hadiselamethariyanto/Movie-App/blob/master/screenshot/4.png"></img>
+<img src="https://github.com/hadiselamethariyanto/Movie-App/blob/master/screenshot/5.png"></img>
+<img src="https://github.com/hadiselamethariyanto/Movie-App/blob/master/screenshot/6.png"></img>
 
 # Mad Scorecard
 

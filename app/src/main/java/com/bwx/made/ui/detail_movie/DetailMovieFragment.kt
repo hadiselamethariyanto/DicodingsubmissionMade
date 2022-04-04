@@ -151,7 +151,7 @@ class DetailMovieFragment : Fragment() {
             .load(resources.getString(R.string.image_path, movie.backdrop_path))
             .centerCrop()
             .apply(
-                RequestOptions.placeholderOf(R.drawable.ic_loading)
+                RequestOptions.placeholderOf(R.drawable.ic_backdrop_loading)
                     .error(R.drawable.ic_error)
             )
             .into(detailBinding.imgBackdrop)
@@ -169,10 +169,10 @@ class DetailMovieFragment : Fragment() {
     private fun setLoading(boolean: Boolean) {
         if (boolean) {
             binding.content.visibility = View.INVISIBLE
-            binding.progressBar.visibility = View.VISIBLE
+            binding.loading.loading.visibility = View.VISIBLE
         } else {
             binding.content.visibility = View.VISIBLE
-            binding.progressBar.visibility = View.GONE
+            binding.loading.loading.visibility = View.GONE
         }
     }
 

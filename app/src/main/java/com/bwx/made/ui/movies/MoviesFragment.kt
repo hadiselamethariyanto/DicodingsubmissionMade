@@ -1,6 +1,7 @@
 package com.bwx.made.ui.movies
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
@@ -117,6 +118,7 @@ class MoviesFragment : Fragment() {
                 }
         }
     }
+
 
 
     private fun initSwipeToRefresh() {

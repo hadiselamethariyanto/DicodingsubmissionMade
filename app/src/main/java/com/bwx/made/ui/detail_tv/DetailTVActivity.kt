@@ -12,6 +12,8 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.bwx.made.R
 import com.bwx.core.domain.model.Tv
@@ -48,7 +50,7 @@ class DetailTVActivity : AppCompatActivity() {
         if (extras != null) {
             val tvId = extras.getInt(EXTRA_TV)
             viewmodel.getDetailTV(tvId)
-            viewmodel.getData().observe(this, { detailTV ->
+            viewmodel.getData().observe(this) { detailTV ->
                 when (detailTV) {
                     is Resource.Loading -> setLoading(true, binding)
                     is Resource.Success -> {
@@ -61,7 +63,7 @@ class DetailTVActivity : AppCompatActivity() {
                         setLoading(false, binding)
                     }
                 }
-            })
+            }
 
             viewmodel.getSeasonTv(tvId).observe(this, seasonObserver)
         }
@@ -81,8 +83,7 @@ class DetailTVActivity : AppCompatActivity() {
         with(detailBinding) {
             tvTitleTv.text = tv.name
             tvCategoryTv.text = tv.genres
-            tvReleasedateTv.text = tv.first_air_date
-            tvEpisodeTv.text = tv.number_of_seasons.toString()
+            tvItemVoteAverage.text = tv.vote_average.toString()
             tvOverview.text = tv.overview
         }
 
@@ -98,13 +99,22 @@ class DetailTVActivity : AppCompatActivity() {
 
 
         Glide.with(this)
-            .load(resources.getString(R.string.image_path, tv.backdrop_path))
-            .centerCrop()
+            .load(resources.getString(R.string.image_path, tv.poster_path))
+            .transform(CenterCrop(), RoundedCorners(36))
             .apply(
                 RequestOptions.placeholderOf(R.drawable.ic_loading)
                     .error(R.drawable.ic_error)
             )
             .into(detailBinding.imgPoster)
+
+        Glide.with(this)
+            .load(resources.getString(R.string.image_path, tv.backdrop_path))
+            .centerCrop()
+            .apply(
+                RequestOptions.placeholderOf(R.drawable.ic_backdrop_loading)
+                    .error(R.drawable.ic_error)
+            )
+            .into(detailBinding.imgBackdrop)
     }
 
 

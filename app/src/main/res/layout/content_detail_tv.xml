@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/img_poster"
+        android:id="@+id/imgBackdrop"
         android:layout_width="match_parent"
         android:layout_height="240dp"
         android:contentDescription="@string/app_name"
@@ -13,70 +13,60 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/imgPoster"
+        android:layout_width="120dp"
+        android:layout_height="170dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="-40dp"
+        android:contentDescription="@string/app_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imgBackdrop" />
+
     <TextView
         android:id="@+id/tv_title_tv"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:fontFamily="sans-serif-black"
         android:text="@string/title"
-        android:textAlignment="center"
+        android:textAlignment="textStart"
         android:textColor="@color/black"
-        android:textSize="24sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/img_poster" />
+        app:layout_constraintStart_toEndOf="@id/imgPoster"
+        app:layout_constraintTop_toBottomOf="@id/imgBackdrop" />
+
+    <TextView
+        android:id="@+id/tv_item_vote_average"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
+        android:drawablePadding="8dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/vote_average"
+        android:textSize="14sp"
+        app:drawableStartCompat="@drawable/ic_star_yellow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imgPoster"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_tv" />
 
     <TextView
         android:id="@+id/tv_category_tv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:drawablePadding="8dp"
+        android:layout_marginTop="4dp"
         android:fontFamily="sans-serif"
         android:text="@string/category"
-        android:textAlignment="center"
-        app:drawableTopCompat="@drawable/ic_video_camera"
-        app:layout_constraintEnd_toStartOf="@id/tv_releasedate_tv"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_title_tv" />
-
-    <TextView
-        android:id="@+id/tv_releasedate_tv"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:drawablePadding="8dp"
-        android:fontFamily="sans-serif"
-        android:text="@string/releasedate"
-        android:textAlignment="center"
-        app:drawableTopCompat="@drawable/ic_date"
-        app:layout_constraintEnd_toStartOf="@id/tv_episode_tv"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintStart_toEndOf="@id/tv_category_tv"
-        app:layout_constraintTop_toBottomOf="@id/tv_title_tv" />
-
-    <TextView
-        android:id="@+id/tv_episode_tv"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:drawablePadding="8dp"
-        android:fontFamily="sans-serif"
-        android:text="@string/episodes"
-        android:textAlignment="center"
-        app:drawableTopCompat="@drawable/ic_play"
+        android:textAlignment="textStart"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintStart_toEndOf="@id/tv_releasedate_tv"
-        app:layout_constraintTop_toBottomOf="@id/tv_title_tv" />
+        app:layout_constraintStart_toEndOf="@id/imgPoster"
+        app:layout_constraintTop_toBottomOf="@id/tv_item_vote_average" />
 
     <TextView
         android:id="@+id/text_over"
@@ -90,7 +80,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_category_tv" />
+        app:layout_constraintTop_toBottomOf="@+id/imgPoster" />
 
     <TextView
         android:id="@+id/tv_overview"

@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.detail_movie.DetailMovieFragment">
 
-
     <androidx.core.widget.NestedScrollView
         android:id="@+id/content"
         android:layout_width="match_parent"
@@ -21,10 +20,9 @@
 
     </androidx.core.widget.NestedScrollView>
 
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <include
+        android:id="@+id/loading"
+        layout="@layout/view_loading"
         app:layout_anchor="@id/content"
         app:layout_anchorGravity="center_horizontal|center_vertical" />
 

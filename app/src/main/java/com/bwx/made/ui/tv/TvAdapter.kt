@@ -2,6 +2,7 @@ package com.bwx.made.ui.tv
 
 import android.content.Intent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -12,9 +13,7 @@ import com.bwx.made.R
 import com.bwx.core.domain.model.Tv
 import com.bwx.made.databinding.ItemsTvBinding
 import com.bwx.made.ui.detail_tv.DetailTVActivity
-import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.util.*
+import com.bwx.made.utils.Utils
 import kotlin.collections.ArrayList
 
 class TvAdapter : RecyclerView.Adapter<TvAdapter.TvViewHolder>() {
@@ -41,20 +40,15 @@ class TvAdapter : RecyclerView.Adapter<TvAdapter.TvViewHolder>() {
         RecyclerView.ViewHolder(binding.root) {
         fun bind(tv: Tv) {
             with(binding) {
-                var format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-
-                var newDate: Date? = null
-                try {
-                    newDate = format.parse(tv.first_air_date)
-                } catch (e: ParseException) {
-                    e.printStackTrace()
-                }
-                format = SimpleDateFormat("dd MMMM yy", Locale.getDefault())
-                val date: String = format.format(newDate)
-
                 tvItemTitle.text = tv.name
-                tvItemDate.text = date
                 tvItemVoteAverage.text = tv.vote_average.toString()
+
+                if (tv.first_air_date.isNotEmpty() || tv.first_air_date != "null") {
+                    tvItemDate.text = Utils.formatStringDate(tv.first_air_date)
+                    tvItemDate.visibility = View.VISIBLE
+                } else {
+                    tvItemDate.visibility = View.GONE
+                }
                 itemView.setOnClickListener {
                     val intent = Intent(itemView.context, DetailTVActivity::class.java)
                     intent.putExtra(DetailTVActivity.EXTRA_TV, tv.tv_id)

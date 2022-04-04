@@ -7,6 +7,6 @@
     <fragment
         android:id="@+id/tvFragment"
         android:name="com.bwx.made.ui.tv.TvFragment"
-        android:label="TvFragment"
+        android:label="@string/label_tv"
         tools:layout="@layout/fragment_tv" />
 </navigation>

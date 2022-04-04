@@ -45,14 +45,12 @@ class CinemasRepository(
         }.asFlow()
     }
 
-    override fun getDetailMovie(movieId: Int): Flow<Resource<Movie>> {
-        return object : NetworkBoundResource<Movie, DetailMovieResponse>() {
-            override fun loadFromDB(): Flow<Movie> =
-                localDataSource.getDetailMovie(movieId).map {
-                    DataMapper.mapMovieEntityToDomain(it)
-                }
+    override fun getDetailMovie(movieId: Int): Flow<Resource<MovieEntity>> {
+        return object : NetworkBoundResource<MovieEntity, DetailMovieResponse>() {
+            override fun loadFromDB(): Flow<MovieEntity> =
+                localDataSource.getDetailMovie(movieId)
 
-            override fun shouldFetch(data: Movie?): Boolean =
+            override fun shouldFetch(data: MovieEntity?): Boolean =
                 data != null && data.runtime == 0
 
             override suspend fun createCall(): Flow<ApiResponse<DetailMovieResponse>> =
@@ -203,7 +201,12 @@ class CinemasRepository(
                 val seasonList = ArrayList<SeasonEntity>()
                 for (x in data.seasons) {
                     val season =
-                        SeasonEntity(id = x.id, name = x.name, tv_id = tvId, x.poster_path.toString())
+                        SeasonEntity(
+                            id = x.id,
+                            name = x.name,
+                            tv_id = tvId,
+                            x.poster_path.toString()
+                        )
                     seasonList.add(season)
                 }
                 localDataSource.insertSeasonTv(seasonList)
@@ -235,9 +238,8 @@ class CinemasRepository(
         localDataSource.setFavoriteTv(tvEntity, state)
     }
 
-    override suspend fun setFavoriteMovie(movie: Movie, state: Boolean) {
-        val movieEntity = DataMapper.mapMovieDomainToEntity(movie)
-        localDataSource.setFavoriteMovie(movieEntity, state)
+    override suspend fun setFavoriteMovie(movie: MovieEntity, state: Boolean) {
+        localDataSource.setFavoriteMovie(movie, state)
     }
 
 }

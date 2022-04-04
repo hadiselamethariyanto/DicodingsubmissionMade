@@ -4,11 +4,9 @@ import android.os.Bundle
 import android.view.*
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
-import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bwx.core.data.Resource
 import com.bwx.core.data.source.local.entity.MovieEntity
@@ -97,7 +95,7 @@ class MoviesFragment : Fragment() {
         viewModel.setGenre(0)
 
         lifecycleScope.launchWhenCreated {
-            viewModel.posts.collectLatest {
+            viewModel.movies.collectLatest {
                 moviesAdapter.submitData(it)
             }
         }
@@ -120,15 +118,6 @@ class MoviesFragment : Fragment() {
         }
     }
 
-    private val moviePagingObserver = Observer<PagingData<MovieEntity>> {
-        lifecycleScope.launchWhenCreated {
-            moviesAdapter.submitData(it)
-        }
-    }
-
-    private fun getData(genre: Int) {
-        viewModel.getListMovies(genre)
-    }
 
     private fun initSwipeToRefresh() {
         binding.refresh.setOnRefreshListener {

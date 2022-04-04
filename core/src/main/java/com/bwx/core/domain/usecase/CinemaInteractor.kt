@@ -5,31 +5,32 @@ import com.bwx.core.domain.model.Movie
 import com.bwx.core.domain.model.Tv
 import com.bwx.core.domain.repository.ICinemaRepository
 import com.bwx.core.data.Resource
+import com.bwx.core.data.source.local.entity.MovieEntity
 import com.bwx.core.domain.model.Season
 import kotlinx.coroutines.flow.Flow
 
-class CinemaInteractor(private val repositoru: ICinemaRepository) : CinemaUseCase {
+class CinemaInteractor(private val repository: ICinemaRepository) : CinemaUseCase {
     override fun getListMovie(sort: String): Flow<Resource<List<Movie>>> =
-        repositoru.getListMovie(sort)
+        repository.getListMovie(sort)
 
 
-    override fun getDetailMovie(movieId: Int): Flow<Resource<Movie>> =
-        repositoru.getDetailMovie(movieId)
+    override fun getDetailMovie(movieId: Int): Flow<Resource<MovieEntity>> =
+        repository.getDetailMovie(movieId)
 
     override fun getCreditsMovie(movieId: Int): Flow<Resource<List<Cast>>> =
-        repositoru.getCreditsMovie(movieId)
+        repository.getCreditsMovie(movieId)
 
-    override fun getListTV(sort: String): Flow<Resource<List<Tv>>> = repositoru.getListTV(sort)
+    override fun getListTV(sort: String): Flow<Resource<List<Tv>>> = repository.getListTV(sort)
 
-    override fun getDetailTV(tvId: Int): Flow<Resource<Tv>> = repositoru.getDetailTV(tvId)
-    override fun getFavoriteTv(): Flow<List<Tv>> = repositoru.getFavoriteTv()
+    override fun getDetailTV(tvId: Int): Flow<Resource<Tv>> = repository.getDetailTV(tvId)
+    override fun getFavoriteTv(): Flow<List<Tv>> = repository.getFavoriteTv()
 
-    override fun getFavoriteMovies(): Flow<List<Movie>> = repositoru.getFavoriteMovies()
+    override fun getFavoriteMovies(): Flow<List<Movie>> = repository.getFavoriteMovies()
 
-    override fun getSeasonTv(tv_id: Int): Flow<List<Season>> = repositoru.getSeasonTv(tv_id)
+    override fun getSeasonTv(tv_id: Int): Flow<List<Season>> = repository.getSeasonTv(tv_id)
 
-    override suspend fun setFavoriteMovie(movie: Movie, state: Boolean) =
-        repositoru.setFavoriteMovie(movie, state)
+    override suspend fun setFavoriteMovie(movie: MovieEntity, state: Boolean) =
+        repository.setFavoriteMovie(movie, state)
 
-    override suspend fun setFavoriteTv(tv: Tv, state: Boolean) = repositoru.setFavoriteTv(tv, state)
+    override suspend fun setFavoriteTv(tv: Tv, state: Boolean) = repository.setFavoriteTv(tv, state)
 }

@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.bwx.core.domain.model.Movie
 import com.bwx.core.domain.usecase.CinemaUseCase
 import com.bwx.core.data.Resource
+import com.bwx.core.data.source.local.entity.MovieEntity
 import com.bwx.core.domain.usecase.MoviesUseCase
 import kotlinx.coroutines.launch
 
@@ -15,7 +15,7 @@ class DetailMovieViewModel(
     private val moviesUseCase: MoviesUseCase
 ) : ViewModel() {
 
-    private lateinit var detailMovie: LiveData<Resource<Movie>>
+    private lateinit var detailMovie: LiveData<Resource<MovieEntity>>
 
     fun getDetailMovie(movieId: Int) {
         detailMovie = cinemaUseCase.getDetailMovie(movieId).asLiveData()

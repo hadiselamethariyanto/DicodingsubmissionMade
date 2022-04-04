@@ -16,6 +16,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.bwx.core.data.Resource
+import com.bwx.core.data.source.local.entity.MovieEntity
 import com.bwx.core.domain.model.Movie
 import com.bwx.core.domain.model.Video
 import com.bwx.made.R
@@ -109,7 +110,7 @@ class DetailMovieFragment : Fragment() {
     }
 
 
-    private val movieObserver = Observer<Resource<Movie>> { movie ->
+    private val movieObserver = Observer<Resource<MovieEntity>> { movie ->
         when (movie) {
             is Resource.Loading -> setLoading(true)
             is Resource.Success -> {
@@ -131,7 +132,7 @@ class DetailMovieFragment : Fragment() {
         }
     }
 
-    private fun populateMovie(movie: Movie) {
+    private fun populateMovie(movie: MovieEntity) {
         with(detailBinding) {
             tvTitleMovie.text = movie.title
             tvItemVoteAverage.text = movie.vote_average.toString()

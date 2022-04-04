@@ -42,13 +42,7 @@ class TvAdapter : RecyclerView.Adapter<TvAdapter.TvViewHolder>() {
             with(binding) {
                 tvItemTitle.text = tv.name
                 tvItemVoteAverage.text = tv.vote_average.toString()
-
-                if (tv.first_air_date.isNotEmpty() || tv.first_air_date != "null") {
-                    tvItemDate.text = Utils.formatStringDate(tv.first_air_date)
-                    tvItemDate.visibility = View.VISIBLE
-                } else {
-                    tvItemDate.visibility = View.GONE
-                }
+                tvItemDate.text = tv.first_air_date
                 itemView.setOnClickListener {
                     val intent = Intent(itemView.context, DetailTVActivity::class.java)
                     intent.putExtra(DetailTVActivity.EXTRA_TV, tv.tv_id)

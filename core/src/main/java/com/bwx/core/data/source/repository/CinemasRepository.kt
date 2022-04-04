@@ -39,7 +39,7 @@ class CinemasRepository(
                 remoteDataSource.getMovies()
 
             override suspend fun saveCallResult(data: List<MoviesItem>) {
-                val movieList = DataMapper.mapMovieResponsesToEntities(data)
+                val movieList = DataMapper.mapMovieResponsesToEntities(data, 1)
                 localDataSource.insertMovies(movieList)
             }
         }.asFlow()
@@ -67,20 +67,20 @@ class CinemasRepository(
                     }
                 }
 
-                val movie = MovieEntity(
-                    id = data.id,
-                    title = data.title,
-                    overview = data.overview,
-                    poster_path = data.posterPath,
-                    backdrop_path = data.backdropPath,
-                    release_date = data.releaseDate,
-                    runtime = data.runtime,
-                    vote_average = data.voteAverage,
-                    isFav = false,
-                    genres = genres.toString()
-                )
-
-                localDataSource.updateMovie(movie)
+//                val movie = MovieEntity(
+//                    id = data.id,
+//                    title = data.title,
+//                    overview = data.overview,
+//                    poster_path = data.posterPath,
+//                    backdrop_path = data.backdropPath,
+//                    release_date = data.releaseDate,
+//                    runtime = data.runtime,
+//                    vote_average = data.voteAverage,
+//                    isFav = false,
+//                    genres = genres.toString()
+//                )
+//
+//                localDataSource.updateMovie(movie)
 
             }
 

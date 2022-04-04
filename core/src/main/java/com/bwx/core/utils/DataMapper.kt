@@ -75,9 +75,9 @@ object DataMapper {
         return genres
     }
 
-    fun mapMovieResponsesToEntities(input: List<MoviesItem>): List<MovieEntity> {
+    fun mapMovieResponsesToEntities(input: List<MoviesItem>, page: Int): List<MovieEntity> {
         val movieList = ArrayList<MovieEntity>()
-        input.map { response ->
+        input.mapIndexed { index, response ->
             val tourism = MovieEntity(
                 id = response.id ?: 0,
                 title = response.title.toString(),
@@ -88,7 +88,9 @@ object DataMapper {
                 runtime = 0,
                 vote_average = response.voteAverage ?: 0.0,
                 isFav = false,
-                genres = ""
+                genres = "",
+                number = index,
+                page = page
             )
             movieList.add(tourism)
         }
@@ -185,19 +187,6 @@ object DataMapper {
         genres = input.genres
     )
 
-
-    fun mapMovieDomainToEntity(input: Movie) = MovieEntity(
-        id = input.id,
-        title = input.title,
-        overview = input.overview,
-        release_date = input.release_date,
-        poster_path = input.poster_path,
-        backdrop_path = input.backdrop_path,
-        vote_average = input.vote_average,
-        runtime = input.runtime,
-        isFav = input.isFav,
-        genres = input.genres
-    )
 
     fun mapTvDomainToEntity(input: Tv) = TvEntity(
         tv_id = input.tv_id,

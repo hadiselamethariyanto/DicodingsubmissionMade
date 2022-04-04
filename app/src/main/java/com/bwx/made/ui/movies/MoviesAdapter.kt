@@ -45,12 +45,7 @@ class MoviesAdapter :
 
                 tvItemTitle.text = movie.title
                 tvItemVoteAverage.text = movie.vote_average.toString()
-                if (movie.release_date.isNotEmpty() || movie.release_date != "null") {
-                    tvItemDate.text = Utils.formatStringDate(movie.release_date)
-                    tvItemDate.visibility = View.VISIBLE
-                } else {
-                    tvItemDate.visibility = View.GONE
-                }
+                tvItemDate.text = movie.release_date
 
                 itemView.setOnClickListener {
                     onItemClickCallback.onItemClicked(movie)

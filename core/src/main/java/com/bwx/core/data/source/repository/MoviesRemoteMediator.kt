@@ -8,7 +8,6 @@ import com.bwx.core.data.source.local.LocalDataSource
 import com.bwx.core.data.source.local.entity.MovieEntity
 import com.bwx.core.data.source.local.entity.RemoteKeyEntity
 import com.bwx.core.data.source.remote.RemoteDataSource
-import com.bwx.core.data.source.remote.response.MovieResponse
 import com.bwx.core.utils.DataMapper
 import retrofit2.HttpException
 import java.io.IOException
@@ -59,7 +58,12 @@ class MoviesRemoteMediator(
             localDataSource.insertRemoteKey(remoteKeyEntity)
 
             if (movies.results.isNotEmpty()) {
-                localDataSource.insertMovies(DataMapper.mapMovieResponsesToEntities(movies.results))
+                localDataSource.insertMovies(
+                    DataMapper.mapMovieResponsesToEntities(
+                        movies.results,
+                        movies.page
+                    )
+                )
                 localDataSource.insertGenresMovie(DataMapper.mapMovieGenresResponseToEntities(movies.results))
             }
 

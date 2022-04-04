@@ -26,5 +26,9 @@ data class MovieEntity(
     @ColumnInfo(name = "isFav")
     var isFav: Boolean = false,
     @ColumnInfo(name = "genres")
-    var genres: String
+    var genres: String,
+    @ColumnInfo(name = "number")
+    var number: Int,
+    @ColumnInfo(name = "page")
+    var page: Int
 )

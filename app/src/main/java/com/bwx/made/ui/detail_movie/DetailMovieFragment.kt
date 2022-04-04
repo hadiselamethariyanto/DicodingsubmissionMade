@@ -152,7 +152,7 @@ class DetailMovieFragment : Fragment() {
             .centerCrop()
             .apply(
                 RequestOptions.placeholderOf(R.drawable.ic_backdrop_loading)
-                    .error(R.drawable.ic_error)
+                    .error(R.drawable.ic_backdrop_loading)
             )
             .into(detailBinding.imgBackdrop)
 

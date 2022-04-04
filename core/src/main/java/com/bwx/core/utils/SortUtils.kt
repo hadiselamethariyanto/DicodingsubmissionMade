@@ -27,8 +27,8 @@ object SortUtils {
         val simpleQuery =
             StringBuilder().append("SELECT DISTINCT m.* FROM movie m INNER JOIN genre_movie g ON m.id = g.movie_id ")
         when (genre) {
-            0 -> simpleQuery.append("ORDER BY vote_average DESC")
-            else -> simpleQuery.append("WHERE g.genre_id = $genre ORDER BY vote_average DESC")
+            0 -> simpleQuery.append("ORDER BY page ASC,number ASC")
+            else -> simpleQuery.append("WHERE g.genre_id = $genre ORDER BY page ASC,number ASC")
         }
         return SimpleSQLiteQuery(simpleQuery.toString())
     }

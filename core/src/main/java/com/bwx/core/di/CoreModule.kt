@@ -2,15 +2,15 @@ package com.bwx.core.di
 
 import androidx.room.Room
 import com.bwx.core.BuildConfig
-import com.bwx.core.data.source.repository.CinemasRepository
 import com.bwx.core.data.source.local.LocalDataSource
 import com.bwx.core.data.source.local.room.CinemaDatabase
+import com.bwx.core.data.source.local.room.TvDao
 import com.bwx.core.data.source.remote.RemoteDataSource
 import com.bwx.core.data.source.remote.network.ApiService
-import com.bwx.core.data.source.repository.MoviesRemoteMediator
-import com.bwx.core.data.source.repository.MoviesRepository
+import com.bwx.core.data.source.repository.*
 import com.bwx.core.domain.repository.ICinemaRepository
 import com.bwx.core.domain.repository.IMoviesRepository
+import com.bwx.core.domain.repository.ITvRepository
 import net.sqlcipher.database.SQLiteDatabase
 import net.sqlcipher.database.SupportFactory
 import okhttp3.CertificatePinner
@@ -27,11 +27,12 @@ val databaseModule = module {
     val factory = SupportFactory(passphrase)
 
     factory { get<CinemaDatabase>().cinemaDao() }
+//    single { get<CinemaDatabase>().tvDao() }
     single {
         Room.databaseBuilder(
             androidContext(),
             CinemaDatabase::class.java, "Cinema.db"
-        ).fallbackToDestructiveMigration().openHelperFactory(factory).build()
+        ).fallbackToDestructiveMigration().build()
     }
 }
 
@@ -66,6 +67,8 @@ val repositoryModule = module {
     single { LocalDataSource(get()) }
     single { RemoteDataSource(get()) }
     single { MoviesRemoteMediator(get(), get()) }
+    single { TvRemoteMediator(get(), get()) }
     single<ICinemaRepository> { CinemasRepository(get(), get()) }
     single<IMoviesRepository> { MoviesRepository(get(), get()) }
+    single<ITvRepository> { TvRepository(get(), get()) }
 }

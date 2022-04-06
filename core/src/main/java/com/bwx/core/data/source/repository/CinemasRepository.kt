@@ -127,15 +127,16 @@ class CinemasRepository(
                 for (response in data) {
                     val tv = TvEntity(
                         tv_id = response.id,
-                        first_air_date = response.firstAirDate,
-                        overview = response.overview,
-                        poster_path = response.posterPath,
+                        first_air_date = response.firstAirDate.toString(),
+                        overview = response.overview.toString(),
+                        poster_path = response.posterPath.toString(),
                         backdrop_path = response.backdropPath.toString(),
                         vote_average = response.voteAverage,
                         name = response.name,
-                        number_of_seasons = response.number_of_seasons,
-                        isFav = false,
-                        genres = ""
+                        number_of_seasons = response.number_of_seasons ?: 0,
+                        genres = "",
+                        number = 0,
+                        page = 1
                     )
                     tvList.add(tv)
                 }
@@ -170,20 +171,20 @@ class CinemasRepository(
                     }
                 }
 
-                val tv = TvEntity(
-                    tv_id = data.id,
-                    first_air_date = data.firstAirDate,
-                    overview = data.overview,
-                    poster_path = data.posterPath,
-                    backdrop_path = data.backdropPath,
-                    vote_average = data.voteAverage,
-                    name = data.name,
-                    number_of_seasons = data.numberOfSeasons,
-                    isFav = false,
-                    genres = genres.toString()
-                )
-
-                localDataSource.updateTv(tv)
+//                val tv = TvEntity(
+//                    tv_id = data.id,
+//                    first_air_date = data.firstAirDate,
+//                    overview = data.overview,
+//                    poster_path = data.posterPath,
+//                    backdrop_path = data.backdropPath,
+//                    vote_average = data.voteAverage,
+//                    name = data.name,
+//                    number_of_seasons = data.numberOfSeasons,
+//                    isFav = false,
+//                    genres = genres.toString()
+//                )
+//
+//                localDataSource.updateTv(tv)
 
                 val seasonList = ArrayList<SeasonEntity>()
                 for (x in data.seasons) {

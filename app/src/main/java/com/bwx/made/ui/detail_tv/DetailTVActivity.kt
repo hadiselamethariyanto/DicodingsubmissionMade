@@ -89,13 +89,13 @@ class DetailTVActivity : AppCompatActivity() {
 
         this.tv = tv
 
-        if (tv.isFav) {
-            binding.fab.imageTintList =
-                ColorStateList.valueOf(ContextCompat.getColor(this, R.color.red))
-        } else {
-            binding.fab.imageTintList =
-                ColorStateList.valueOf(ContextCompat.getColor(this, R.color.white))
-        }
+//        if (tv.isFav) {
+//            binding.fab.imageTintList =
+//                ColorStateList.valueOf(ContextCompat.getColor(this, R.color.red))
+//        } else {
+//            binding.fab.imageTintList =
+//                ColorStateList.valueOf(ContextCompat.getColor(this, R.color.white))
+//        }
 
 
         Glide.with(this)

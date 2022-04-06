@@ -41,7 +41,7 @@ class FavoriteTvFragment : Fragment() {
         viewModel.getFavTv().observe(viewLifecycleOwner) { listFavorite ->
             if (listFavorite != null) {
                 if (listFavorite.isNotEmpty()) {
-                    tvAdapter.updateData(listFavorite)
+//                    tvAdapter.updateData(listFavorite)
                     binding?.emptyData?.visibility = View.GONE
                 } else {
                     binding?.emptyData?.visibility = View.VISIBLE

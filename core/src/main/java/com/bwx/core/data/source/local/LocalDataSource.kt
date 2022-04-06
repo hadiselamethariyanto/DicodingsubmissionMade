@@ -2,6 +2,7 @@ package com.bwx.core.data.source.local
 
 import com.bwx.core.data.source.local.entity.*
 import com.bwx.core.data.source.local.room.CinemaDao
+import com.bwx.core.data.source.local.room.TvDao
 import com.bwx.core.utils.SortUtils
 import com.bwx.core.utils.SortUtils.MOVIE_ENTITIES
 import com.bwx.core.utils.SortUtils.TV_ENTITIES
@@ -19,6 +20,8 @@ class LocalDataSource(private val cinemaDao: CinemaDao) {
 
     fun getPagingSourceReviewsMovie(movieId: Int) = cinemaDao.getPagingReviewsMovie(movieId)
 
+    fun getPagingSourceTv() = cinemaDao.getPagingTv()
+
     fun getCastMovie(movie_id: Int): Flow<List<CastEntity>> =
         cinemaDao.getCastMovie(movie_id)
 
@@ -29,6 +32,8 @@ class LocalDataSource(private val cinemaDao: CinemaDao) {
     suspend fun insertMovieVideos(videos: List<VideoEntity>) = cinemaDao.insertMovieVideos(videos)
 
     suspend fun insertMovies(movies: List<MovieEntity>) = cinemaDao.insertMovies(movies)
+
+    suspend fun insertTvs(tvs: List<TvEntity>) = cinemaDao.insertTV(tvs)
 
     suspend fun insertReviews(reviews: List<ReviewEntity>) = cinemaDao.insertReviews(reviews)
 
@@ -56,7 +61,7 @@ class LocalDataSource(private val cinemaDao: CinemaDao) {
     suspend fun insertSeasonTv(seasons: List<SeasonEntity>) = cinemaDao.insertSeasons(seasons)
 
     suspend fun setFavoriteTv(tv: TvEntity, newState: Boolean) {
-        tv.isFav = newState
+//        tv.isFav = newState
         cinemaDao.updateTv(tv)
     }
 
@@ -83,6 +88,8 @@ class LocalDataSource(private val cinemaDao: CinemaDao) {
 
     suspend fun deleteMovie() = cinemaDao.deleteMovie()
 
-    suspend fun deleteRemoteKey() = cinemaDao.deleteRemoteKey()
+    suspend fun deleteRemoteKey(category: String) = cinemaDao.deleteRemoteKey(category)
+
+    suspend fun deleteTv() = cinemaDao.deleteTv()
 
 }

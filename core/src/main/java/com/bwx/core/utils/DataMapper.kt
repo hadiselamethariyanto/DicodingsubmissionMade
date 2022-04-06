@@ -75,6 +75,28 @@ object DataMapper {
         return genres
     }
 
+
+    fun mapTvResponsesToEntities(input: List<TVItem>, page: Int): List<TvEntity> {
+        val tvList = ArrayList<TvEntity>()
+        input.mapIndexed { index, response ->
+            val tv = TvEntity(
+                tv_id = response.id,
+                first_air_date = response.firstAirDate.toString(),
+                overview = response.overview.toString(),
+                poster_path = response.posterPath.toString(),
+                backdrop_path = response.backdropPath.toString(),
+                vote_average = response.voteAverage,
+                name = response.name,
+                number_of_seasons = response.number_of_seasons ?: 0,
+                genres = "",
+                number = index,
+                page = page
+            )
+            tvList.add(tv)
+        }
+        return tvList
+    }
+
     fun mapMovieResponsesToEntities(input: List<MoviesItem>, page: Int): List<MovieEntity> {
         val movieList = ArrayList<MovieEntity>()
         input.mapIndexed { index, response ->
@@ -151,7 +173,6 @@ object DataMapper {
                 vote_average = it.vote_average,
                 name = it.name,
                 number_of_seasons = it.number_of_seasons,
-                isFav = it.isFav,
                 genres = it.genres
             )
         }
@@ -183,7 +204,6 @@ object DataMapper {
         vote_average = input.vote_average,
         name = input.name,
         number_of_seasons = input.number_of_seasons,
-        isFav = input.isFav,
         genres = input.genres
     )
 
@@ -197,8 +217,9 @@ object DataMapper {
         vote_average = input.vote_average,
         name = input.name,
         number_of_seasons = input.number_of_seasons,
-        isFav = input.isFav,
-        genres = input.genres
+        genres = input.genres,
+        number = 0,
+        page = 0
     )
 
 }

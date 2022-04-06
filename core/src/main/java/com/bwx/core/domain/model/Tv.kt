@@ -9,6 +9,5 @@ data class Tv(
     var vote_average: Double,
     var name: String,
     var number_of_seasons: Int,
-    var isFav: Boolean,
     var genres: String
 )

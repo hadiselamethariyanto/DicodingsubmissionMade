@@ -13,4 +13,5 @@ import com.bwx.core.data.source.local.entity.*
 )
 abstract class CinemaDatabase : RoomDatabase() {
     abstract fun cinemaDao(): CinemaDao
+//    abstract fun tvDao(): TvDao
 }

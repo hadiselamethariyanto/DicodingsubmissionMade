@@ -35,7 +35,7 @@ interface CinemaDao {
     @RawQuery(observedEntities = [TvEntity::class])
     fun getTv(query: SimpleSQLiteQuery): Flow<List<TvEntity>>
 
-    @Query("SELECT * FROM tv WHERE isFav = 1")
+    @Query("SELECT * FROM tv")
     fun getFavTv(): Flow<List<TvEntity>>
 
     @Query("SELECT * FROM season WHERE tv_id = :tv_id")
@@ -95,7 +95,13 @@ interface CinemaDao {
     @Query("DELETE FROM movie")
     suspend fun deleteMovie()
 
-    @Query("DELETE FROM remote_keys")
-    suspend fun deleteRemoteKey()
+    @Query("DELETE FROM remote_keys WHERE category=:category")
+    suspend fun deleteRemoteKey(category: String)
+
+    @Query("SELECT * FROM tv ORDER BY page ASC,number ASC")
+    fun getPagingTv(): PagingSource<Int, TvEntity>
+
+    @Query("DELETE FROM tv")
+    suspend fun deleteTv()
 
 }

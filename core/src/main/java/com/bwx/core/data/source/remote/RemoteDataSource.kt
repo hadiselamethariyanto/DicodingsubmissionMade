@@ -35,6 +35,9 @@ class RemoteDataSource(private val apiService: ApiService) {
         LANGUAGE, page
     )
 
+    suspend fun getPagingTv(page: Int?): TvResponse =
+        apiService.getPopularTv(API_KEY, LANGUAGE, page)
+
     suspend fun getDetailMovie(movieId: Int): Flow<ApiResponse<DetailMovieResponse>> {
         return flow {
             try {

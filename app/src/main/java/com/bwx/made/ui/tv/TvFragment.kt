@@ -3,15 +3,14 @@ package com.bwx.made.ui.tv
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.bwx.made.R
-import com.bwx.core.domain.model.Tv
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import com.bwx.made.databinding.FragmentTvBinding
-import com.bwx.core.utils.SortUtils.RANDOM
-import com.bwx.core.utils.SortUtils.TV_NEW
-import com.bwx.core.utils.SortUtils.TV_OLD
-import com.bwx.core.data.Resource
+import com.bwx.made.utils.asMergedLoadStates
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChangedBy
+import kotlinx.coroutines.flow.filter
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class TvFragment : Fragment() {
@@ -34,64 +33,46 @@ class TvFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (activity != null) {
+            setupAdapter()
+            initSwipeToRefresh()
+        }
+    }
 
-            tvAdapter = TvAdapter()
 
-            viewModel.getListTv(TV_NEW).observe(viewLifecycleOwner, tvObserver)
+    private fun setupAdapter() {
+        tvAdapter = TvAdapter()
+        binding.rvTv.adapter = tvAdapter.withLoadStateHeaderAndFooter(
+            header = TvLoadStateAdapter(tvAdapter),
+            footer = TvLoadStateAdapter(tvAdapter)
+        )
 
-            with(binding.rvTv) {
-                layoutManager = LinearLayoutManager(context)
-                setHasFixedSize(true)
-                adapter = tvAdapter
+        viewModel.getPagingPopularTv().observe(viewLifecycleOwner) {
+            lifecycleScope.launchWhenCreated {
+                tvAdapter.submitData(it)
             }
+        }
 
-            binding.refresh.setOnRefreshListener {
-                setLoading(true)
+        lifecycleScope.launchWhenCreated {
+            tvAdapter.loadStateFlow.collectLatest { loadStates ->
+                binding.refresh.isRefreshing = loadStates.mediator?.refresh is LoadState.Loading
             }
         }
-    }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        menu.clear()
-        activity?.menuInflater?.inflate(R.menu.menu_short, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        var sort = ""
-        when (item.itemId) {
-            R.id.action_latest -> sort = TV_NEW
-            R.id.action_older -> sort = TV_OLD
-            R.id.action_random -> sort = RANDOM
-        }
-
-        viewModel.getListTv(sort).observe(viewLifecycleOwner, tvObserver)
-        item.isChecked = true
-
-        return super.onOptionsItemSelected(item)
-    }
-
-    private fun setLoading(boolean: Boolean) {
-        binding.refresh.isRefreshing = boolean
-        if (boolean) {
-            binding.rvTv.visibility = View.GONE
-        } else {
-            binding.rvTv.visibility = View.VISIBLE
-        }
-    }
-
-    private val tvObserver = Observer<Resource<List<Tv>>> { tv ->
-        if (tv != null) {
-            when (tv) {
-                is Resource.Loading -> setLoading(true)
-                is Resource.Success -> {
-                    setLoading(false)
-                    tv.data?.let { tvAdapter.updateData(it) }
+        lifecycleScope.launchWhenCreated {
+            tvAdapter.loadStateFlow
+                .asMergedLoadStates()
+                .distinctUntilChangedBy { it.refresh }
+                .filter { it.refresh is LoadState.NotLoading }
+                .collect {
+                    binding.rvTv.scrollToPosition(0)
                 }
-                is Resource.Error -> {
-                    setLoading(false)
-                }
-            }
+        }
+
+    }
+
+    private fun initSwipeToRefresh() {
+        binding.refresh.setOnRefreshListener {
+            tvAdapter.refresh()
         }
     }
 

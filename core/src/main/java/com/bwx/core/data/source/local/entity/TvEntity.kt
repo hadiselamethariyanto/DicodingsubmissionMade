@@ -23,8 +23,10 @@ data class TvEntity(
     var name: String,
     @ColumnInfo(name = "number_of_seasons")
     var number_of_seasons: Int,
-    @ColumnInfo(name = "isFav")
-    var isFav: Boolean,
     @ColumnInfo(name = "genres")
-    var genres: String
+    var genres: String,
+    @ColumnInfo(name = "number")
+    var number: Int,
+    @ColumnInfo(name = "page")
+    var page: Int
 )

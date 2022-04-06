@@ -21,8 +21,8 @@ class DetailTvViewModel(private val cinemaUseCase: CinemaUseCase) : ViewModel() 
         val tv = detailTv.value
         if (tv != null) {
             viewModelScope.launch {
-                val newState = !tv.data!!.isFav
-                cinemaUseCase.setFavoriteTv(tv.data!!, newState)
+//                val newState = !tv.data!!.isFav
+//                cinemaUseCase.setFavoriteTv(tv.data!!, newState)
             }
         }
     }

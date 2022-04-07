@@ -8,6 +8,16 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CinemaDao {
+
+    @Query("SELECT EXISTS(SELECT * FROM favorite_movie WHERE movie_id=:movieId)")
+    suspend fun checkFavoriteMovie(movieId: Int): Boolean
+
+    @Delete
+    suspend fun deleteFavoriteMovie(movie: FavoriteMovieEntity)
+
+    @Query("DELETE FROM movie")
+    suspend fun deleteMovie()
+
     @RawQuery(observedEntities = [MovieEntity::class])
     fun getMovies(query: SimpleSQLiteQuery): Flow<List<MovieEntity>>
 
@@ -32,11 +42,8 @@ interface CinemaDao {
     @Query("SELECT * FROM `cast` WHERE movie_id=:movie_id")
     fun getCastMovie(movie_id: Int): Flow<List<CastEntity>>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertRemoteKey(remoteKeyEntity: RemoteKeyEntity)
-
-    @Query("SELECT * FROM remote_keys WHERE category=:category LIMIT 1")
-    suspend fun getRemoteKey(category: String): RemoteKeyEntity
+    @Query("SELECT EXISTS(SELECT * FROM favorite_movie WHERE movie_id=:movieId)")
+    fun getFavoriteMovie(movieId: Int): Flow<Boolean>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertMovies(movies: List<MovieEntity>)
@@ -56,26 +63,11 @@ interface CinemaDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCast(casts: List<CastEntity>)
 
-    @Query("UPDATE movie SET runtime=:runtime, genres=:genres WHERE id=:movieId")
-    suspend fun updateMovie(movieId: Int, runtime: Int, genres: String)
-
-    @Query("SELECT EXISTS(SELECT * FROM favorite_movie WHERE movie_id=:movieId)")
-    suspend fun checkFavoriteMovie(movieId: Int): Boolean
-
-    @Query("SELECT EXISTS(SELECT * FROM favorite_movie WHERE movie_id=:movieId)")
-    fun getFavoriteMovie(movieId: Int): Flow<Boolean>
-
     @Insert
     suspend fun insertFavoriteMovie(movie: FavoriteMovieEntity)
 
-    @Delete
-    suspend fun deleteFavoriteMovie(movie: FavoriteMovieEntity)
-
-    @Query("DELETE FROM movie")
-    suspend fun deleteMovie()
-
-    @Query("DELETE FROM remote_keys WHERE category=:category")
-    suspend fun deleteRemoteKey(category: String)
+    @Query("UPDATE movie SET runtime=:runtime, genres=:genres WHERE id=:movieId")
+    suspend fun updateMovie(movieId: Int, runtime: Int, genres: String)
 
 
 }

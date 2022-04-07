@@ -102,7 +102,7 @@ class TvRepository(
 
     override suspend fun setFavoriteTv(tv: Tv, state: Boolean) {
         val tvEntity = DataMapper.mapTvDomainToEntity(tv)
-        localDataSource.setFavoriteTv(tvEntity, state)
+        localDataSource.setFavoriteTv(tvEntity)
     }
 
 }

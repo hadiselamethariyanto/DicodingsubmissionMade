@@ -4,7 +4,6 @@ import androidx.room.Room
 import com.bwx.core.BuildConfig
 import com.bwx.core.data.source.local.LocalDataSource
 import com.bwx.core.data.source.local.room.CinemaDatabase
-import com.bwx.core.data.source.local.room.TvDao
 import com.bwx.core.data.source.remote.RemoteDataSource
 import com.bwx.core.data.source.remote.network.ApiService
 import com.bwx.core.data.source.repository.*
@@ -27,6 +26,8 @@ val databaseModule = module {
 
     factory { get<CinemaDatabase>().cinemaDao() }
     factory { get<CinemaDatabase>().tvDao() }
+    factory { get<CinemaDatabase>().remoteKeyDao() }
+
     single {
         Room.databaseBuilder(
             androidContext(),
@@ -63,7 +64,7 @@ val networkModule = module {
 }
 
 val repositoryModule = module {
-    single { LocalDataSource(get(),get()) }
+    single { LocalDataSource(get(), get(), get()) }
     single { RemoteDataSource(get()) }
     single { MoviesRemoteMediator(get(), get()) }
     single { TvRemoteMediator(get(), get()) }

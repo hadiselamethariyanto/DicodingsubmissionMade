@@ -2,16 +2,16 @@ package com.bwx.core.data.source.local
 
 import com.bwx.core.data.source.local.entity.*
 import com.bwx.core.data.source.local.room.CinemaDao
+import com.bwx.core.data.source.local.room.RemoteKeyDao
 import com.bwx.core.data.source.local.room.TvDao
 import com.bwx.core.utils.SortUtils
-import com.bwx.core.utils.SortUtils.MOVIE_ENTITIES
-import com.bwx.core.utils.SortUtils.TV_ENTITIES
 import kotlinx.coroutines.flow.Flow
 
-class LocalDataSource(private val cinemaDao: CinemaDao, private val tvDao: TvDao) {
-
-    fun getAllMovies(sort: String): Flow<List<MovieEntity>> =
-        cinemaDao.getMovies(SortUtils.getSortedQuery(sort, MOVIE_ENTITIES))
+class LocalDataSource(
+    private val cinemaDao: CinemaDao,
+    private val tvDao: TvDao,
+    private val remoteKeyDao: RemoteKeyDao
+) {
 
     fun getPagingSourceMovies(genre: Int) =
         cinemaDao.getPagingSourceMovies(SortUtils.getMovieByGenreQuery(genre))
@@ -42,10 +42,6 @@ class LocalDataSource(private val cinemaDao: CinemaDao, private val tvDao: TvDao
 
     suspend fun insertCast(casts: List<CastEntity>) = cinemaDao.insertCast(casts)
 
-    fun getAllTv(sort: String): Flow<List<TvEntity>> =
-        tvDao.getTv(SortUtils.getSortedQuery(sort, TV_ENTITIES))
-
-
     fun getDetailMovie(id: Int) = cinemaDao.getDetailMovie(id)
 
     suspend fun updateMovie(movieId: Int, runtime: Int, genres: String) =
@@ -57,9 +53,12 @@ class LocalDataSource(private val cinemaDao: CinemaDao, private val tvDao: TvDao
 
     suspend fun insertSeasonTv(seasons: List<SeasonEntity>) = tvDao.insertSeasons(seasons)
 
-    suspend fun setFavoriteTv(tv: TvEntity, newState: Boolean) {
-//        tv.isFav = newState
-        tvDao.updateTv(tv)
+    suspend fun setFavoriteTv(tv: TvEntity) {
+        if (tvDao.checkFavoriteTv(tv.tv_id)) {
+            tvDao.deleteFavoriteTv(FavoriteTvEntity(tv_id = tv.tv_id))
+        } else {
+            tvDao.insertFavoriteTv(FavoriteTvEntity(tv_id = tv.tv_id))
+        }
     }
 
     suspend fun setFavoriteMovie(movie: MovieEntity) {
@@ -78,14 +77,14 @@ class LocalDataSource(private val cinemaDao: CinemaDao, private val tvDao: TvDao
 
     fun getFavoriteMovies(): Flow<List<MovieEntity>> = cinemaDao.getFavMovies()
 
-    suspend fun getRemoteKey(category: String) = cinemaDao.getRemoteKey(category)
+    suspend fun getRemoteKey(category: String) = remoteKeyDao.getRemoteKey(category)
 
     suspend fun insertRemoteKey(remoteKeyEntity: RemoteKeyEntity) =
-        cinemaDao.insertRemoteKey(remoteKeyEntity)
+        remoteKeyDao.insertRemoteKey(remoteKeyEntity)
 
     suspend fun deleteMovie() = cinemaDao.deleteMovie()
 
-    suspend fun deleteRemoteKey(category: String) = cinemaDao.deleteRemoteKey(category)
+    suspend fun deleteRemoteKey(category: String) = remoteKeyDao.deleteRemoteKey(category)
 
     suspend fun deleteTv() = tvDao.deleteTv()
 

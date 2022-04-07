@@ -15,7 +15,7 @@ interface MoviesUseCase {
 
     fun getPagingReviewsMovie(movieId: Int): Flow<PagingData<ReviewEntity>>
 
-    fun getDetailMovie(movieId: Int): Flow<Resource<Movie>>
+    fun getDetailMovie(movieId: Int): Flow<Resource<MovieEntity>>
 
     fun getCreditsMovie(movieId: Int): Flow<Resource<List<Cast>>>
 
@@ -24,4 +24,8 @@ interface MoviesUseCase {
     fun getGenreTypes(): Flow<Resource<List<Genre>>>
 
     fun getFavoriteMovie(movieId: Int): Flow<Boolean>
+
+    fun getFavoriteMovies(): Flow<List<Movie>>
+
+    suspend fun setFavoriteMovie(movie: MovieEntity)
 }

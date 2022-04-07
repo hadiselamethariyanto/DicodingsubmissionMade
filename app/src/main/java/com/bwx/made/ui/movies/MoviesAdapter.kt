@@ -41,8 +41,6 @@ class MoviesAdapter :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: MovieEntity) {
             with(binding) {
-
-
                 tvItemTitle.text = movie.title
                 tvItemVoteAverage.text = movie.vote_average.toString()
                 tvItemDate.text = movie.release_date

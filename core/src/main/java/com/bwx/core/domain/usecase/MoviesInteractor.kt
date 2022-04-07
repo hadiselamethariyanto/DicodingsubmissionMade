@@ -18,7 +18,7 @@ class MoviesInteractor(private val repository: IMoviesRepository) : MoviesUseCas
     override fun getPagingReviewsMovie(movieId: Int): Flow<PagingData<ReviewEntity>> =
         repository.getPagingReviewsMovie(movieId)
 
-    override fun getDetailMovie(movieId: Int): Flow<Resource<Movie>> =
+    override fun getDetailMovie(movieId: Int): Flow<Resource<MovieEntity>> =
         repository.getDetailMovie(movieId)
 
     override fun getCreditsMovie(movieId: Int): Flow<Resource<List<Cast>>> =
@@ -31,5 +31,10 @@ class MoviesInteractor(private val repository: IMoviesRepository) : MoviesUseCas
 
     override fun getFavoriteMovie(movieId: Int): Flow<Boolean> =
         repository.getFavoriteMovie(movieId)
+
+    override fun getFavoriteMovies(): Flow<List<Movie>> = repository.getFavoriteMovies()
+
+    override suspend fun setFavoriteMovie(movie: MovieEntity) =
+        repository.setFavoriteMovie(movie)
 
 }

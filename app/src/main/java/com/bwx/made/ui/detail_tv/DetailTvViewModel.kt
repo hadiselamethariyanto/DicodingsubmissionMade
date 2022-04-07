@@ -4,17 +4,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.bwx.core.domain.model.Tv
-import com.bwx.core.domain.usecase.CinemaUseCase
 import com.bwx.core.data.Resource
+import com.bwx.core.data.source.local.entity.TvEntity
+import com.bwx.core.domain.usecase.TvUseCase
 import kotlinx.coroutines.launch
 
-class DetailTvViewModel(private val cinemaUseCase: CinemaUseCase) : ViewModel() {
+class DetailTvViewModel(private val tvUseCase: TvUseCase) : ViewModel() {
 
-    private lateinit var detailTv: LiveData<Resource<Tv>>
+    private lateinit var detailTv: LiveData<Resource<TvEntity>>
 
     fun getDetailTV(tvId: Int) {
-        detailTv = cinemaUseCase.getDetailTV(tvId).asLiveData()
+        detailTv = tvUseCase.getDetailTV(tvId).asLiveData()
     }
 
     fun setFavorite() {
@@ -27,7 +27,7 @@ class DetailTvViewModel(private val cinemaUseCase: CinemaUseCase) : ViewModel() 
         }
     }
 
-    fun getSeasonTv(tv_id: Int) = cinemaUseCase.getSeasonTv(tv_id).asLiveData()
+    fun getSeasonTv(tv_id: Int) = tvUseCase.getSeasonTv(tv_id).asLiveData()
 
 
     fun getData() = detailTv

@@ -7,10 +7,8 @@ import com.bwx.core.utils.SortUtils
 import com.bwx.core.utils.SortUtils.MOVIE_ENTITIES
 import com.bwx.core.utils.SortUtils.TV_ENTITIES
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
 
-class LocalDataSource(private val cinemaDao: CinemaDao) {
+class LocalDataSource(private val cinemaDao: CinemaDao, private val tvDao: TvDao) {
 
     fun getAllMovies(sort: String): Flow<List<MovieEntity>> =
         cinemaDao.getMovies(SortUtils.getSortedQuery(sort, MOVIE_ENTITIES))
@@ -20,7 +18,7 @@ class LocalDataSource(private val cinemaDao: CinemaDao) {
 
     fun getPagingSourceReviewsMovie(movieId: Int) = cinemaDao.getPagingReviewsMovie(movieId)
 
-    fun getPagingSourceTv() = cinemaDao.getPagingTv()
+    fun getPagingSourceTv() = tvDao.getPagingTv()
 
     fun getCastMovie(movie_id: Int): Flow<List<CastEntity>> =
         cinemaDao.getCastMovie(movie_id)
@@ -33,7 +31,7 @@ class LocalDataSource(private val cinemaDao: CinemaDao) {
 
     suspend fun insertMovies(movies: List<MovieEntity>) = cinemaDao.insertMovies(movies)
 
-    suspend fun insertTvs(tvs: List<TvEntity>) = cinemaDao.insertTV(tvs)
+    suspend fun insertTvs(tvs: List<TvEntity>) = tvDao.insertTv(tvs)
 
     suspend fun insertReviews(reviews: List<ReviewEntity>) = cinemaDao.insertReviews(reviews)
 
@@ -45,24 +43,23 @@ class LocalDataSource(private val cinemaDao: CinemaDao) {
     suspend fun insertCast(casts: List<CastEntity>) = cinemaDao.insertCast(casts)
 
     fun getAllTv(sort: String): Flow<List<TvEntity>> =
-        cinemaDao.getTv(SortUtils.getSortedQuery(sort, TV_ENTITIES))
+        tvDao.getTv(SortUtils.getSortedQuery(sort, TV_ENTITIES))
 
-    suspend fun insertTV(tv: List<TvEntity>) = cinemaDao.insertTV(tv)
 
     fun getDetailMovie(id: Int) = cinemaDao.getDetailMovie(id)
 
     suspend fun updateMovie(movieId: Int, runtime: Int, genres: String) =
         cinemaDao.updateMovie(movieId = movieId, runtime = runtime, genres = genres)
 
-    fun getDetailTv(id: Int) = cinemaDao.getDetailTv(id)
+    fun getDetailTv(id: Int) = tvDao.getDetailTv(id)
 
-    suspend fun updateTv(tv: TvEntity) = cinemaDao.updateTv(tv)
+    suspend fun updateTv(tv: TvEntity) = tvDao.updateTv(tv)
 
-    suspend fun insertSeasonTv(seasons: List<SeasonEntity>) = cinemaDao.insertSeasons(seasons)
+    suspend fun insertSeasonTv(seasons: List<SeasonEntity>) = tvDao.insertSeasons(seasons)
 
     suspend fun setFavoriteTv(tv: TvEntity, newState: Boolean) {
 //        tv.isFav = newState
-        cinemaDao.updateTv(tv)
+        tvDao.updateTv(tv)
     }
 
     suspend fun setFavoriteMovie(movie: MovieEntity) {
@@ -75,9 +72,9 @@ class LocalDataSource(private val cinemaDao: CinemaDao) {
 
     fun getFavoriteMovie(movieId: Int): Flow<Boolean> = cinemaDao.getFavoriteMovie(movieId)
 
-    fun getSeasonTv(tv_id: Int): Flow<List<SeasonEntity>> = cinemaDao.getSeasonTv(tv_id)
+    fun getSeasonTv(tv_id: Int): Flow<List<SeasonEntity>> = tvDao.getSeasonTv(tv_id)
 
-    fun getFavoriteTv(): Flow<List<TvEntity>> = cinemaDao.getFavTv()
+    fun getFavoriteTv(): Flow<List<TvEntity>> = tvDao.getFavTv()
 
     fun getFavoriteMovies(): Flow<List<MovieEntity>> = cinemaDao.getFavMovies()
 
@@ -90,6 +87,6 @@ class LocalDataSource(private val cinemaDao: CinemaDao) {
 
     suspend fun deleteRemoteKey(category: String) = cinemaDao.deleteRemoteKey(category)
 
-    suspend fun deleteTv() = cinemaDao.deleteTv()
+    suspend fun deleteTv() = tvDao.deleteTv()
 
 }

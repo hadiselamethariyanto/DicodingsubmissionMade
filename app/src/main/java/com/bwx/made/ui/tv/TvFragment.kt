@@ -2,9 +2,13 @@ package com.bwx.made.ui.tv
 
 import android.os.Bundle
 import android.view.*
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
+import com.bwx.core.data.source.local.entity.TvEntity
+import com.bwx.made.R
 import com.bwx.made.databinding.FragmentTvBinding
 import com.bwx.made.utils.asMergedLoadStates
 import kotlinx.coroutines.flow.collect
@@ -41,6 +45,13 @@ class TvFragment : Fragment() {
 
     private fun setupAdapter() {
         tvAdapter = TvAdapter()
+        tvAdapter.setOnItemClickCallback(object : TvAdapter.OnItemClickCallback {
+            override fun onItemClicked(data: TvEntity) {
+                val bundle = bundleOf(TV_KEY to data.tv_id, TV_OVERVIEW to data.overview)
+                findNavController().navigate(R.id.action_tvFragment_to_tvDetailFragment, bundle)
+            }
+        })
+
         binding.rvTv.adapter = tvAdapter.withLoadStateHeaderAndFooter(
             header = TvLoadStateAdapter(tvAdapter),
             footer = TvLoadStateAdapter(tvAdapter)
@@ -74,6 +85,11 @@ class TvFragment : Fragment() {
         binding.refresh.setOnRefreshListener {
             tvAdapter.refresh()
         }
+    }
+
+    companion object {
+        const val TV_KEY = "tv_key"
+        const val TV_OVERVIEW = "tv_overview"
     }
 
 }

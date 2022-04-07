@@ -12,7 +12,6 @@ import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val useCaseModule = module {
-    factory<CinemaUseCase> { CinemaInteractor(get()) }
     factory<MoviesUseCase> { MoviesInteractor(get()) }
     factory<TvUseCase> { TvInteractor(get()) }
 }
@@ -20,7 +19,7 @@ val useCaseModule = module {
 val viewModelModule = module {
     viewModel { MoviesViewModel(get()) }
     viewModel { TvViewModel(get()) }
-    viewModel { DetailMovieViewModel(get(), get()) }
+    viewModel { DetailMovieViewModel(get()) }
     viewModel { DetailTvViewModel(get()) }
     viewModel { MovieReviewsViewModel(get()) }
     viewModel { InfoViewModel(get()) }

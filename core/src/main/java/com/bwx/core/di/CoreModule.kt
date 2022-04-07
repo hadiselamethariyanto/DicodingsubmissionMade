@@ -8,7 +8,6 @@ import com.bwx.core.data.source.local.room.TvDao
 import com.bwx.core.data.source.remote.RemoteDataSource
 import com.bwx.core.data.source.remote.network.ApiService
 import com.bwx.core.data.source.repository.*
-import com.bwx.core.domain.repository.ICinemaRepository
 import com.bwx.core.domain.repository.IMoviesRepository
 import com.bwx.core.domain.repository.ITvRepository
 import net.sqlcipher.database.SQLiteDatabase
@@ -27,7 +26,7 @@ val databaseModule = module {
     val factory = SupportFactory(passphrase)
 
     factory { get<CinemaDatabase>().cinemaDao() }
-//    single { get<CinemaDatabase>().tvDao() }
+    factory { get<CinemaDatabase>().tvDao() }
     single {
         Room.databaseBuilder(
             androidContext(),
@@ -64,11 +63,10 @@ val networkModule = module {
 }
 
 val repositoryModule = module {
-    single { LocalDataSource(get()) }
+    single { LocalDataSource(get(),get()) }
     single { RemoteDataSource(get()) }
     single { MoviesRemoteMediator(get(), get()) }
     single { TvRemoteMediator(get(), get()) }
-    single<ICinemaRepository> { CinemasRepository(get(), get()) }
     single<IMoviesRepository> { MoviesRepository(get(), get()) }
     single<ITvRepository> { TvRepository(get(), get()) }
 }

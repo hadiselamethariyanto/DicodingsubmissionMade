@@ -54,14 +54,12 @@ class MoviesRepository(
         }.flow
     }
 
-    override fun getDetailMovie(movieId: Int): Flow<Resource<Movie>> {
-        return object : NetworkBoundResource<Movie, DetailMovieResponse>() {
-            override fun loadFromDB(): Flow<Movie> =
-                localDataSource.getDetailMovie(movieId).map {
-                    DataMapper.mapMovieEntityToDomain(it)
-                }
+    override fun getDetailMovie(movieId: Int): Flow<Resource<MovieEntity>> {
+        return object : NetworkBoundResource<MovieEntity, DetailMovieResponse>() {
+            override fun loadFromDB(): Flow<MovieEntity> =
+                localDataSource.getDetailMovie(movieId)
 
-            override fun shouldFetch(data: Movie?): Boolean =
+            override fun shouldFetch(data: MovieEntity?): Boolean =
                 data != null && data.runtime == 0
 
             override suspend fun createCall(): Flow<ApiResponse<DetailMovieResponse>> =
@@ -167,7 +165,17 @@ class MoviesRepository(
         }.asFlow()
     }
 
+    override fun getFavoriteMovies(): Flow<List<Movie>> {
+        return localDataSource.getFavoriteMovies().map {
+            DataMapper.mapMovieEntitiesToDomain(it)
+        }
+    }
+
     override fun getFavoriteMovie(movieId: Int): Flow<Boolean> {
         return localDataSource.getFavoriteMovie(movieId)
+    }
+
+    override suspend fun setFavoriteMovie(movie: MovieEntity) {
+        localDataSource.setFavoriteMovie(movie)
     }
 }

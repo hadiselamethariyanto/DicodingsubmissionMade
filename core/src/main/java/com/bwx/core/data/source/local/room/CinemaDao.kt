@@ -29,18 +29,6 @@ interface CinemaDao {
     @Query("SELECT * FROM genre_type")
     fun getGenreTypes(): Flow<List<GenreTypeEntity>>
 
-    @Query("SELECT * FROM tv WHERE tv_id = :id")
-    fun getDetailTv(id: Int): Flow<TvEntity>
-
-    @RawQuery(observedEntities = [TvEntity::class])
-    fun getTv(query: SimpleSQLiteQuery): Flow<List<TvEntity>>
-
-    @Query("SELECT * FROM tv")
-    fun getFavTv(): Flow<List<TvEntity>>
-
-    @Query("SELECT * FROM season WHERE tv_id = :tv_id")
-    fun getSeasonTv(tv_id: Int): Flow<List<SeasonEntity>>
-
     @Query("SELECT * FROM `cast` WHERE movie_id=:movie_id")
     fun getCastMovie(movie_id: Int): Flow<List<CastEntity>>
 
@@ -66,13 +54,7 @@ interface CinemaDao {
     suspend fun insertMovieVideos(videos: List<VideoEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertTV(tv: List<TvEntity>)
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCast(casts: List<CastEntity>)
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertSeasons(seasons: List<SeasonEntity>)
 
     @Query("UPDATE movie SET runtime=:runtime, genres=:genres WHERE id=:movieId")
     suspend fun updateMovie(movieId: Int, runtime: Int, genres: String)
@@ -89,19 +71,11 @@ interface CinemaDao {
     @Delete
     suspend fun deleteFavoriteMovie(movie: FavoriteMovieEntity)
 
-    @Update
-    suspend fun updateTv(tv: TvEntity)
-
     @Query("DELETE FROM movie")
     suspend fun deleteMovie()
 
     @Query("DELETE FROM remote_keys WHERE category=:category")
     suspend fun deleteRemoteKey(category: String)
 
-    @Query("SELECT * FROM tv ORDER BY page ASC,number ASC")
-    fun getPagingTv(): PagingSource<Int, TvEntity>
-
-    @Query("DELETE FROM tv")
-    suspend fun deleteTv()
 
 }

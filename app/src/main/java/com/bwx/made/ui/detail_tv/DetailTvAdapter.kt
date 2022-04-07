@@ -16,10 +16,10 @@ class DetailTvAdapter : RecyclerView.Adapter<DetailTvAdapter.DetailTvViewHolder>
 
     private var listEpisode = ArrayList<Season>()
 
-    fun setEpisode(newEpisode: List<Season>?) {
-        if (newEpisode == null) return
-        this.listEpisode.clear()
-        this.listEpisode.addAll(newEpisode)
+    fun setEpisode(newEpisode: List<Season>) {
+        listEpisode.clear()
+        listEpisode.addAll(newEpisode)
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DetailTvViewHolder {

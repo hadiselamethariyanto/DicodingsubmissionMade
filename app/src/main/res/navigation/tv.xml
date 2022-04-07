@@ -8,5 +8,15 @@
         android:id="@+id/tvFragment"
         android:name="com.bwx.made.ui.tv.TvFragment"
         android:label="@string/label_tv"
-        tools:layout="@layout/fragment_tv" />
+        tools:layout="@layout/fragment_tv">
+        <action
+            android:id="@+id/action_tvFragment_to_tvDetailFragment"
+            app:destination="@id/tvDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/tvDetailFragment"
+        android:name="com.bwx.made.ui.detail_tv.DetailTvFragment"
+        android:label="@string/label_detail_tv"
+        tools:layout="@layout/fragment_detail_tv" />
 </navigation>

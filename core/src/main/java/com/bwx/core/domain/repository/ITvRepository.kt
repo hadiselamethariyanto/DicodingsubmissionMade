@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface ITvRepository {
     fun getPagingPopularTv(): Flow<PagingData<TvEntity>>
-    fun getDetailTV(tvId: Int): Flow<Resource<Tv>>
+    fun getDetailTV(tvId: Int): Flow<Resource<TvEntity>>
     fun getFavoriteTv(): Flow<List<Tv>>
     fun getSeasonTv(tv_id: Int): Flow<List<Season>>
     suspend fun setFavoriteTv(tv: Tv, state: Boolean)
